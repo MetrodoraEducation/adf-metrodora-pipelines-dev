@@ -1,13 +1,71 @@
 {
-	"name": "p_Zoho_copy1",
+	"name": "p_Zoho",
 	"properties": {
 		"activities": [
 			{
-				"name": "CopydataZohoLeads",
-				"type": "Copy",
+				"name": "WebZoho",
+				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"url": "https://accounts.zoho.eu/oauth/v2/token",
+					"body": {
+						"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Set variable",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Set variable Users",
+						"activity": "WebZoho",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "WebActivityName",
+					"value": {
+						"value": "@activity('WebZoho').output.access_token\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "CopydataZohoLeadsPrueba",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Set variable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -30,7 +88,139 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZoho').output.access_token)",
+								"type": "Expression"
+							}
+						},
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_Zoho_API",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeUrl": {
+								"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Owner,First_Name,Last_Name,Designation,Email,Phone,Mobile,Lead_Source,Lead_Status,Email_Opt_Out,Created_Time,Modified_Time,Secondary_Email,Street,City,Zip_Code,Description,Tag,Converted_Date_Time,id,Fecha_de_nacimiento,Sexo,Motivos_de_perdida,Apellido_2,NIF_CIF,Fecha_hora_intento_de_contacto_1,Puerta,Localidad,N_mero,Piso,Residencia,Reason_for_Conversion_Failure,Provincia,lead_rating,lead_scoring,id_programa,Apellidos_2,Producto,id_producto&pipeline().parameters.per_page')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adsl_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
+							"folder": {
+								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"type": "Expression"
+							},
+							"filename": "zoholeads.json"
+						}
+					}
+				]
+			},
+			{
+				"name": "WebZohoLeads",
+				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"url": "https://accounts.zoho.eu/oauth/v2/token",
+					"body": {
+						"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
+						"type": "Expression"
+					},
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Set variable Leads",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "WebZohoLeads",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "WebActivityName",
+					"value": {
+						"value": "@activity('WebZohoLeads').output.access_token\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "CopydataZohoLeads",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "Set variable Leads",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"additionalHeaders": {
+							"Content-Type": "application/json",
+							"Authorization": {
+								"value": "@concat('Bearer ', activity('WebZohoLeads').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -65,10 +255,10 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaZohoLeads.json"
+							"filename": "jsazoholeads.json"
 						}
 					}
 				]
@@ -132,9 +322,11 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Set variable Users",
+						"activity": "Set variable Deals",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -157,7 +349,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoUsers').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -195,16 +387,16 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaZohoDeals.json"
+							"filename": "jsazohodeals.json"
 						}
 					}
 				]
 			},
 			{
-				"name": "WebZohoAPI",
+				"name": "WebZohoUsers",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -236,7 +428,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "WebZohoAPI",
+						"activity": "WebZohoUsers",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -250,7 +442,7 @@
 				"typeProperties": {
 					"variableName": "WebActivityName",
 					"value": {
-						"value": "@activity('WebZohoAPI').output.access_token\n",
+						"value": "@activity('WebZohoUsers').output.access_token\n",
 						"type": "Expression"
 					}
 				}
@@ -283,7 +475,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoDeals').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -308,7 +500,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"relativeUrl": {
-								"value": "@concat('https://www.zohoapis.eu/crm/v7/users?type=AllUsers')",
+								"value": "@concat('/crm/v7/users?type=AllUsers')",
 								"type": "Expression"
 							}
 						}
@@ -321,10 +513,10 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaZohoUsers.json"
+							"filename": "jsazohousers.json"
 						}
 					}
 				]
