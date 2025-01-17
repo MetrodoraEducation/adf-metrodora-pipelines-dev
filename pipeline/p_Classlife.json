@@ -146,7 +146,7 @@
 						"referenceName": "ds_Classlife",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeUrl": "/enroll_groups"
+							"relativeUrl": "enroll_groups?showMetas=1"
 						}
 					}
 				],
