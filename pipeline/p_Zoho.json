@@ -405,7 +405,7 @@
 			},
 			"Modified_Time_Filter": {
 				"type": "string",
-				"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
+				"defaultValue": "formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
 			}
 		},
 		"variables": {
