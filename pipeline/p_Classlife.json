@@ -76,18 +76,13 @@
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"Authorization": "apiKey C!Fd4e045d16e5544"
+						"Authorization": "apiKey C!Fd4e045d16e5544",
+						"API_CLIENT": "919"
 					},
 					"url": "https://api.classlife.io/api/v1/enroll_groups?showMetas=1"
 				}
 			}
 		],
-		"parameters": {
-			"dayToLoad": {
-				"type": "string",
-				"defaultValue": "7"
-			}
-		},
 		"folder": {
 			"name": "Lakehouse/Bronze"
 		},
