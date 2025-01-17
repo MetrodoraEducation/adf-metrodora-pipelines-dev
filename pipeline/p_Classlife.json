@@ -29,7 +29,7 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Content-Type": "application/json",
-							"Authorization": "Token C!Fd4e045d16e5544"
+							"Authorization": "C!Fd4e045d16e5544"
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
@@ -52,7 +52,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"relativeUrl": {
-								"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+								"value": "@concat('v1/enroll_groups')",
 								"type": "Expression"
 							}
 						}
