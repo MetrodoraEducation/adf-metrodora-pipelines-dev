@@ -156,7 +156,10 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"container": "bronze",
-							"folder": "@concat('lakehouse/clientify/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+							"folder": {
+								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"type": "Expression"
+							},
 							"filename": "jsaclasslifeenrollgroups.json"
 						}
 					}
