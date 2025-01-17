@@ -76,10 +76,16 @@
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"Authorization": "apiKey C!Fd4e045d16e5544",
-						"API_CLIENT": "919"
+						"apiKey": {
+							"value": "@pipeline().parameters.API_KEY",
+							"type": "Expression"
+						},
+						"API-Client": {
+							"value": "@pipeline().parameters.API_CLIENT",
+							"type": "Expression"
+						}
 					},
-					"url": "https://api.classlife.io/api/v1/enroll_groups?showMetas=1"
+					"url": "@concat('https://api.classlife.io/api/v1/enroll_groups?showMetas=1')"
 				}
 			}
 		],
