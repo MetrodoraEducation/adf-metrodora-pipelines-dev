@@ -29,7 +29,7 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Content-Type": "application/json",
-							"Authorization": "C!Fd4e045d16e5544"
+							"Authorization": "@concat('Token ',activity('WebGetToken').output.value)"
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
