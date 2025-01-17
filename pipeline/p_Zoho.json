@@ -137,6 +137,8 @@
 			{
 				"name": "WebZohoLeads",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -165,6 +167,8 @@
 			{
 				"name": "Set variable Leads",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "WebZohoLeads",
@@ -189,6 +193,8 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Leads",
@@ -260,6 +266,8 @@
 			{
 				"name": "WebZohoDeals",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -288,6 +296,8 @@
 			{
 				"name": "Set variable Deals",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "WebZohoDeals",
@@ -312,6 +322,8 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Deals",
@@ -337,7 +349,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoDeals').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoUsers').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -434,6 +446,80 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "CopydataZohoUsers",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set variable Users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"additionalHeaders": {
+							"Content-Type": "application/json",
+							"Authorization": {
+								"value": "@concat('Bearer ', activity('WebZohoDeals').output.access_token)",
+								"type": "Expression"
+							}
+						},
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_Zoho_API",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeUrl": {
+								"value": "@concat('/crm/v7/users?type=AllUsers')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_adsl_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"container": "bronze",
+							"folder": {
+								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"type": "Expression"
+							},
+							"filename": "jsazohodeals.json"
+						}
+					}
+				]
 			}
 		],
 		"parameters": {
