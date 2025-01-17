@@ -256,7 +256,7 @@
 								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "jsazoholeads.json"
+							"filename": "JsaZohoLeads.json"
 						}
 					}
 				]
@@ -386,7 +386,7 @@
 								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaZohoUsers.json"
+							"filename": "JsaZohoDeals.json"
 						}
 					}
 				]
@@ -512,7 +512,7 @@
 								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "jsazohousers.json"
+							"filename": "JsaZohoUsers.json"
 						}
 					}
 				]
