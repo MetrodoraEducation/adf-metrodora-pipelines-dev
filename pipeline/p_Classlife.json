@@ -30,7 +30,7 @@
 				}
 			},
 			{
-				"name": "Copy data1",
+				"name": "ClasslifeEnrollGroups",
 				"type": "Copy",
 				"dependsOn": [
 					{
