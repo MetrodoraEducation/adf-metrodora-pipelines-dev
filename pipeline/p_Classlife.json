@@ -3,13 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyDataClassLife",
+				"name": "CopyDataClassLifeEnrollGroups",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "WebClassLife",
+						"activity": "WebClasslifeEnrollGroups",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -28,9 +26,12 @@
 						"type": "RestSource",
 						"httpRequestTimeout": "00:01:40",
 						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "POST",
+						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Content-Type": "application/json"
+						},
+						"paginationRules": {
+							"supportRFC5988": "true"
 						}
 					},
 					"sink": {
@@ -49,7 +50,7 @@
 						"referenceName": "ds_Classlife",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeUrl": "/enroll_groups?showMetas=1"
+							"relativeUrl": "/enroll_groups"
 						}
 					}
 				],
@@ -60,16 +61,16 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehousef0/odoo/lead/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))\n\n\n",
+								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "odoolead.json"
+							"filename": "jsaenroll_groups.json"
 						}
 					}
 				]
 			},
 			{
-				"name": "WebClassLife",
+				"name": "WebClasslifeEnrollGroups",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -87,15 +88,12 @@
 							"value": "@pipeline().parameters.API_KEY",
 							"type": "Expression"
 						},
-						"API-Client": {
+						"clientId": {
 							"value": "@pipeline().parameters.API_CLIENT",
 							"type": "Expression"
 						}
 					},
-					"url": {
-						"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
-						"type": "Expression"
-					}
+					"url": "@concat('https://api.classlife.io/api/v1/enroll_groups')"
 				}
 			}
 		],
