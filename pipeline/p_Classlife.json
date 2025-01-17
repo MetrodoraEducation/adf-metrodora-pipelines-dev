@@ -7,7 +7,14 @@
 				"type": "Copy",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "WebClassLife",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -97,6 +104,9 @@
 			"API_KEY": {
 				"type": "string",
 				"defaultValue": "C!Fd4e045d16e5544"
+			},
+			"showMetas": {
+				"type": "string"
 			}
 		},
 		"folder": {
