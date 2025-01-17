@@ -70,7 +70,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": ""
+					"headers": {
+						"Authorization": "apiKey C!Fd4e045d16e5544"
+					},
+					"url": "https://api.classlife.io/api/v1/enroll_groups?showMetas=1"
 				}
 			}
 		],
