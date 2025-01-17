@@ -8,7 +8,7 @@
 		"parameters": {
 			"relativeUrl": {
 				"type": "string",
-				"defaultValue": "/enroll_groups?showMetas=1"
+				"defaultValue": "/enroll_groups"
 			}
 		},
 		"annotations": [],

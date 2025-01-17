@@ -92,7 +92,10 @@
 							"type": "Expression"
 						}
 					},
-					"url": "@concat('https://api.classlife.io/api/v1/enroll_groups?showMetas=1')"
+					"url": {
+						"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -106,7 +109,8 @@
 				"defaultValue": "C!Fd4e045d16e5544"
 			},
 			"showMetas": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "7"
 			}
 		},
 		"folder": {
