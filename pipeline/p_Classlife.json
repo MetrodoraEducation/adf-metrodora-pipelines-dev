@@ -124,7 +124,11 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"additionalHeaders": {
-							"Content-Type": "application/json"
+							"Content-Type": "application/json",
+							"apiKey": {
+								"value": "@pipeline().parameters.API_KEY",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
