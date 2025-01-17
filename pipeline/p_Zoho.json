@@ -260,8 +260,6 @@
 			{
 				"name": "WebZohoDeals",
 				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -290,8 +288,6 @@
 			{
 				"name": "Set variable Deals",
 				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "WebZohoDeals",
@@ -316,8 +312,6 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Deals",
