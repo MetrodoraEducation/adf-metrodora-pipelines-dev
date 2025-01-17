@@ -3,80 +3,6 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopyDataClassLifeEnrollGroups",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "WebClasslifeEnrollGroups",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:02:00",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET",
-						"additionalHeaders": {
-							"Content-Type": "application/json",
-							"Authorization": {
-								"value": "Token C!Fd4e045d16e5544",
-								"type": "Expression"
-							}
-						},
-						"paginationRules": {
-							"supportRFC5988": "true"
-						}
-					},
-					"sink": {
-						"type": "JsonSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "JsonWriteSettings"
-						}
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "ds_Classlife",
-						"type": "DatasetReference",
-						"parameters": {
-							"relativeUrl": {
-								"value": "@concat('v1/enroll_groups')",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "ds_adsl_json",
-						"type": "DatasetReference",
-						"parameters": {
-							"container": "bronze",
-							"folder": {
-								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
-								"type": "Expression"
-							},
-							"filename": "jsaenroll_groups.json"
-						}
-					}
-				]
-			},
-			{
 				"name": "WebClasslifeEnrollGroups",
 				"type": "WebActivity",
 				"dependsOn": [],
@@ -171,6 +97,29 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "WebClasslifeEnrollGroups",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"enableStaging": false
+				}
 			}
 		],
 		"parameters": {
