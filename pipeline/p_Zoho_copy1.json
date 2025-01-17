@@ -496,7 +496,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"relativeUrl": {
-								"value": "@concat('/crm/v7/users?type=AllUsers')",
+								"value": "@concat('https://www.zohoapis.eu/crm/v7/users?type=AllUsers')",
 								"type": "Expression"
 							}
 						}
