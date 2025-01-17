@@ -1,5 +1,5 @@
 {
-	"name": "p_Zoho_copy1",
+	"name": "p_Zoho",
 	"properties": {
 		"activities": [
 			{
@@ -72,62 +72,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "WebZohoDeals",
-				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"method": "POST",
-					"headers": {
-						"Content-Type": "application/x-www-form-urlencoded"
-					},
-					"url": "https://accounts.zoho.eu/oauth/v2/token",
-					"body": {
-						"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
-						"type": "Expression"
-					},
-					"authentication": {
-						"type": "MSI",
-						"resource": "https://vault.azure.net"
-					}
-				}
-			},
-			{
-				"name": "Set variable Deals",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "WebZohoDeals",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "WebActivityName",
-					"value": {
-						"value": "@activity('WebZohoDeals').output.access_token\n",
-						"type": "Expression"
-					}
-				}
 			},
 			{
 				"name": "CopydataZohoDeals",
