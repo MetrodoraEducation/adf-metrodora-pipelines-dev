@@ -55,7 +55,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"relativeUrl": {
-								"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+								"value": "@concat('v1/enroll_groups')",
 								"type": "Expression"
 							}
 						}
