@@ -218,7 +218,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoLeads').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -345,7 +345,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoUsers').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							}
 						},
@@ -386,7 +386,7 @@
 								"value": "@concat('lakehouse/zoho/deals/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "jsazohodeals.json"
+							"filename": "JsaZohoUsers.json"
 						}
 					}
 				]
@@ -438,7 +438,7 @@
 				"typeProperties": {
 					"variableName": "WebActivityName",
 					"value": {
-						"value": "@activity('WebZohoUsers').output.access_token\n",
+						"value": "@activity('WebZohoAPI').output.access_token\n",
 						"type": "Expression"
 					}
 				}
@@ -471,7 +471,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer ', activity('WebZohoDeals').output.access_token)",
+								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							}
 						},
