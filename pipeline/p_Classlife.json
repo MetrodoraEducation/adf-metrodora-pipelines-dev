@@ -128,6 +128,10 @@
 							"apiKey": {
 								"value": "@pipeline().parameters.API_KEY",
 								"type": "Expression"
+							},
+							"clientId": {
+								"value": "@pipeline().parameters.API_CLIENT",
+								"type": "Expression"
 							}
 						},
 						"paginationRules": {
