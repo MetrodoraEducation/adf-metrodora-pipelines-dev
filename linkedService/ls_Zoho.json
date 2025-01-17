@@ -1,0 +1,24 @@
+{
+	"name": "ls_Zoho",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"parameters": {
+			"access_token": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://accounts.zoho.eu",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"Authorization": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
+		}
+	}
+}
