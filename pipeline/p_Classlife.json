@@ -5,6 +5,8 @@
 			{
 				"name": "CopyDataClassLife",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -38,7 +40,10 @@
 				"inputs": [
 					{
 						"referenceName": "ds_Classlife",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeUrl": "/enroll_groups?showMetas=1"
+						}
 					}
 				],
 				"outputs": [
@@ -57,7 +62,7 @@
 				]
 			},
 			{
-				"name": "Web1",
+				"name": "WebClassLife",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
