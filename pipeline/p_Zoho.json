@@ -408,6 +408,10 @@
 		"variables": {
 			"WebActivityName": {
 				"type": "String"
+			},
+			"Modified_Time_Filter": {
+				"type": "String",
+				"defaultValue": "@addDays(utcnow(), -7)"
 			}
 		},
 		"folder": {
