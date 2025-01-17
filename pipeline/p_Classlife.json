@@ -30,7 +30,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Token ',activity('WebClasslifeEnrollGroups').input)",
+								"value": "Token C!Fd4e045d16e5544",
 								"type": "Expression"
 							}
 						},
