@@ -29,7 +29,10 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Content-Type": "application/json",
-							"Authorization": "@concat('Token ',activity('WebGetToken').output.value)"
+							"Authorization": {
+								"value": "@concat('Token ',activity('WebClasslifeEnrollGroups').output)",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
