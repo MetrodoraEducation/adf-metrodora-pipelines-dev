@@ -28,11 +28,7 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"additionalHeaders": {
-							"Content-Type": "application/json",
-							"Authorization": {
-								"value": "@concat('Token ', activity('WebClasslifeEnrollGroups').output.response.data.api_key)",
-								"type": "Expression"
-							}
+							"Content-Type": "application/json"
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
@@ -54,7 +50,10 @@
 						"referenceName": "ds_Classlife",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeUrl": "/enroll_groups?showMetas=1"
+							"relativeUrl": {
+								"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+								"type": "Expression"
+							}
 						}
 					}
 				],
