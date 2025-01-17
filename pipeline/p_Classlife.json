@@ -28,7 +28,8 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"additionalHeaders": {
-							"Content-Type": "application/json"
+							"Content-Type": "application/json",
+							"Authorization": "Token C!Fd4e045d16e5544"
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
