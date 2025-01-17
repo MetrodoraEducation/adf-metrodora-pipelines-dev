@@ -69,7 +69,8 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"method": "GET"
+					"method": "GET",
+					"url": ""
 				}
 			}
 		],
