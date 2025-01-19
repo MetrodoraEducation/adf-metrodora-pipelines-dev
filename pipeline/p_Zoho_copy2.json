@@ -359,7 +359,7 @@
 			},
 			"refresh_token": {
 				"type": "string",
-				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoResfreshToken/4ab96997faa54df6b70bedb8d64060cc"
+				"defaultValue": "@Microsoft.KeyVault(SecretUri='https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoResfreshToken/4ab96997faa54df6b70bedb8d64060cc')"
 			},
 			"Modified_Time_Filter": {
 				"type": "string",
