@@ -194,7 +194,7 @@
 				"typeProperties": {
 					"variableName": "WebActivityName",
 					"value": {
-						"value": "@activity('WebZohoAPI').output.access_token",
+						"value": "@activity('WebZohoAPI').output",
 						"type": "Expression"
 					}
 				}
