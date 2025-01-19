@@ -349,18 +349,6 @@
 			}
 		],
 		"parameters": {
-			"client_id": {
-				"type": "string",
-				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientId/e410366df7cf48bbb237c2afae7fcd51"
-			},
-			"client_secret": {
-				"type": "string",
-				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientSecret/c51da0e591c34f72b22eace15a84b7f2"
-			},
-			"refresh_token": {
-				"type": "string",
-				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoResfreshToken/4ab96997faa54df6b70bedb8d64060cc"
-			},
 			"Modified_Time_Filter": {
 				"type": "string",
 				"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
@@ -369,6 +357,18 @@
 		"variables": {
 			"WebActivityName": {
 				"type": "String"
+			},
+			"client_id": {
+				"type": "String",
+				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientId/e410366df7cf48bbb237c2afae7fcd51"
+			},
+			"client_secret": {
+				"type": "String",
+				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientSecret/c51da0e591c34f72b22eace15a84b7f2"
+			},
+			"refresh_token": {
+				"type": "String",
+				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoResfreshToken/4ab96997faa54df6b70bedb8d64060cc"
 			}
 		},
 		"folder": {
