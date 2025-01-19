@@ -166,7 +166,7 @@
 					},
 					"url": "https://accounts.zoho.eu/oauth/v2/token",
 					"body": {
-						"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
+						"value": "@concat('client_id=', variables('client_id'), \n        '&client_secret=', variables('client_secret'),\n        '&refresh_token=', variables('refresh_token'),\n        '&grant_type=refresh_token')\n",
 						"type": "Expression"
 					},
 					"authentication": {
