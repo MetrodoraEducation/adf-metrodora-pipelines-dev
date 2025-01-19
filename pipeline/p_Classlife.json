@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "WebClasslifeEnrollGroups",
+				"name": "WebClasslife",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -26,15 +26,19 @@
 							"type": "Expression"
 						}
 					},
-					"url": "@concat('https://api.classlife.io/api/v1/enroll_groups')"
+					"url": {
+						"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+						"type": "Expression"
+					}
 				}
 			},
 			{
-				"name": "ClasslifeEnrollGroups",
+				"name": "ClasslifeTitulaciones",
+				"description": "ClasslifeEnrollGroups",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "WebClasslifeEnrollGroups",
+						"activity": "WebClasslife",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -99,7 +103,7 @@
 								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "jsaclasslifeenrollgroups.json"
+							"filename": "JsaClassLifeTitulaciones.json"
 						}
 					}
 				]
