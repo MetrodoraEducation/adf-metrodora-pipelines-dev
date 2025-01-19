@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "WebClasslife",
+				"description": "Activity web that calls the endpoint enroll_groups",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
