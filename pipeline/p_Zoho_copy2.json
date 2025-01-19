@@ -351,7 +351,7 @@
 		"parameters": {
 			"client_id": {
 				"type": "string",
-				"defaultValue": "1000.1F4VDBCZ89HIY80175SZZF595HBSNO"
+				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientId/e410366df7cf48bbb237c2afae7fcd51"
 			},
 			"client_secret": {
 				"type": "string",
