@@ -355,7 +355,7 @@
 			},
 			"client_secret": {
 				"type": "string",
-				"defaultValue": "d3743dfd871d30ac90d12b3e6ac02de1111c51076e"
+				"defaultValue": "https://kvmetrodoralakehousedev.vault.azure.net/secrets/ZohoClientSecret/c51da0e591c34f72b22eace15a84b7f2"
 			},
 			"refresh_token": {
 				"type": "string",
