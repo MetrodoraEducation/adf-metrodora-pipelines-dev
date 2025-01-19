@@ -1,5 +1,5 @@
 {
-	"name": "p_Zoho",
+	"name": "p_Zoho_copy2",
 	"properties": {
 		"activities": [
 			{
@@ -156,9 +156,8 @@
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
-					"secureInput": false
+					"secureInput": true
 				},
-				"userProperties": [],
 				"typeProperties": {
 					"method": "POST",
 					"headers": {
