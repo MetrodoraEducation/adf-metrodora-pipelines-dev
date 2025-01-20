@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopydataZohoDeals1",
+				"name": "CopydataZohoDeals",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -77,7 +77,7 @@
 				]
 			},
 			{
-				"name": "CopydataZohoLeads1",
+				"name": "CopydataZohoLeads",
 				"type": "Copy",
 				"dependsOn": [
 					{
