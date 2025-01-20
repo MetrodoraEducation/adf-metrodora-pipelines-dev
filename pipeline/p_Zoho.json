@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "CopydataZohoDeals",
+				"name": "CopydataZohoDeals1",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -71,13 +71,13 @@
 								"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaZohoLeads.json"
+							"filename": "JsaZohoDeals.json"
 						}
 					}
 				]
 			},
 			{
-				"name": "CopydataZohoLeads",
+				"name": "CopydataZohoLeads1",
 				"type": "Copy",
 				"dependsOn": [
 					{
