@@ -392,14 +392,9 @@
 			{
 				"name": "Until1",
 				"type": "Until",
-				"dependsOn": [
-					{
-						"activity": "CopydataZohoDeals",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
@@ -512,6 +507,26 @@
 							}
 						}
 					],
+					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "Until2",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "CopydataZohoDeals",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('moreRecords'), false)\n",
+						"type": "Expression"
+					},
 					"timeout": "0.12:00:00"
 				}
 			}
