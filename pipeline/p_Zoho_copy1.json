@@ -400,7 +400,7 @@
 			},
 			"reprocessDate": {
 				"type": "string",
-				"defaultValue": "8"
+				"defaultValue": "11"
 			}
 		},
 		"variables": {
