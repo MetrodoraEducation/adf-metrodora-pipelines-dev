@@ -399,8 +399,7 @@
 				"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
 			},
 			"reprocessDate": {
-				"type": "string",
-				"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
+				"type": "string"
 			}
 		},
 		"variables": {
