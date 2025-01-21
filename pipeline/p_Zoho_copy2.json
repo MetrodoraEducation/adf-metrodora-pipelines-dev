@@ -110,7 +110,8 @@
 							"Authorization": {
 								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
-							}
+							},
+							"If-Modified-Since": "@variables('ifModifiedSinceDate')"
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
