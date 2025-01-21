@@ -423,7 +423,11 @@
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "GET",
 									"paginationRules": {
-										"supportRFC5988": "true"
+										"supportRFC5988": "true",
+										"QueryParameters.next_page_token": {
+											"value": "@activity('CopydataZohoDeals').output.response.info.next_page_token\n",
+											"type": "Expression"
+										}
 									}
 								},
 								"enableStaging": false
