@@ -399,7 +399,7 @@
 			},
 			"reprocessDate": {
 				"type": "string",
-				"defaultValue": "6"
+				"defaultValue": "3"
 			}
 		},
 		"variables": {
