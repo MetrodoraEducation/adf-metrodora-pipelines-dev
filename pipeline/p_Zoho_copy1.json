@@ -451,7 +451,10 @@
 									"referenceName": "ds_Zoho_API",
 									"type": "DatasetReference",
 									"parameters": {
-										"relativeUrl": "@dataset().relativeUrl"
+										"relativeUrl": {
+											"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?', 'next_page_token=', variables('NextPageToken'))",
+											"type": "Expression"
+										}
 									}
 								}
 							],
