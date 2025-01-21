@@ -32,6 +32,10 @@
 							"Authorization": {
 								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
+							},
+							"If-Modified-Since": {
+								"value": "@variables('ifModifiedSinceDate')",
+								"type": "Expression"
 							}
 						},
 						"paginationRules": {
@@ -207,6 +211,8 @@
 			{
 				"name": "CopydataZohoUsers",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -281,6 +287,8 @@
 			{
 				"name": "CopydataZohoContactos",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
