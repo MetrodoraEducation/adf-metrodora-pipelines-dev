@@ -434,6 +434,15 @@
 										"supportRFC5988": "true"
 									}
 								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
+									}
+								},
 								"enableStaging": false
 							},
 							"inputs": [
@@ -445,6 +454,17 @@
 											"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Motivo_p_rdida_B2C,ID_Producto,Owner.name,Owner.id,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n&per_page=200',variables('nextPageToken'))",
 											"type": "Expression"
 										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_adsl_json",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"folder": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"filename": "JsaZohoDeals1.json"
 									}
 								}
 							]
