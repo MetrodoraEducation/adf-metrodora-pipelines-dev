@@ -402,6 +402,9 @@
 			"daysToReprocess": {
 				"type": "string",
 				"defaultValue": "11"
+			},
+			"nextPageToken": {
+				"type": "string"
 			}
 		},
 		"variables": {
