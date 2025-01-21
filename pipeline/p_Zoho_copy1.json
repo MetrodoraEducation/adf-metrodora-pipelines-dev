@@ -425,6 +425,11 @@
 									"httpRequestTimeout": "00:01:40",
 									"requestInterval": "00.00:00:00.010",
 									"requestMethod": "GET",
+									"additionalHeaders": {
+										"Content-Type": "application/json",
+										"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"If-Modified-Since": "@variables('ifModifiedSinceDate')"
+									},
 									"paginationRules": {
 										"supportRFC5988": "true"
 									}
