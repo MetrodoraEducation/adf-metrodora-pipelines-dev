@@ -441,6 +441,51 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "NextPageToken",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Copy data1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "NextPageToken",
+								"value": {
+									"value": "@activity('Copy data1').output.response.info.next_page_token",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "MoreRecords",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "NextPageToken",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "MoreRecords",
+								"value": ""
+							}
 						}
 					],
 					"timeout": "0.12:00:00"
