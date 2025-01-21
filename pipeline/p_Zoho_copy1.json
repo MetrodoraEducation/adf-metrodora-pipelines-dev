@@ -420,8 +420,7 @@
 				"type": "String"
 			},
 			"moreRecords": {
-				"type": "Boolean",
-				"defaultValue": true
+				"type": "Boolean"
 			}
 		},
 		"folder": {
