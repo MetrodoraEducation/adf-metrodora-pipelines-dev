@@ -527,6 +527,45 @@
 						"value": "@equals(variables('moreRecords'), false)\n",
 						"type": "Expression"
 					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "RestSource",
+									"httpRequestTimeout": "00:01:40",
+									"requestInterval": "00.00:00:00.010",
+									"requestMethod": "GET",
+									"paginationRules": {
+										"supportRFC5988": "true"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_Zoho_API",
+									"type": "DatasetReference",
+									"parameters": {
+										"relativeUrl": {
+											"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Motivo_p_rdida_B2C&per_page=200&page_token=', variables('nextPageToken'))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					],
 					"timeout": "0.12:00:00"
 				}
 			}
