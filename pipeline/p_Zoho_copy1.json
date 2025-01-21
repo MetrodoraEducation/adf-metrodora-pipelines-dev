@@ -39,8 +39,7 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true",
-							"None": "@json(activity('CopyDataActivity').output.response.info.next_page_token)"
+							"supportRFC5988": "true"
 						}
 					},
 					"sink": {
