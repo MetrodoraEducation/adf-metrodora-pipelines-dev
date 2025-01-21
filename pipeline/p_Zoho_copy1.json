@@ -39,7 +39,8 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true"
+							"supportRFC5988": "true",
+							"None": ""
 						}
 					},
 					"sink": {
@@ -83,6 +84,8 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "If Modified Since Date",
@@ -111,10 +114,14 @@
 								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							},
-							"If-Modified-Since": "@variables('ifModifiedSinceDate')"
+							"If-Modified-Since": {
+								"value": "@variables('ifModifiedSinceDate')",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true"
+							"supportRFC5988": "true",
+							"": "@json(activity('CopyDataActivity').output.response.info.next_page_token)"
 						}
 					},
 					"sink": {
