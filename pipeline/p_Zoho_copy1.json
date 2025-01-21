@@ -539,7 +539,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "NextPageToken",
-					"value": ""
+					"value": {
+						"value": "@activity('CopydataZohoDeals').output.",
+						"type": "Expression"
+					}
 				}
 			}
 		],
