@@ -5,14 +5,7 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set variable Users",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -79,6 +72,8 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -353,6 +348,27 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "If Modified Since Date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable Users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ifModifiedSinceDate",
+					"value": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')\n"
+				}
 			}
 		],
 		"parameters": {
@@ -375,6 +391,9 @@
 		},
 		"variables": {
 			"WebActivityName": {
+				"type": "String"
+			},
+			"ifModifiedSinceDate": {
 				"type": "String"
 			}
 		},
