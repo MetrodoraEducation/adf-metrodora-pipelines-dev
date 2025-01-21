@@ -388,6 +388,19 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('moreRecords'), false)\n",
+						"type": "Expression"
+					},
+					"timeout": "0.12:00:00"
+				}
 			}
 		],
 		"parameters": {
@@ -419,7 +432,8 @@
 				"type": "String"
 			},
 			"moreRecords": {
-				"type": "Boolean"
+				"type": "Boolean",
+				"defaultValue": true
 			}
 		},
 		"folder": {
