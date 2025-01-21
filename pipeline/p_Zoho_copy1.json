@@ -5,14 +5,7 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "If ModifiedSince Date",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -384,6 +377,39 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If ModifiedSince Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "nextPageToken",
+					"value": {
+						"value": "$['info']['next_page_token']",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"timeout": "0.12:00:00"
+				}
 			}
 		],
 		"parameters": {
@@ -412,6 +438,9 @@
 				"type": "String"
 			},
 			"ifModifiedSinceDate": {
+				"type": "String"
+			},
+			"nextPageToken": {
 				"type": "String"
 			}
 		},
