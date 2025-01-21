@@ -468,6 +468,48 @@
 									}
 								}
 							]
+						},
+						{
+							"name": "nextPageToken",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "CopydataZohoDeals1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "nextPageToken",
+								"value": "@activity('CopyDataActivity').output.response.info.next_page_token\n"
+							}
+						},
+						{
+							"name": "moreRecords",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "nextPageToken",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "moreRecords",
+								"value": "@activity('CopyDataActivity').output.response.info.more_records\n"
+							}
 						}
 					],
 					"timeout": "0.12:00:00"
