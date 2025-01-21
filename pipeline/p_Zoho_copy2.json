@@ -5,7 +5,14 @@
 			{
 				"name": "CopydataZohoDeals",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "If Modified Since Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -367,7 +374,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "ifModifiedSinceDate",
-					"value": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')\n"
+					"value": {
+						"value": "@if(equals(pipeline().parameters.reprocessDate, ''), \n    formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ'), \n    pipeline().parameters.reprocessDate)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
@@ -384,9 +394,8 @@
 				"type": "string",
 				"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
 			},
-			"Modified_Time_Filter": {
-				"type": "string",
-				"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
+			"reprocessDate": {
+				"type": "string"
 			}
 		},
 		"variables": {
