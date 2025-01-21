@@ -83,11 +83,9 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Set variable Users",
+						"activity": "If Modified Since Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
