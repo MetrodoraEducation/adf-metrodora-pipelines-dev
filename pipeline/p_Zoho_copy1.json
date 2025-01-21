@@ -400,7 +400,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@equals(variables('MoreRecords'), false)\n",
+						"value": "@not(equals(variables('NextPageToken'), ''))",
 						"type": "Expression"
 					},
 					"activities": [
@@ -489,7 +489,7 @@
 							"typeProperties": {
 								"variableName": "NextPageToken",
 								"value": {
-									"value": "@activity('Copy data1').output.response.info.next_page_token",
+									"value": "@activity('CopyDataZohoDeals').output.info.next_page_token",
 									"type": "Expression"
 								}
 							}
@@ -513,7 +513,7 @@
 							"typeProperties": {
 								"variableName": "MoreRecords",
 								"value": {
-									"value": "@activity('Copy data1').output.response.info.more_records",
+									"value": "@activity('CopydataZohoDeals').output.response.info.more_records",
 									"type": "Expression"
 								}
 							}
