@@ -395,7 +395,7 @@
 			},
 			"reprocessDate": {
 				"type": "int",
-				"defaultValue": 10
+				"defaultValue": 7
 			}
 		},
 		"variables": {
