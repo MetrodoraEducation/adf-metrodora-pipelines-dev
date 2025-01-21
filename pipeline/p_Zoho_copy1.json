@@ -40,7 +40,7 @@
 						},
 						"paginationRules": {
 							"supportRFC5988": "true",
-							"None": ""
+							"None": "@json(activity('CopyDataActivity').output.response.info.next_page_token)"
 						}
 					},
 					"sink": {
@@ -411,6 +411,12 @@
 			},
 			"ifModifiedSinceDate": {
 				"type": "String"
+			},
+			"nextPageToken": {
+				"type": "String"
+			},
+			"moreRecords": {
+				"type": "Boolean"
 			}
 		},
 		"folder": {
