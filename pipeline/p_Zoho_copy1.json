@@ -39,8 +39,7 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true",
-							"QueryParameters.Rule_NextPageToken": "$.@activity('CopyDataZohoDeals').output.response.info.next_page_token"
+							"supportRFC5988": "true"
 						}
 					},
 					"sink": {
@@ -389,8 +388,6 @@
 			{
 				"name": "Until1",
 				"type": "Until",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CopydataZohoDeals",
