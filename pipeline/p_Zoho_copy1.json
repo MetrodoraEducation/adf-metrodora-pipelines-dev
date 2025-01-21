@@ -424,7 +424,8 @@
 									"requestMethod": "GET",
 									"additionalHeaders": {
 										"Content-Type": "application/json",
-										"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)"
+										"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"If-Modified-Since": "@variables('ifModifiedSinceDate')"
 									},
 									"paginationRules": {
 										"supportRFC5988": "true",
@@ -432,6 +433,15 @@
 											"value": "@activity('CopydataZohoDeals').output.response.info.next_page_token\n",
 											"type": "Expression"
 										}
+									}
+								},
+								"sink": {
+									"type": "JsonSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "JsonWriteSettings"
 									}
 								},
 								"enableStaging": false
@@ -442,6 +452,17 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"relativeUrl": "@dataset().relativeUrl"
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_adsl_json",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"folder": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"filename": "JsaZohoDeals1.json"
 									}
 								}
 							]
