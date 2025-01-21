@@ -40,7 +40,7 @@
 						},
 						"paginationRules": {
 							"supportRFC5988": "true",
-							"QueryParameters": ""
+							"QueryParameters.Rule_NextPageToken": "$.@activity('CopyDataZohoDeals').output.response.info.next_page_token"
 						}
 					},
 					"sink": {
