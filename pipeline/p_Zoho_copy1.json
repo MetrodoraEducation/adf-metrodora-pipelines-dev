@@ -390,7 +390,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "CopydataZohoDeals",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -429,7 +429,7 @@
 									"paginationRules": {
 										"supportRFC5988": "true",
 										"QueryParameters.next_page_token": {
-											"value": "@activity('CopydataZohoDeals').output.response.info.next_page_token\n",
+											"value": "@activity('CopydataZohoDeals').output.response.next_page_token\n",
 											"type": "Expression"
 										}
 									}
@@ -519,6 +519,27 @@
 						}
 					],
 					"timeout": "0.12:00:00"
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "CopydataZohoDeals",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "NextPageToken",
+					"value": ""
 				}
 			}
 		],
