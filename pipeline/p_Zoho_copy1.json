@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set variable Users",
+						"activity": "If ModifiedSince Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -349,6 +349,23 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "If ModifiedSince Date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable Users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
 			}
 		],
 		"parameters": {
