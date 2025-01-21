@@ -378,7 +378,7 @@
 				"typeProperties": {
 					"variableName": "ifModifiedSinceDate",
 					"value": {
-						"value": "@if(equals(pipeline().parameters.reprocessDate, ''), \n    formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ'), \n    pipeline().parameters.reprocessDate)",
+						"value": "@formatDateTime(addDays(utcnow(), if(equals(pipeline().parameters.reprocessDate, ''), -7, int(pipeline().parameters.reprocessDate))), 'yyyy-MM-ddTHH:mm:ssZ')",
 						"type": "Expression"
 					}
 				}
