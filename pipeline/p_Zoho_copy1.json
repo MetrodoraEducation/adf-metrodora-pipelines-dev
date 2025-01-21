@@ -385,6 +385,19 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('MoreRecords'), false)\n",
+						"type": "Expression"
+					},
+					"timeout": "0.12:00:00"
+				}
 			}
 		],
 		"parameters": {
@@ -411,6 +424,13 @@
 			},
 			"ifModifiedSinceDate": {
 				"type": "String"
+			},
+			"NextPageToken": {
+				"type": "String"
+			},
+			"MoreRecords": {
+				"type": "Boolean",
+				"defaultValue": true
 			}
 		},
 		"folder": {
