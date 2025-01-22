@@ -439,21 +439,35 @@
 					"method": "GET",
 					"headers": {
 						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-						"Content-Type": "application/json",
-						"per_page": "200"
+						"Content-Type": "application/json"
 					},
 					"url": "https://www.zohoapis.eu/crm/v7/Deals"
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "NextPageToken",
+				"description": "",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "GetNextPageToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "NextPageToken",
+					"value": [
+						"@if(activity('GetNextPageToken').output.info.more_records",
+						" activity('GetNextPageToken').output.info.next_page_token, '')\n"
+					]
+				}
 			}
 		],
 		"parameters": {
