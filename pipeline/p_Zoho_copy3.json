@@ -393,6 +393,8 @@
 			{
 				"name": "Next Page Token",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CopydataZohoDeals",
@@ -435,6 +437,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
+					"headers": {
+						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+						"Content-Type": "application/json"
+					},
 					"url": "https://www.zohoapis.eu/crm/v7/Deals"
 				}
 			}
