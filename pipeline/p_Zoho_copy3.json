@@ -439,7 +439,8 @@
 					"method": "GET",
 					"headers": {
 						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						"fields": "Modified_Time,Motivo_p_rdida_B2C"
 					},
 					"url": "https://www.zohoapis.eu/crm/v7/Deals"
 				}
