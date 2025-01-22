@@ -11,6 +11,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "NextPageToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -421,7 +427,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Set variable Users",
+						"activity": "WebZohoAPI",
 						"dependencyConditions": [
 							"Succeeded"
 						]
