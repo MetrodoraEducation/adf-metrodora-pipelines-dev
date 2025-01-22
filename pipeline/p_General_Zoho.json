@@ -12,16 +12,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_CallsSalesBronzeSilver",
+						"referenceName": "p_Zoho",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"dayToLoad": {
-							"value": "@pipeline().parameters.dayToLoad",
-							"type": "Expression"
-						}
-					}
+					"waitOnCompletion": true
 				}
 			}
 		],
