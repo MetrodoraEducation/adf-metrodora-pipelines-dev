@@ -195,7 +195,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Web1",
+						"activity": "Web GetNextPageToken",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -415,7 +415,7 @@
 				}
 			},
 			{
-				"name": "Web1",
+				"name": "Web GetNextPageToken",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -432,7 +432,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"url": "https://www.zohoapis.eu/crm/v7/Deals"
+				}
 			}
 		],
 		"parameters": {
