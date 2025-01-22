@@ -116,7 +116,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ZohoContacts"
+					"notebookPath": "/Lakehouse/Silver/ZohoCampaigns"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
