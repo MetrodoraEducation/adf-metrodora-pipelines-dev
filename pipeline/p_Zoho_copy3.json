@@ -45,11 +45,7 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true",
-							"QueryParameters.Pagination_NextPageToken": {
-								"value": "@variables('NextPageToken')",
-								"type": "Expression"
-							}
+							"supportRFC5988": "true"
 						}
 					},
 					"sink": {
