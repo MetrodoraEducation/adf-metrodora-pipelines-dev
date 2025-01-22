@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ExecutePipelineZohoBronzeSilver",
+				"name": "ExecuteZohoBronze",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
@@ -19,16 +19,23 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineZohoBronzeSilver_copy1",
+				"name": "ExecuteZohoBronzetoSilver",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ExecuteZohoBronze",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_Zoho",
+						"referenceName": "p_ZohoSilver",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
