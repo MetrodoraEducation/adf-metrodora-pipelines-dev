@@ -41,6 +41,26 @@
 					"referenceName": "ls_AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "NotebookZohoLeadsSilver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Lakehouse/Silver/ZohoLeads"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
