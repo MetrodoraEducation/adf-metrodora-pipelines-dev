@@ -34,7 +34,7 @@
 				}
 			},
 			{
-				"name": "ClasslifeTitulaciones",
+				"name": "ClasslifeProductos",
 				"description": "ClasslifeEnrollGroups",
 				"type": "Copy",
 				"dependsOn": [
@@ -104,7 +104,7 @@
 								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaClassLifeTitulaciones.json"
+							"filename": "JsaClassLifeProductos.json"
 						}
 					}
 				]
