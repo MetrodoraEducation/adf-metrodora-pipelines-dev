@@ -441,7 +441,10 @@
 						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 						"Content-Type": "application/json"
 					},
-					"url": "https://www.zohoapis.eu/crm/v7/Deals?fields=Modified_Time, Motivo_p_rdida_B2C&per_page=200"
+					"url": {
+						"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Modified_Time,Motivo_p_rdida_B2C&per_page=200', if(equals(variables('NextPageToken'), ''), '', concat('&next_page_token=', variables('NextPageToken'))))",
+						"type": "Expression"
+					}
 				}
 			},
 			{
