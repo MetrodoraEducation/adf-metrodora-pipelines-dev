@@ -113,7 +113,10 @@
 								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							},
-							"If-Modified-Since": "@variables('ifModifiedSinceDate')"
+							"If-Modified-Since": {
+								"value": "@variables('ifModifiedSinceDate')",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
@@ -388,6 +391,8 @@
 			{
 				"name": "Until1",
 				"type": "Until",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable1",
@@ -423,8 +428,14 @@
 									"requestMethod": "GET",
 									"additionalHeaders": {
 										"Content-Type": "application/json",
-										"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-										"If-Modified-Since": "@variables('ifModifiedSinceDate')"
+										"Authorization": {
+											"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+											"type": "Expression"
+										},
+										"If-Modified-Since": {
+											"value": "@variables('ifModifiedSinceDate')",
+											"type": "Expression"
+										}
 									},
 									"paginationRules": {
 										"supportRFC5988": "true",
@@ -524,6 +535,8 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CopydataZohoDeals",
