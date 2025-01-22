@@ -45,7 +45,8 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true"
+							"supportRFC5988": "true",
+							"AbsoluteUrl": "$.next_page_token"
 						}
 					},
 					"sink": {
@@ -126,7 +127,7 @@
 						},
 						"paginationRules": {
 							"supportRFC5988": "true",
-							"AbsoluteUrl": "$.meta.next_page_token"
+							"AbsoluteUrl": "$.next_page_token"
 						}
 					},
 					"sink": {
