@@ -17,6 +17,22 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "ExecutePipelineZohoBronzeSilver_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Zoho",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
 			}
 		],
 		"parameters": {
