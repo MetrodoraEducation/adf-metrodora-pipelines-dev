@@ -463,10 +463,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "NextPageToken",
-					"value": [
-						"@if(activity('GetNextPageToken').output.info.more_records",
-						" activity('GetNextPageToken').output.info.next_page_token, '')\n"
-					]
+					"value": {
+						"value": "@if(activity('GetNextPageToken').output.info.more_records, activity('GetNextPageToken').output.info.next_page_token, '')",
+						"type": "Expression"
+					}
 				}
 			}
 		],
