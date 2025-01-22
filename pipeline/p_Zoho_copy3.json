@@ -467,7 +467,7 @@
 				"typeProperties": {
 					"variableName": "NextPageToken",
 					"value": {
-						"value": "@if(activity('GetNextPageToken').output.info.more_records, activity('GetNextPageToken').output.info.next_page_token, '')",
+						"value": "@activity('GetNextPageToken').output.info.next_page_token",
 						"type": "Expression"
 					}
 				}
