@@ -417,7 +417,7 @@
 				}
 			},
 			{
-				"name": "Web GetNextPageToken",
+				"name": "GetNextPageToken",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
