@@ -195,7 +195,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Web GetNextPageToken",
+						"activity": "WebZohoAPI",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -419,7 +419,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "WebZohoAPI",
+						"activity": "Set variable Users",
 						"dependencyConditions": [
 							"Succeeded"
 						]
