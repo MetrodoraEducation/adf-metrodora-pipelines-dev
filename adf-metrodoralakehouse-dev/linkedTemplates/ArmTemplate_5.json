@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
+		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
+			"type": "string",
+			"defaultValue": "7"
+		},
 		"tr_General_properties_p_General_parameters_dayToLoad": {
 			"type": "string",
 			"defaultValue": "7"
@@ -20,6 +24,285 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/p_SalesBronze_Full')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecutePipelineClientifyDealsBronze_Full",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronze_Full",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineOdooLeadBronze_Full",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_OdooLeadBronze_Full",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsBronze_IdForDelete",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronze_IdForDelete",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Lakehouse/Bronze"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-12T16:45:05Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_SalesDWHF0')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataFlowSalesDWHF0",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_SalesDWHF0",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSalesGoldF0": {},
+									"sink1": {
+										"schema": "public",
+										"table": "f0sales"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "LakehouseF0/DWHF0"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-11-05T09:59:44Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_SalesGoldF0')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecutePipelineClientifyDealsGoldF0",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ExecutePipelineOdooLeadGoldF0",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsGoldF0",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineOdooLeadGoldF0",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_OdooLeadGoldF0",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsGoldF0_LeadsNetosPhone",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "ExecutePipelineClientifyDealsGoldF0_IdForDelete",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsGoldF0_LeadsNetosPhone",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsGoldF0_LeadsNetosEmail",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "ExecutePipelineClientifyDealsGoldF0_LeadsNetosPhone",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsGoldF0_LeadsNetosEmail",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsGoldF0_LostReason",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ExecutePipelineClientifyDealsGoldF0",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsGoldF0_LostReason",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsGoldF0_IdForDelete",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ExecutePipelineClientifyDealsGoldF0_LostReason",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsGoldF0_IdForDelete",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "LakehouseF0/GoldF0"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-11-22T08:55:27Z"
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/p_SalesGoldF0_copy1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -255,6 +538,71 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-11-19T15:22:40Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_General_Zoho')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecuteZohoBronze",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_Zoho",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "ExecuteZohoBronzetoSilver",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "ExecuteZohoBronze",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ZohoSilver",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"reprocessDate": {
+						"type": "string",
+						"defaultValue": "7"
+					}
+				},
+				"folder": {
+					"name": "Lakehouse/General"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-13T08:33:18Z"
 			},
 			"dependsOn": []
 		},
@@ -499,7 +847,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-12-12T17:02:54Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/p_SalesBronze_Full')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/p_SalesSilverF0')]",
@@ -586,6 +936,46 @@
 				"lastPublishTime": "2024-11-19T15:19:25Z"
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tr_general_zoho')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "p_General_Zoho",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"reprocessDate": "[parameters('tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2025-01-22T20:59:00",
+						"timeZone": "Romance Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								3
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/p_General_Zoho')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/p_General')]",
@@ -1003,7 +1393,9 @@
 				"lastPublishTime": "2024-11-05T09:59:45Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_SalesSilverF0')]"
+				"[concat(variables('factoryId'), '/pipelines/p_SalesSilverF0')]",
+				"[concat(variables('factoryId'), '/pipelines/p_SalesGoldF0')]",
+				"[concat(variables('factoryId'), '/pipelines/p_SalesDWHF0')]"
 			]
 		},
 		{
@@ -1266,7 +1658,9 @@
 				"lastPublishTime": "2024-11-05T09:59:45Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_SalesSilverF0')]"
+				"[concat(variables('factoryId'), '/pipelines/p_SalesSilverF0')]",
+				"[concat(variables('factoryId'), '/pipelines/p_SalesGoldF0')]",
+				"[concat(variables('factoryId'), '/pipelines/p_SalesDWHF0')]"
 			]
 		},
 		{

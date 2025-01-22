@@ -56,6 +56,10 @@
 			"type": "string",
 			"defaultValue": "7"
 		},
+		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
+			"type": "string",
+			"defaultValue": "7"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -210,6 +214,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
+						"value": "[parameters('tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate')]"
 					},
 					"tr_General_properties_p_General_parameters_dayToLoad": {
 						"value": "[parameters('tr_General_properties_p_General_parameters_dayToLoad')]"

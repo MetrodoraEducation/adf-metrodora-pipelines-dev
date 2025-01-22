@@ -38,6 +38,145 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/p_ZohoSilver')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookZohoContactsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoDealsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/ZohoContacts"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoDealsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/ZohoDeals"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoLeadsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/ZohoLeads"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoUsersSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoLeadsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/ZohoDeals"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoCampaignsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoContactsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/ZohoCampaigns"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Lakehouse/Silver"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-12T17:02:07Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_Aircall')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3941,122 +4080,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_adsl')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/p_AircallCallsBronze')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CopyDataAircallToBronze",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "SetVariableDateToLoad",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"paginationRules": {
-									"AbsoluteUrl": "$.meta.next_page_link"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_Aircall",
-								"type": "DatasetReference",
-								"parameters": {
-									"relativeurl": {
-										"value": "@concat('v1/calls?per_page=50&from=',variables('unix'))",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_adsl_json",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@concat('lakehouse/aircall/calls/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))\n\n\n\n",
-										"type": "Expression"
-									},
-									"filename": "aircallcalls.json"
-								}
-							}
-						]
-					},
-					{
-						"name": "SetVariableDateToLoad",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "unix",
-							"value": {
-								"value": "@{div(sub(ticks(addDays(utcnow(),int(concat('-',string(pipeline().parameters.dayToLoad))))), ticks('1970-01-01')),10000000)}",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"dayToLoad": {
-						"type": "string",
-						"defaultValue": "7"
-					}
-				},
-				"variables": {
-					"unix": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Lakehouse/Bronze"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-11-05T10:00:21Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_Aircall')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adsl_json')]"
 			]
 		}
 	]

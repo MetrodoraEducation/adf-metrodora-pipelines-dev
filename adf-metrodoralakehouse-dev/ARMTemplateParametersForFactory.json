@@ -40,6 +40,9 @@
 		},
 		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
 			"value": "7"
+		},
+		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
+			"value": "7"
 		}
 	}
 }
