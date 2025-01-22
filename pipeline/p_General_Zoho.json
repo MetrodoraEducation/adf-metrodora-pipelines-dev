@@ -42,6 +42,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"reprocessDate": {
+				"type": "string",
+				"defaultValue": "7"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General"
 		},
