@@ -396,32 +396,6 @@
 				}
 			},
 			{
-				"name": "Next Page Token",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "CopydataZohoDeals",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "NextPageToken",
-					"value": {
-						"value": "@activity('CopydataZohoDeals').output.executionDetails",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "GetNextPageToken",
 				"type": "WebActivity",
 				"dependsOn": [
