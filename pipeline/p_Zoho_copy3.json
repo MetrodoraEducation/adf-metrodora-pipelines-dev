@@ -499,7 +499,7 @@
 				"type": "String"
 			},
 			"NextPageToken": {
-				"type": "Array"
+				"type": "String"
 			}
 		},
 		"folder": {
