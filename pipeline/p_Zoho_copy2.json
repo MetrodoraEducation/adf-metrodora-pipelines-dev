@@ -414,6 +414,9 @@
 			},
 			"ifModifiedSinceDate": {
 				"type": "String"
+			},
+			"NextPageToken": {
+				"type": "String"
 			}
 		},
 		"folder": {
