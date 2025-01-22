@@ -447,9 +447,16 @@
 				}
 			},
 			{
-				"name": "CopydataZohoContactos_copy1",
+				"name": "CopydataZohoCampaigns",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set variable Users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
