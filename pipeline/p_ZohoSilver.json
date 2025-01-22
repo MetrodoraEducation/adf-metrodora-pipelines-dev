@@ -5,7 +5,14 @@
 			{
 				"name": "NotebookZohoContactsSilver",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "NotebookZohoDealsSilver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -56,6 +63,33 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Lakehouse/Silver/ZohoLeads"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "NotebookZohoUsersSilver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "NotebookZohoLeadsSilver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Lakehouse/Silver/ZohoDeals"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
