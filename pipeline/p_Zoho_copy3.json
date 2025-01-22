@@ -413,6 +413,32 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Next Page Token_copy1",
+				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "WebZohoAPI",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "NextPageToken",
+					"value": {
+						"value": "@activity('CopydataZohoDeals').output.next_page_token",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
