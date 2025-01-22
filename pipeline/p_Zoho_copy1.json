@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "If Modified Since Date",
+						"activity": "SetVariableDateToLoad",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -558,6 +558,27 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "SetVariableDateToLoad",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "If Modified Since Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "unix",
+					"value": "@{div(sub(ticks(addDays(utcnow(),int(concat('-',string(pipeline().parameters.dayToLoad))))), ticks('1970-01-01')),10000000)}"
+				}
 			}
 		],
 		"parameters": {
@@ -591,6 +612,9 @@
 			"MoreRecords": {
 				"type": "Boolean",
 				"defaultValue": true
+			},
+			"unix": {
+				"type": "String"
 			}
 		},
 		"folder": {
