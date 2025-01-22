@@ -90,8 +90,6 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "If Modified Since Date",
@@ -223,8 +221,6 @@
 			{
 				"name": "CopydataZohoUsers",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -299,8 +295,6 @@
 			{
 				"name": "CopydataZohoContactos",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
