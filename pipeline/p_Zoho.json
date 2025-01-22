@@ -39,7 +39,8 @@
 							}
 						},
 						"paginationRules": {
-							"supportRFC5988": "true"
+							"supportRFC5988": "true",
+							"AbsoluteUrl": "$.meta.next_page_link"
 						}
 					},
 					"sink": {
@@ -111,7 +112,10 @@
 								"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
 								"type": "Expression"
 							},
-							"If-Modified-Since": "@variables('ifModifiedSinceDate')"
+							"If-Modified-Since": {
+								"value": "@variables('ifModifiedSinceDate')",
+								"type": "Expression"
+							}
 						},
 						"paginationRules": {
 							"supportRFC5988": "true"
