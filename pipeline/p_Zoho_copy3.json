@@ -439,10 +439,21 @@
 					"method": "GET",
 					"headers": {
 						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-						"Content-Type": "application/json"
+						"Content-Type": "application/json",
+						"per_page": "200"
 					},
 					"url": "https://www.zohoapis.eu/crm/v7/Deals"
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
 			}
 		],
 		"parameters": {
