@@ -42,7 +42,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ZohoDeals"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/Zoho_intermediate_tables"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
