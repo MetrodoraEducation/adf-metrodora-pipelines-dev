@@ -61,7 +61,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ZohoDeals"
+					"notebookPath": "/Lakehouse/Silver/Zoho_load_to_dimensions"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
