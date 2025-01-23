@@ -206,8 +206,8 @@
 					}
 				],
 				"policy": {
-					"secureOutput": false,
-					"secureInput": false
+					"secureOutput": true,
+					"secureInput": true
 				},
 				"userProperties": [],
 				"typeProperties": {
@@ -378,8 +378,8 @@
 					}
 				],
 				"policy": {
-					"secureOutput": false,
-					"secureInput": false
+					"secureOutput": true,
+					"secureInput": true
 				},
 				"userProperties": [],
 				"typeProperties": {
@@ -405,14 +405,17 @@
 					"timeout": "0.12:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
+					"secureOutput": true,
+					"secureInput": true
 				},
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
 					"headers": {
-						"Authorization": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+						"Authorization": {
+							"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+							"type": "Expression"
+						},
 						"Content-Type": "application/json"
 					},
 					"url": {
@@ -434,8 +437,8 @@
 					}
 				],
 				"policy": {
-					"secureOutput": false,
-					"secureInput": false
+					"secureOutput": true,
+					"secureInput": true
 				},
 				"userProperties": [],
 				"typeProperties": {
