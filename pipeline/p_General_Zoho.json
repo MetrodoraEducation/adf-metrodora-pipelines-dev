@@ -61,7 +61,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/Zoho_dimensions"
+					"notebookPath": "/Repos/sergio.correal@es.logicalis.com/notebooks-databricks-dev/Lakehouse/Silver/Zoho_dimensions"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
