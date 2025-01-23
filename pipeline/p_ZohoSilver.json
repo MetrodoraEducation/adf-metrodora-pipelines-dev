@@ -42,7 +42,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/Zoho_intermediate_tables"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoDeals"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -62,7 +62,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ZohoLeads"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoLeads"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
