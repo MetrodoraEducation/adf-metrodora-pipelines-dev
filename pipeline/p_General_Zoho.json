@@ -40,57 +40,6 @@
 					},
 					"waitOnCompletion": true
 				}
-			},
-			{
-				"name": "NotebookZohoDimensions",
-				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "NotebookIntermediateTables",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/Zoho_dimensions"
-				},
-				"linkedServiceName": {
-					"referenceName": "ls_AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "NotebookIntermediateTables",
-				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/Zoho_intermediate_tables"
-				},
-				"linkedServiceName": {
-					"referenceName": "ls_AzureDatabricks",
-					"type": "LinkedServiceReference"
-				}
 			}
 		],
 		"parameters": {
