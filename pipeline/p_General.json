@@ -114,7 +114,7 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineCallsSalesBronzeSilver_Full_copy1",
+				"name": "ExecutePipelineZohoBronzeSilver_Full_copy1",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
