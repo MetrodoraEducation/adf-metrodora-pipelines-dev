@@ -1,0 +1,62 @@
+{
+	"name": "p_General_Classlife",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteClasslife",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Classlife",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "NotebooClasslife",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClasslifeProductos"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"reprocessDate": {
+				"type": "string",
+				"defaultValue": "7"
+			}
+		},
+		"folder": {
+			"name": "Lakehouse/General"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-13T08:33:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
