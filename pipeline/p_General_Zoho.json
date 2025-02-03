@@ -128,7 +128,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/Zoho_intermediate_tables"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClasslifeProductos"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
