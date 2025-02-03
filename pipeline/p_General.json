@@ -112,6 +112,28 @@
 					"referenceName": "ls_AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "ExecutePipelineCallsSalesBronzeSilver_Full_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_CallsSalesBronzeSilver",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"dayToLoad": {
+							"value": "@pipeline().parameters.dayToLoad",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"parameters": {
