@@ -45,7 +45,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -116,7 +116,14 @@
 			{
 				"name": "ExecutePipelineZohoBronzeSilver_Full",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -130,9 +137,16 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineZohoBronzeSilver_Full_copy1",
+				"name": "ExecutePipelineClasslifeBronzeSilver_Full",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ExecutePipelineZohoBronzeSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
