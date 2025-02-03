@@ -114,6 +114,22 @@
 				}
 			},
 			{
+				"name": "ExecutePipelineZohoBronzeSilver_Full",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_General_Zoho",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
 				"name": "ExecutePipelineZohoBronzeSilver_Full_copy1",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
@@ -123,16 +139,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_CallsSalesBronzeSilver",
+						"referenceName": "p_General_Zoho",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"dayToLoad": {
-							"value": "@pipeline().parameters.dayToLoad",
-							"type": "Expression"
-						}
-					}
+					"waitOnCompletion": true
 				}
 			}
 		],
