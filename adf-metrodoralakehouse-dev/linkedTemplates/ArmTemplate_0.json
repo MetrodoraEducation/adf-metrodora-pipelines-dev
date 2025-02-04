@@ -7,11 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
-		"ls_PostgreSql_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_PostgreSql'",
-			"defaultValue": "Host=psql-metrodoralakehouse-dev.postgres.database.azure.com;Port=5432;Database=lakehouse;UID=sqladminuser;EncryptionMethod=1;ValidateServerCertificate=0"
-		},
 		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "1212-104707-fmkh3hmk"
@@ -35,14 +30,6 @@
 		"ls_Zoho_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://accounts.zoho.eu"
-		},
-		"ls_Aircall_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://api.aircall.io/"
-		},
-		"ls_Aircall_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "c668cd9a3a86775ddb72333278d0b7bb"
 		}
 	},
 	"variables": {
@@ -492,6 +479,214 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/p_ZohoSilver')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookZohoContactsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoDealsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoContacts"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoDealsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoDeals"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoLeadsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoLeads"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoUsersSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoLeadsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoUsers"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookZohoCampaignsSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookZohoContactsSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoCampaigns"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Lakehouse/Silver"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-12T17:02:07Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_ZohoSilver_copy1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "NotebookSalesSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/SalesSilver"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookSalesIdDeletedSilver",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "NotebookSalesSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Lakehouse/Silver/SalesIdDeletedSilver"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Lakehouse/Silver"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-12T17:02:07Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/p_dim_gold')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -710,7 +905,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/dim_sede_gold"
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_sede_gold"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -751,6 +946,86 @@
 						"userProperties": [],
 						"typeProperties": {
 							"notebookPath": "/Lakehouse/Gold/dim_tipo_negocio_gold"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookDim_producto_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_producto_gold"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookDim_programa_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_programa_gold"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookDim_vertical_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_vertical_gold"
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "NotebookDim_dim_entidad_legal_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_entidad_legal_gold"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -995,55 +1270,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_Zoho')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_Aircall')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('ls_Aircall_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('ls_Aircall_properties_typeProperties_userName')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_KeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "aircallpwd"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_KeyVault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_PostgreSql')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzurePostgreSql",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_PostgreSql_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_KeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "psqlpwd"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_KeyVault')]"
 			]
 		}
 	]

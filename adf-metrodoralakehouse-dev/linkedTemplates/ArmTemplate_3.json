@@ -13,6 +13,54 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/p_ClientifyDealsGoldF0_LeadsNetosEmail')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DataFlowClientifyDealsGoldF0_LeadsNetosEmail",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_ClientifyDealsGoldF0_LeadsNetosEmail",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSalesGoldF0": {},
+									"sinkSalesGoldF0": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "LakehouseF0/GoldF0"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-11-05T09:59:44Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/p_ClientifyDealsGoldF0_LeadsNetosPhone')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1669,6 +1717,963 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/p_Zoho')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopydataZohoDeals",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "If Modified Since Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NextPageToken",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									},
+									"If-Modified-Since": {
+										"value": "@variables('ifModifiedSinceDate')",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true",
+									"AbsoluteUrl": "$.next_page_token"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Motivo_p_rdida_B2C,ID_Producto,Owner.name,Owner.id,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n&per_page=200',if(\n        equals(variables('NextPageToken'), ''), \n        '', \n        concat('&next_page_token=', variables('NextPageToken'))\n    )\n)",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoDeals.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "CopydataZohoLeads",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "If Modified Since Date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									},
+									"If-Modified-Since": {
+										"value": "@variables('ifModifiedSinceDate')",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true",
+									"AbsoluteUrl": "$.next_page_token"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Created_DateApellido_2,Description,device,Email,fbclid,First_Name,gclid1,id,id_producto,id_programa,Last_Name,lead_correlation_id,lead_rating,lead_scoring,Lead_Source,Lead_Status,Mobile,Motivos_de_perdida,Nacionalidad,Owner.email,Owner.id,Owner.name,Phone,Provincia,Residencia,Sexo,source,Tipolog_a_de_cliente,Typo_Conversion,utm_ad_id,utm_adset_id,utm_campaign_id,utm_campaign_name,utm_channel,utm_estrategia,utm_medium,utm_perfil,utm_source,utm_term,utm_type,Visitor_Score,Modified_Time&per_page=200')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoLeads.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "WebZohoAPI",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							"url": "https://accounts.zoho.eu/oauth/v2/token",
+							"body": {
+								"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
+								"type": "Expression"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Set variable Users",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "WebZohoAPI",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "WebActivityName",
+							"value": {
+								"value": "@activity('WebZohoAPI').output.access_token\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "CopydataZohoUsers",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/users?fields=country,role.name,role.id,city,language,locale,microsoft,Isonline,Modified_By,$shift_effective_from,street,$current_shift,Currency,alias,id,state,fax,country_locale,sandboxDeveloper,first_name,email,zip,status_reason__s,decimal_separator,created_time,website,Modified_Time,time_format,$next_shift,offset,profile.name,profile.id,mobile,last_name,time_zone,number_separator,created_by,zuid,confirm,full_name,phone,dob,date_format&type=AllUsers')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoUsers.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "CopydataZohoContactos",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Contacts?on_demand_properties=\"$client_portal_permission\"&fields=Email,Mailing_Zip,Other_Zip,Mailing_Street,Other_State,woztellplatformintegration__WhatsApp_Opt_Out,Other_Country,Sexo,Profesion,First_Name,Phone,Estudios,Mailing_Country,recibir_comunicacion,id,Apellidos_2,Provincia,ID_Classlife,Date_of_Birth,Tipo_de_contacto,Mailing_City,Other_City,Home_Phone1,Other_Street,Mobile,Residencia,Nacionalidad,Secondary_Email,Tipo_de_cliente,DNI')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoContacts.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "If Modified Since Date",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "ifModifiedSinceDate",
+							"value": {
+								"value": "@formatDateTime(addDays(utcnow(), if(equals(pipeline().parameters.reprocessDate, ''), -7, sub(0, pipeline().parameters.reprocessDate))), 'yyyy-MM-ddTHH:mm:ssZ')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GetNextPageToken",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "WebZohoAPI",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "GET",
+							"headers": {
+								"Authorization": {
+									"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+									"type": "Expression"
+								},
+								"Content-Type": "application/json"
+							},
+							"url": {
+								"value": "@concat(\n    'https://www.zohoapis.eu/crm/v7/Deals?fields=Modified_Time,Motivo_p_rdida_B2C&per_page=200',\n    if(\n        equals(variables('NextPageToken'), ''), \n        '', \n        concat('&next_page_token=', variables('NextPageToken'))\n    )\n)",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "NextPageToken",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GetNextPageToken",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "NextPageToken",
+							"value": {
+								"value": "@activity('GetNextPageToken').output.info.next_page_token",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "CopydataZohoCampaigns",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Campaigns?fields=Campaign_Name,Type,Status,', 'Native__Campaigns__Extn__Campaign_Subject,Parent_Campaign,Budgeted_Cost,Actual_Cost,Created_By,Native__Survey__Extn__Department_ID,Description,Layout,Tag,End_Date,Start_Date,Expected_Revenue,Linea_de_negocio,Modified_By,Currency,Num_sent,Owner,Native__Campaigns__Extn__Reply_to_Address,Expected_Response,Native__Campaigns__Extn__Sender_Address,Native__Campaigns__Extn__Sender_Name,Native__Survey__Extn__Survey,Native__Survey__Extn__Survey_Department,Native__Survey__Extn__Survey_Type,Native__Survey__Extn__Survey_URL,Exchange_Rate,Native__Webinar__Extn__Webinar_Duration,Native__Webinar__Extn__Webinar_Launch_URL,Native__Webinar__Extn__Webinar_Registration_URL,Native__Webinar__Extn__Webinar_Schedule')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoCampaigns.json"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"client_id": {
+						"type": "string",
+						"defaultValue": "1000.1F4VDBCZ89HIY80175SZZF595HBSNO"
+					},
+					"client_secret": {
+						"type": "string",
+						"defaultValue": "d3743dfd871d30ac90d12b3e6ac02de1111c51076e"
+					},
+					"refresh_token": {
+						"type": "string",
+						"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
+					},
+					"reprocessDate": {
+						"type": "int",
+						"defaultValue": 7
+					}
+				},
+				"variables": {
+					"WebActivityName": {
+						"type": "String"
+					},
+					"ifModifiedSinceDate": {
+						"type": "String"
+					},
+					"NextPageToken": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "Lakehouse/Bronze"
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-01-16T21:54:24Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_Zoho_old_v1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopydataZohoDeals",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Motivo_p_rdida_B2C,ID_Producto,Owner.name,Owner.id,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n&criteria=(Modified_Time:>=', pipeline().parameters.Modified_Time_Filter, ')')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoDeals.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "CopydataZohoLeads",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Created_DateApellido_2,Description,device,Email,fbclid,First_Name,gclid1,id,id_producto,id_programa,Last_Name,lead_correlation_id,lead_rating,lead_scoring,Lead_Source,Lead_Status,Mobile,Motivos_de_perdida,Nacionalidad,Owner.email,Owner.id,Owner.name,Phone,Provincia,Residencia,Sexo,source,Tipolog_a_de_cliente,Typo_Conversion,utm_ad_id,utm_adset_id,utm_campaign_id,utm_campaign_name,utm_channel,utm_estrategia,utm_medium,utm_perfil,utm_source,utm_term,utm_type,Visitor_Score,Modified_Time')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoLeads.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "WebZohoAPI",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": true,
+							"secureInput": true
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							"url": "https://accounts.zoho.eu/oauth/v2/token",
+							"body": {
+								"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
+								"type": "Expression"
+							},
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
+						}
+					},
+					{
+						"name": "Set variable Users",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "WebZohoAPI",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "WebActivityName",
+							"value": {
+								"value": "@activity('WebZohoAPI').output.access_token\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "CopydataZohoUsers",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/users?fields=country,role.name,role.id,city,language,locale,microsoft,Isonline,Modified_By,$shift_effective_from,street,$current_shift,Currency,alias,id,state,fax,country_locale,sandboxDeveloper,first_name,email,zip,status_reason__s,decimal_separator,created_time,website,Modified_Time,time_format,$next_shift,offset,profile.name,profile.id,mobile,last_name,time_zone,number_separator,created_by,zuid,confirm,full_name,phone,dob,date_format&type=AllUsers')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoUsers.json"
+								}
+							}
+						]
+					},
+					{
+						"name": "CopydataZohoContactos",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set variable Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"additionalHeaders": {
+									"Content-Type": "application/json",
+									"Authorization": {
+										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
+										"type": "Expression"
+									}
+								},
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_Zoho_API",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeUrl": {
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Contacts?on_demand_properties=\"$client_portal_permission\"&fields=Email,Mailing_Zip,Other_Zip,Mailing_Street,Other_State,woztellplatformintegration__WhatsApp_Opt_Out,Other_Country,Sexo,Profesion,First_Name,Phone,Estudios,Mailing_Country,recibir_comunicacion,id,Apellidos_2,Provincia,ID_Classlife,Date_of_Birth,Tipo_de_contacto,Mailing_City,Other_City,Home_Phone1,Other_Street,Mobile,Residencia,Nacionalidad,Secondary_Email,Tipo_de_cliente,DNI')",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_adsl_json",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": "bronze",
+									"folder": {
+										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+										"type": "Expression"
+									},
+									"filename": "JsaZohoContacts.json"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"client_id": {
+						"type": "string",
+						"defaultValue": "1000.1F4VDBCZ89HIY80175SZZF595HBSNO"
+					},
+					"client_secret": {
+						"type": "string",
+						"defaultValue": "d3743dfd871d30ac90d12b3e6ac02de1111c51076e"
+					},
+					"refresh_token": {
+						"type": "string",
+						"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
+					},
+					"Modified_Time_Filter": {
+						"type": "string",
+						"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
+					}
+				},
+				"variables": {
+					"WebActivityName": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "Lakehouse/Bronze"
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-01-16T21:54:24Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/p_Zoho_old_v2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2095,395 +3100,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/p_Zoho_old_v1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CopydataZohoDeals",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set variable Users",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"additionalHeaders": {
-									"Content-Type": "application/json",
-									"Authorization": {
-										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-										"type": "Expression"
-									}
-								},
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_Zoho_API",
-								"type": "DatasetReference",
-								"parameters": {
-									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?fields=Motivo_p_rdida_B2C,ID_Producto,Owner.name,Owner.id,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n&criteria=(Modified_Time:>=', pipeline().parameters.Modified_Time_Filter, ')')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_adsl_json",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
-										"type": "Expression"
-									},
-									"filename": "JsaZohoDeals.json"
-								}
-							}
-						]
-					},
-					{
-						"name": "CopydataZohoLeads",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set variable Users",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"additionalHeaders": {
-									"Content-Type": "application/json",
-									"Authorization": {
-										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-										"type": "Expression"
-									}
-								},
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_Zoho_API",
-								"type": "DatasetReference",
-								"parameters": {
-									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Created_DateApellido_2,Description,device,Email,fbclid,First_Name,gclid1,id,id_producto,id_programa,Last_Name,lead_correlation_id,lead_rating,lead_scoring,Lead_Source,Lead_Status,Mobile,Motivos_de_perdida,Nacionalidad,Owner.email,Owner.id,Owner.name,Phone,Provincia,Residencia,Sexo,source,Tipolog_a_de_cliente,Typo_Conversion,utm_ad_id,utm_adset_id,utm_campaign_id,utm_campaign_name,utm_channel,utm_estrategia,utm_medium,utm_perfil,utm_source,utm_term,utm_type,Visitor_Score,Modified_Time')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_adsl_json",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
-										"type": "Expression"
-									},
-									"filename": "JsaZohoLeads.json"
-								}
-							}
-						]
-					},
-					{
-						"name": "WebZohoAPI",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": true,
-							"secureInput": true
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"method": "POST",
-							"headers": {
-								"Content-Type": "application/x-www-form-urlencoded"
-							},
-							"url": "https://accounts.zoho.eu/oauth/v2/token",
-							"body": {
-								"value": "@concat('client_id=', pipeline().parameters.client_id, \n        '&client_secret=', pipeline().parameters.client_secret,\n        '&refresh_token=', pipeline().parameters.refresh_token,\n        '&grant_type=refresh_token')",
-								"type": "Expression"
-							},
-							"authentication": {
-								"type": "MSI",
-								"resource": "https://vault.azure.net"
-							}
-						}
-					},
-					{
-						"name": "Set variable Users",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "WebZohoAPI",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "WebActivityName",
-							"value": {
-								"value": "@activity('WebZohoAPI').output.access_token\n",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "CopydataZohoUsers",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set variable Users",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"additionalHeaders": {
-									"Content-Type": "application/json",
-									"Authorization": {
-										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-										"type": "Expression"
-									}
-								},
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_Zoho_API",
-								"type": "DatasetReference",
-								"parameters": {
-									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/users?fields=country,role.name,role.id,city,language,locale,microsoft,Isonline,Modified_By,$shift_effective_from,street,$current_shift,Currency,alias,id,state,fax,country_locale,sandboxDeveloper,first_name,email,zip,status_reason__s,decimal_separator,created_time,website,Modified_Time,time_format,$next_shift,offset,profile.name,profile.id,mobile,last_name,time_zone,number_separator,created_by,zuid,confirm,full_name,phone,dob,date_format&type=AllUsers')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_adsl_json",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
-										"type": "Expression"
-									},
-									"filename": "JsaZohoUsers.json"
-								}
-							}
-						]
-					},
-					{
-						"name": "CopydataZohoContactos",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set variable Users",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET",
-								"additionalHeaders": {
-									"Content-Type": "application/json",
-									"Authorization": {
-										"value": "@concat('Bearer ', activity('WebZohoAPI').output.access_token)",
-										"type": "Expression"
-									}
-								},
-								"paginationRules": {
-									"supportRFC5988": "true"
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_Zoho_API",
-								"type": "DatasetReference",
-								"parameters": {
-									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Contacts?on_demand_properties=\"$client_portal_permission\"&fields=Email,Mailing_Zip,Other_Zip,Mailing_Street,Other_State,woztellplatformintegration__WhatsApp_Opt_Out,Other_Country,Sexo,Profesion,First_Name,Phone,Estudios,Mailing_Country,recibir_comunicacion,id,Apellidos_2,Provincia,ID_Classlife,Date_of_Birth,Tipo_de_contacto,Mailing_City,Other_City,Home_Phone1,Other_Street,Mobile,Residencia,Nacionalidad,Secondary_Email,Tipo_de_cliente,DNI')",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_adsl_json",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "bronze",
-									"folder": {
-										"value": "@concat('lakehouse/zoho/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
-										"type": "Expression"
-									},
-									"filename": "JsaZohoContacts.json"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"client_id": {
-						"type": "string",
-						"defaultValue": "1000.1F4VDBCZ89HIY80175SZZF595HBSNO"
-					},
-					"client_secret": {
-						"type": "string",
-						"defaultValue": "d3743dfd871d30ac90d12b3e6ac02de1111c51076e"
-					},
-					"refresh_token": {
-						"type": "string",
-						"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
-					},
-					"Modified_Time_Filter": {
-						"type": "string",
-						"defaultValue": "@formatDateTime(addDays(utcnow(), -7), 'yyyy-MM-ddTHH:mm:ssZ')"
-					}
-				},
-				"variables": {
-					"WebActivityName": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "Lakehouse/Bronze"
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-01-16T21:54:24Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/df_AircallCallsSilverF0')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -2880,183 +3496,6 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     partitionBy('hash', 1)) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_BudgetGoldF0')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "GoldF0"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_adsl_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "sourceBudgetBronzeF0"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "ls_adsl",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sinkBudgetGoldF0"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumnImportes"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          Fecha as string,",
-						"          Escenario as string,",
-						"          Titulacion as string,",
-						"          Centro as string,",
-						"          Sede as string,",
-						"          Modalidad as string,",
-						"          numLeadsNetos as integer,",
-						"          numLeadsBrutos as integer,",
-						"          NewEnrollment as integer,",
-						"          importeVentaNeta as string,",
-						"          importeVentaBruta as string,",
-						"          importeCaptacion as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     rowUrlColumn: 'filepath',",
-						"     format: 'parquet',",
-						"     partitionBy('hash', 1)) ~> sourceBudgetBronzeF0",
-						"select1 derive(processdate = currentUTC(),",
-						"          fecha = toDate(fecha,'dd/MM/yyyy'),",
-						"     partitionBy('hash', 1)) ~> derivedColumn1",
-						"derivedColumnImportes select(mapColumn(",
-						"          fecha = Fecha,",
-						"          escenario = Escenario,",
-						"          titulacion = Titulacion,",
-						"          centro = Centro,",
-						"          sede = Sede,",
-						"          modalidad = Modalidad,",
-						"          num_leads_netos = numLeadsNetos,",
-						"          num_leads_brutos = numLeadsBrutos,",
-						"          new_enrollment = NewEnrollment,",
-						"          importe_venta_neta = importeVentaNeta,",
-						"          importe_venta_bruta = importeVentaBruta,",
-						"          importe_captacion = importeCaptacion,",
-						"          filepath",
-						"     ),",
-						"     partitionBy('hash', 1),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"sourceBudgetBronzeF0 derive(importeVentaNeta = toDouble(replace(importeVentaNeta,',','.')),",
-						"          importeVentaBruta = toDouble(replace(importeVentaBruta,',','.')),",
-						"          importeCaptacion = toDouble(replace(importeCaptacion,',','.')),",
-						"     partitionBy('hash', 1)) ~> derivedColumnImportes",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     format: 'delta',",
-						"     fileSystem: 'gold',",
-						"     folderPath: 'lakehousef0/budget',",
-						"     deltaTruncate: true,",
-						"     mergeSchema: false,",
-						"     autoCompact: false,",
-						"     optimizedWrite: false,",
-						"     vacuum: 0,",
-						"     deletable: false,",
-						"     insertable: true,",
-						"     updateable: false,",
-						"     upsertable: false,",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkBudgetGoldF0"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_CallsDWHF0')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "DWHF0"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "ls_adsl",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sourceCallsGoldF0"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_PostgreSql",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "alterRow1"
-						},
-						{
-							"name": "MapDrifted1",
-							"description": "Crea una asignación explícita para cada columna de desfase."
-						}
-					],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     format: 'delta',",
-						"     fileSystem: 'gold',",
-						"     folderPath: 'lakehousef0/calls') ~> sourceCallsGoldF0",
-						"MapDrifted1 alterRow(insertIf(true()),",
-						"     partitionBy('hash', 1)) ~> alterRow1",
-						"sourceCallsGoldF0 derive(direction = toString(byName('direction')),",
-						"          duration = toInteger(byName('duration')),",
-						"          id = toString(byName('id')),",
-						"          started_at = toTimestamp(byName('started_at')),",
-						"          filepath = toString(byName('filepath')),",
-						"          processdate = toTimestamp(byName('processdate')),",
-						"     partitionBy('hash', 1)) ~> MapDrifted1",
-						"alterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
 					]
 				}
 			},
