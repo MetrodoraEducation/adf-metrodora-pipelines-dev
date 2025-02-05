@@ -323,7 +323,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_dim_entidad_legal_gold",
+				"name": "NotebookDim_entidad_legal_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
