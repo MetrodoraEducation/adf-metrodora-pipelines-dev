@@ -375,7 +375,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_motivo_perdida_gold"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_especialidad_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
