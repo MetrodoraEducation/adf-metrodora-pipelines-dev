@@ -135,7 +135,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Gold/dim_modalidad_gold/Lakehouse"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_modalidad_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
