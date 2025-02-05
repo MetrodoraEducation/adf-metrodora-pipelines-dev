@@ -55,7 +55,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/dim_estado_venta_gold"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_estado_venta_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
