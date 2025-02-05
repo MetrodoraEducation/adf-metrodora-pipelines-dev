@@ -343,7 +343,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim__gold_copy1",
+				"name": "NotebookDim_motivo_perdida_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -355,7 +355,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_entidad_legal_gold"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_motivo_perdida_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
