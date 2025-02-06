@@ -4,7 +4,7 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
 		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
@@ -326,6 +326,8 @@
 					{
 						"name": "NotebookOdooLeadSilver",
 						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -825,7 +827,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Gold/dim_modalidad_gold/Lakehouse"
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_modalidad_gold"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
