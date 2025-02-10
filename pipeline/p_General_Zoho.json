@@ -45,7 +45,7 @@
 		"parameters": {
 			"reprocessDate": {
 				"type": "string",
-				"defaultValue": "60"
+				"defaultValue": "7"
 			}
 		},
 		"folder": {
