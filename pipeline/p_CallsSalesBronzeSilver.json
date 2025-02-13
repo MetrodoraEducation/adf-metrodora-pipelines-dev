@@ -44,7 +44,10 @@
 						"referenceName": "p_ClienitfyOdooSilver",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+					}
 				}
 			},
 			{
