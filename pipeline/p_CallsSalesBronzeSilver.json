@@ -113,7 +113,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'AircallCallsSilver')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'AircallCallsSilver')",
 						"type": "Expression"
 					}
 				},
@@ -129,7 +129,8 @@
 				"defaultValue": "7"
 			},
 			"silver_storage_databricks": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 			}
 		},
 		"folder": {
