@@ -68,7 +68,13 @@
 						"referenceName": "p_BudgetGold_dim",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -124,6 +130,9 @@
 		],
 		"parameters": {
 			"silver_storage_databricks": {
+				"type": "string"
+			},
+			"gold_storage_databricks": {
 				"type": "string"
 			}
 		},

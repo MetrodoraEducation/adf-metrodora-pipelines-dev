@@ -15,7 +15,13 @@
 						"referenceName": "p_General_Budget",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -192,6 +198,10 @@
 			"silver_storage_databricks": {
 				"type": "string",
 				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+			},
+			"gold_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
 			}
 		},
 		"folder": {
