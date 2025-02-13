@@ -265,7 +265,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_tipo_formacion_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_tipo_formacion_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -285,7 +288,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_tipo_negocio_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_tipo_negocio_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -388,7 +394,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_motivo_perdida_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_motivo_perdida_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
