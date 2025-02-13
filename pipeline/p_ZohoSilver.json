@@ -68,7 +68,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoLeads"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ZohoLeads')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -95,7 +98,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ZohoUsers"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ZohoUsers')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
