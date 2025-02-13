@@ -14,6 +14,12 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilver')",
+						"type": "Expression"
+					}
+				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
 					"type": "LinkedServiceReference"
@@ -81,7 +87,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClientifyDealsSilverCIEP"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilverCIEP')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
