@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/fct_llamada_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_llamada_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -35,7 +38,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/fct_venta_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
