@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilver')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'ClientifyDealsSilver')",
 						"type": "Expression"
 					}
 				},
@@ -39,7 +39,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsIdForDeleteSilver')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'ClientifyDealsIdForDeleteSilver')",
 						"type": "Expression"
 					}
 				},
@@ -94,7 +94,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilverCIEP')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'ClientifyDealsSilverCIEP')",
 						"type": "Expression"
 					}
 				},
@@ -124,7 +124,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilverFP')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'ClientifyDealsSilverFP')",
 						"type": "Expression"
 					}
 				},
