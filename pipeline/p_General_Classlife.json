@@ -15,7 +15,13 @@
 						"referenceName": "p_Classlife",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"showMetas": {
+							"value": "@pipeline().parameters.reprocessDate",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -38,7 +44,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClasslifeProductos"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeProductos')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -50,6 +59,9 @@
 			"reprocessDate": {
 				"type": "string",
 				"defaultValue": "7"
+			},
+			"silver_storage_databricks": {
+				"type": "string"
 			}
 		},
 		"folder": {
