@@ -44,10 +44,7 @@
 						"referenceName": "p_ClienitfyOdooSilver",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"silver_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
-					}
+					"waitOnCompletion": true
 				}
 			},
 			{
@@ -70,10 +67,7 @@
 						"referenceName": "p_SalesSilver",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"silver_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
-					}
+					"waitOnCompletion": true
 				}
 			},
 			{
