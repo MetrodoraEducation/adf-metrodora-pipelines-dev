@@ -87,7 +87,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ClientifyDealsSilverCIEP"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClientifyDealsSilverCIEP"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",

@@ -164,9 +164,6 @@
 			"dayToLoad": {
 				"type": "string",
 				"defaultValue": "7"
-			},
-			"storage_notebooks": {
-				"type": "string"
 			}
 		},
 		"folder": {
