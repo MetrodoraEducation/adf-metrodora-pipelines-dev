@@ -164,6 +164,9 @@
 			"dayToLoad": {
 				"type": "string",
 				"defaultValue": "7"
+			},
+			"storage_name": {
+				"type": "string"
 			}
 		},
 		"folder": {
