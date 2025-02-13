@@ -63,7 +63,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/OdooLeadSilver_New"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'OdooLeadSilver_New')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
