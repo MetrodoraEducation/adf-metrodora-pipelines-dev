@@ -38,7 +38,13 @@
 						"referenceName": "p_ZohoSilver",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
@@ -46,6 +52,9 @@
 			"reprocessDate": {
 				"type": "string",
 				"defaultValue": "7"
+			},
+			"silver_storage_databricks": {
+				"type": "string"
 			}
 		},
 		"folder": {
