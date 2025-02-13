@@ -137,7 +137,17 @@
 						"referenceName": "p_General_Zoho",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"reprocessDate": {
+							"value": "@pipeline().parameters.dayToLoad",
+							"type": "Expression"
+						},
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -160,7 +170,13 @@
 						"referenceName": "p_General_Classlife",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"reprocessDate": {
+							"value": "@pipeline().parameters.dayToLoad",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
