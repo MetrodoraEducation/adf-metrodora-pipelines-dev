@@ -43,6 +43,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"gold_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/Gold"
 		},
