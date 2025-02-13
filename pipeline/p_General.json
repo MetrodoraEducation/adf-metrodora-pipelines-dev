@@ -101,7 +101,13 @@
 						"referenceName": "p_fct_gold",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
