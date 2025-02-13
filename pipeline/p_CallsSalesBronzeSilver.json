@@ -124,6 +124,10 @@
 			"dayToLoad": {
 				"type": "string",
 				"defaultValue": "7"
+			},
+			"silver_databricks_repository": {
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 			}
 		},
 		"folder": {
