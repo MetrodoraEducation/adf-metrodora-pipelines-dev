@@ -119,6 +119,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"storage_notebooks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/Silver"
 		},
