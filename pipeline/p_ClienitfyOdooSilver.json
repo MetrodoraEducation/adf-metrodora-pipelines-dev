@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ClientifyDealsSilver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.storage_notebooks, 'ClientifyDealsSilver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
