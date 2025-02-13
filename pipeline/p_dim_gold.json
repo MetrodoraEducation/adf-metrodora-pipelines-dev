@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/dim_campania_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_campania_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -403,6 +406,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"gold_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/Gold"
 		},
