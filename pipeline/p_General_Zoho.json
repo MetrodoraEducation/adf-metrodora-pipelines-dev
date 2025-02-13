@@ -15,7 +15,13 @@
 						"referenceName": "p_Zoho",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"reprocessDate": {
+							"value": "@pipeline().parameters.reprocessDate",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
