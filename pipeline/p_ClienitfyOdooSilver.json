@@ -38,7 +38,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ClientifyDealsIdForDeleteSilver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsIdForDeleteSilver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -117,7 +120,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/ClientifyDealsSilverFP"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClientifyDealsSilverFP')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
