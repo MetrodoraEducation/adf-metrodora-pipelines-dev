@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/SalesSilver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks,'SalesSilver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -50,6 +53,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/Silver"
 		},
