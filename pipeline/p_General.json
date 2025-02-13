@@ -78,7 +78,13 @@
 						"referenceName": "p_dim_gold",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
@@ -130,7 +136,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/master_execute_notebooks"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'master_execute_notebooks')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
