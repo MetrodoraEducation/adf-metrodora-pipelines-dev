@@ -15,7 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_escenario_budget"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_escenario_budget')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -35,7 +38,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_titulacion_budget"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_titulacion_budget')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -55,7 +61,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/fct_budget"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'fct_budget')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -63,6 +72,11 @@
 				}
 			}
 		],
+		"parameters": {
+			"dwh_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/DWH"
 		},
