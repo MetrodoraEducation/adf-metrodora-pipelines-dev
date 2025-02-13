@@ -97,7 +97,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/fct_budget_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_budget_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -133,6 +136,9 @@
 				"type": "string"
 			},
 			"gold_storage_databricks": {
+				"type": "string"
+			},
+			"dwh_storage_databricks": {
 				"type": "string"
 			}
 		},
