@@ -15,6 +15,18 @@
 			"type": "string",
 			"defaultValue": "7"
 		},
+		"tr_General_properties_p_General_parameters_silver_storage_databricks": {
+			"type": "string",
+			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+		},
+		"tr_General_properties_p_General_parameters_gold_storage_databricks": {
+			"type": "string",
+			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+		},
+		"tr_General_properties_p_General_parameters_dwh_storage_databricks": {
+			"type": "string",
+			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+		},
 		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
 			"type": "string",
 			"defaultValue": "7"
@@ -899,7 +911,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -2143,7 +2160,10 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"dayToLoad": "[parameters('tr_General_properties_p_General_parameters_dayToLoad')]"
+							"dayToLoad": "[parameters('tr_General_properties_p_General_parameters_dayToLoad')]",
+							"silver_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_silver_storage_databricks')]",
+							"gold_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_gold_storage_databricks')]",
+							"dwh_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_dwh_storage_databricks')]"
 						}
 					}
 				],
@@ -2156,10 +2176,10 @@
 						"timeZone": "Romance Standard Time",
 						"schedule": {
 							"minutes": [
-								45
+								0
 							],
 							"hours": [
-								8
+								4
 							]
 						}
 					}
