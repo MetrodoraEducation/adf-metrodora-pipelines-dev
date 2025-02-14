@@ -2,7 +2,7 @@
 	"name": "tr_General",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -23,10 +23,10 @@
 				"timeZone": "Romance Standard Time",
 				"schedule": {
 					"minutes": [
-						0
+						45
 					],
 					"hours": [
-						4
+						8
 					]
 				}
 			}
