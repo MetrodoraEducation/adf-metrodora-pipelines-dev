@@ -4,7 +4,7 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Nombre de instancia de Data Factory",
+			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		}
 	},
@@ -1894,8 +1894,8 @@
 							"timeout": "0.12:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
@@ -1926,8 +1926,8 @@
 							}
 						],
 						"policy": {
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
@@ -1991,7 +1991,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/users?fields=country,role.name,role.id,city,language,locale,microsoft,Isonline,Modified_By,$shift_effective_from,street,$current_shift,Currency,alias,id,state,fax,country_locale,sandboxDeveloper,first_name,email,zip,status_reason__s,decimal_separator,created_time,website,Modified_Time,time_format,$next_shift,offset,profile.name,profile.id,mobile,last_name,time_zone,number_separator,created_by,zuid,confirm,full_name,phone,dob,date_format&type=AllUsers')",
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/users?type=AllUsers')",
 										"type": "Expression"
 									}
 								}
@@ -2098,14 +2098,14 @@
 							}
 						],
 						"policy": {
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
 							"variableName": "ifModifiedSinceDate",
 							"value": {
-								"value": "@formatDateTime(addDays(utcnow(), if(equals(pipeline().parameters.reprocessDate, ''), -7, sub(0, pipeline().parameters.reprocessDate))), 'yyyy-MM-ddTHH:mm:ssZ')",
+								"value": "@formatDateTime(addDays(utcnow(), if(equals(pipeline().parameters.reprocessDate, ''), -7, sub(0, int(pipeline().parameters.reprocessDate)))), 'yyyy-MM-ddTHH:mm:ssZ')",
 								"type": "Expression"
 							}
 						}
@@ -2125,8 +2125,8 @@
 							"timeout": "0.12:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
@@ -2157,8 +2157,8 @@
 							}
 						],
 						"policy": {
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
@@ -2261,8 +2261,8 @@
 						"defaultValue": "1000.256013fabf162c6a30e7260b66598da2.d706caedd894d618249377cda8b5cf15"
 					},
 					"reprocessDate": {
-						"type": "int",
-						"defaultValue": 7
+						"type": "string",
+						"defaultValue": "7"
 					}
 				},
 				"variables": {

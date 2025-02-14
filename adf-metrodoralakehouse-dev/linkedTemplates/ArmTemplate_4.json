@@ -4,7 +4,7 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Nombre de instancia de Data Factory",
+			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		}
 	},
@@ -1530,7 +1530,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/BudgetSilver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'BudgetSilver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1558,7 +1561,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1581,7 +1589,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/fct_budget_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_budget_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1609,12 +1620,28 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					},
+					"dwh_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General"
@@ -1644,7 +1671,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"showMetas": {
+									"value": "@pipeline().parameters.reprocessDate",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1667,7 +1699,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/ClasslifeProductos"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeProductos')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1682,6 +1717,9 @@
 					"reprocessDate": {
 						"type": "string",
 						"defaultValue": "7"
+					},
+					"silver_storage_databricks": {
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -1712,7 +1750,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"reprocessDate": {
+									"value": "@pipeline().parameters.reprocessDate",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1736,7 +1779,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
@@ -1747,6 +1795,9 @@
 					"reprocessDate": {
 						"type": "string",
 						"defaultValue": "7"
+					},
+					"silver_storage_databricks": {
+						"type": "string"
 					}
 				},
 				"folder": {

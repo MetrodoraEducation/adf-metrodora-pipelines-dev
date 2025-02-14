@@ -4,7 +4,7 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Nombre de instancia de Data Factory",
+			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
 		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
@@ -870,7 +870,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -939,7 +944,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/AircallCallsSilver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks,'AircallCallsSilver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -954,6 +962,10 @@
 					"dayToLoad": {
 						"type": "string",
 						"defaultValue": "7"
+					},
+					"silver_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 					}
 				},
 				"folder": {
@@ -1212,7 +1224,20 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								},
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1232,6 +1257,10 @@
 							"parameters": {
 								"dayToLoad": {
 									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								},
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
 									"type": "Expression"
 								}
 							}
@@ -1258,7 +1287,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1282,7 +1316,12 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1305,7 +1344,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/DWH/master_execute_notebooks"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'master_execute_notebooks')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1333,7 +1375,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"reprocessDate": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								},
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1357,7 +1408,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"reprocessDate": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								},
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					}
 				],
@@ -1368,6 +1428,18 @@
 					"dayToLoad": {
 						"type": "string",
 						"defaultValue": "7"
+					},
+					"silver_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+					},
+					"gold_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+					},
+					"dwh_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
 					}
 				},
 				"folder": {
@@ -2084,10 +2156,10 @@
 						"timeZone": "Romance Standard Time",
 						"schedule": {
 							"minutes": [
-								0
+								45
 							],
 							"hours": [
-								4
+								8
 							]
 						}
 					}
