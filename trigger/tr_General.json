@@ -10,7 +10,10 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"dayToLoad": "7"
+					"dayToLoad": "7",
+					"silver_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/",
+					"gold_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/",
+					"dwh_storage_databricks": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
 				}
 			}
 		],
