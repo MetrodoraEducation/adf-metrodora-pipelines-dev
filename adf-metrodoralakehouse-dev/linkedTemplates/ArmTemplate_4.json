@@ -1797,7 +1797,8 @@
 						"defaultValue": "7"
 					},
 					"silver_storage_databricks": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 					}
 				},
 				"folder": {
