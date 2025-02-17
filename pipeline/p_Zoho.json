@@ -540,6 +540,10 @@
 			"reprocessDate": {
 				"type": "string",
 				"defaultValue": "7"
+			},
+			"page": {
+				"type": "string",
+				"defaultValue": "3"
 			}
 		},
 		"variables": {
