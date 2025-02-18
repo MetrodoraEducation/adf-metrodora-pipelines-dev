@@ -13,183 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/df_BudgetGoldF0')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "GoldF0"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_adsl_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "sourceBudgetBronzeF0"
-						}
-					],
-					"sinks": [
-						{
-							"linkedService": {
-								"referenceName": "ls_adsl",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sinkBudgetGoldF0"
-						}
-					],
-					"transformations": [
-						{
-							"name": "derivedColumn1"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumnImportes"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          Fecha as string,",
-						"          Escenario as string,",
-						"          Titulacion as string,",
-						"          Centro as string,",
-						"          Sede as string,",
-						"          Modalidad as string,",
-						"          numLeadsNetos as integer,",
-						"          numLeadsBrutos as integer,",
-						"          NewEnrollment as integer,",
-						"          importeVentaNeta as string,",
-						"          importeVentaBruta as string,",
-						"          importeCaptacion as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     rowUrlColumn: 'filepath',",
-						"     format: 'parquet',",
-						"     partitionBy('hash', 1)) ~> sourceBudgetBronzeF0",
-						"select1 derive(processdate = currentUTC(),",
-						"          fecha = toDate(fecha,'dd/MM/yyyy'),",
-						"     partitionBy('hash', 1)) ~> derivedColumn1",
-						"derivedColumnImportes select(mapColumn(",
-						"          fecha = Fecha,",
-						"          escenario = Escenario,",
-						"          titulacion = Titulacion,",
-						"          centro = Centro,",
-						"          sede = Sede,",
-						"          modalidad = Modalidad,",
-						"          num_leads_netos = numLeadsNetos,",
-						"          num_leads_brutos = numLeadsBrutos,",
-						"          new_enrollment = NewEnrollment,",
-						"          importe_venta_neta = importeVentaNeta,",
-						"          importe_venta_bruta = importeVentaBruta,",
-						"          importe_captacion = importeCaptacion,",
-						"          filepath",
-						"     ),",
-						"     partitionBy('hash', 1),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"sourceBudgetBronzeF0 derive(importeVentaNeta = toDouble(replace(importeVentaNeta,',','.')),",
-						"          importeVentaBruta = toDouble(replace(importeVentaBruta,',','.')),",
-						"          importeCaptacion = toDouble(replace(importeCaptacion,',','.')),",
-						"     partitionBy('hash', 1)) ~> derivedColumnImportes",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     format: 'delta',",
-						"     fileSystem: 'gold',",
-						"     folderPath: 'lakehousef0/budget',",
-						"     deltaTruncate: true,",
-						"     mergeSchema: false,",
-						"     autoCompact: false,",
-						"     optimizedWrite: false,",
-						"     vacuum: 0,",
-						"     deletable: false,",
-						"     insertable: true,",
-						"     updateable: false,",
-						"     upsertable: false,",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkBudgetGoldF0"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_CallsDWHF0')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "DWHF0"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"linkedService": {
-								"referenceName": "ls_adsl",
-								"type": "LinkedServiceReference"
-							},
-							"name": "sourceCallsGoldF0"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_PostgreSql",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "alterRow1"
-						},
-						{
-							"name": "MapDrifted1",
-							"description": "Crea una asignación explícita para cada columna de desfase."
-						}
-					],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     format: 'delta',",
-						"     fileSystem: 'gold',",
-						"     folderPath: 'lakehousef0/calls') ~> sourceCallsGoldF0",
-						"MapDrifted1 alterRow(insertIf(true()),",
-						"     partitionBy('hash', 1)) ~> alterRow1",
-						"sourceCallsGoldF0 derive(direction = toString(byName('direction')),",
-						"          duration = toInteger(byName('duration')),",
-						"          id = toString(byName('id')),",
-						"          started_at = toTimestamp(byName('started_at')),",
-						"          filepath = toString(byName('filepath')),",
-						"          processdate = toTimestamp(byName('processdate')),",
-						"     partitionBy('hash', 1)) ~> MapDrifted1",
-						"alterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/df_ClientifyDealsSilverF0')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1173,9 +996,7 @@
 				"annotations": [],
 				"lastPublishTime": "2024-11-05T09:59:44Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_BudgetGoldF0')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/p_CallsDWHF0')]",
@@ -1226,9 +1047,7 @@
 				"annotations": [],
 				"lastPublishTime": "2024-11-05T09:59:44Z"
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/df_CallsDWHF0')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/p_CallsSalesBronzeSilver_Full_copy1')]",
@@ -2079,6 +1898,200 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/df_OdooLeadSilverF0')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_SalesBronze')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecutePipelineClientifyDealsBronze",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronze",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"dayToLoad": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ExecutePipelineOdooLeadBronze",
+						"type": "ExecutePipeline",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_OdooLeadBronze",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"dayToLoad": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsBronze_IdForDelete",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronze_IdForDelete",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"dayToLoad": {
+						"type": "string",
+						"defaultValue": "7"
+					}
+				},
+				"folder": {
+					"name": "Lakehouse/Bronze"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-12-13T08:29:01Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/p_SalesBronzeF0')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecutePipelineClientifyDealsBronzeF0",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronzeF0",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"dayToLoad": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ExecutePipelineOdooLeadBronzeF0",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_OdooLeadBronzeF0",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"dayToLoad": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsBronzeF0_LostReason",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronzeF0_LostReason",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"dayToLoad": {
+									"value": "@pipeline().parameters.dayToLoad",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "ExecutePipelineClientifyDealsBronzeF0_IdForDelete",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_ClientifyDealsBronzeF0_IdForDelete",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"dayToLoad": {
+						"type": "string",
+						"defaultValue": "7"
+					}
+				},
+				"folder": {
+					"name": "LakehouseF0/BronzeF0"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-11-19T15:15:40Z"
+			},
+			"dependsOn": []
 		}
 	]
 }
