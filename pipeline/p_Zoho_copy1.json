@@ -46,7 +46,7 @@
 						},
 						"paginationRules": {
 							"supportRFC5988": "true",
-							"AbsoluteUrl": "$.info.next_page_token"
+							"AbsoluteUrl": "Headers.next_page_token"
 						}
 					},
 					"sink": {
@@ -90,6 +90,8 @@
 			{
 				"name": "CopydataZohoLeads",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "If Modified Since Date",
@@ -221,6 +223,8 @@
 			{
 				"name": "CopydataZohoUsers",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -295,6 +299,8 @@
 			{
 				"name": "CopydataZohoContactos",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -452,6 +458,8 @@
 			{
 				"name": "CopydataZohoCampaigns",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Set variable Users",
@@ -539,7 +547,7 @@
 			},
 			"reprocessDate": {
 				"type": "string",
-				"defaultValue": "7"
+				"defaultValue": "3"
 			}
 		},
 		"variables": {
