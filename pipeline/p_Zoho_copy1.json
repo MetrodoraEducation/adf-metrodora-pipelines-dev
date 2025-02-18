@@ -555,7 +555,7 @@
 				"typeProperties": {
 					"variableName": "V2_NextPageToken",
 					"value": {
-						"value": "@activity('CopydataZohoDeals').input.next_page_token",
+						"value": "@activity('CopydataZohoDeals').output.next_page_token",
 						"type": "Expression"
 					}
 				}
