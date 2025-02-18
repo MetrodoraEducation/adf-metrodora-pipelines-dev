@@ -46,7 +46,10 @@
 						},
 						"paginationRules": {
 							"supportRFC5988": "true",
-							"AbsoluteUrl": "$.next_page_token"
+							"AbsoluteUrl": {
+								"value": "@activity('GetNextPageToken').output",
+								"type": "Expression"
+							}
 						}
 					},
 					"sink": {
