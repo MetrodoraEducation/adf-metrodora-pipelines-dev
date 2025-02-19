@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "NotebookDim_campania_gold",
+				"name": "Dim_campania_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -26,7 +26,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_comercial_gold",
+				"name": "Dim_comercial_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -49,7 +49,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_estado_venta_gold",
+				"name": "Dim_estado_venta_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -72,7 +72,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_etapa_venta_gold",
+				"name": "Dim_etapa_venta_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -95,7 +95,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_institucion_gold",
+				"name": "Dim_institucion_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -118,7 +118,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_localidad_gold",
+				"name": "Dim_localidad_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
