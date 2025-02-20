@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "NotebookClientifyDealsSilver",
+				"name": "ClientifyDealsSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -74,11 +74,11 @@
 				}
 			},
 			{
-				"name": "NotebookClientifyDealsSilver_Ciep",
+				"name": "ClientifyDealsSilver_Ciep",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookClientifyDealsSilver",
+						"activity": "ClientifyDealsSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -108,7 +108,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookClientifyDealsSilver_Ciep",
+						"activity": "ClientifyDealsSilver_Ciep",
 						"dependencyConditions": [
 							"Succeeded"
 						]

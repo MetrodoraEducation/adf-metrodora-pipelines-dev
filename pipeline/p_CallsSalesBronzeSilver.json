@@ -105,7 +105,7 @@
 				}
 			},
 			{
-				"name": "NotebookAircallCallsSilver",
+				"name": "AircallCallsSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
