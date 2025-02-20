@@ -543,11 +543,11 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "NotebookZohoContactsSilver",
+						"name": "ZohoContactsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookZohoDealsSilver",
+								"activity": "ZohoDealsSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -573,7 +573,7 @@
 						}
 					},
 					{
-						"name": "NotebookZohoDealsSilver",
+						"name": "ZohoDealsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -596,7 +596,7 @@
 						}
 					},
 					{
-						"name": "NotebookZohoLeadsSilver",
+						"name": "ZohoLeadsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -619,11 +619,11 @@
 						}
 					},
 					{
-						"name": "NotebookZohoUsersSilver",
+						"name": "ZohoUsersSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookZohoLeadsSilver",
+								"activity": "ZohoLeadsSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -649,11 +649,11 @@
 						}
 					},
 					{
-						"name": "NotebookZohoCampaignsSilver",
+						"name": "ZohoCampaignsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookZohoContactsSilver",
+								"activity": "ZohoContactsSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -679,17 +679,17 @@
 						}
 					},
 					{
-						"name": "NotebookTablon_Leads_and_DealsSilver",
+						"name": "Tablon_Leads_and_DealsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookZohoCampaignsSilver",
+								"activity": "ZohoCampaignsSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "NotebookZohoUsersSilver",
+								"activity": "ZohoUsersSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -807,7 +807,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "NotebookDim_campania_gold",
+						"name": "Dim_campania_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -830,7 +830,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_comercial_gold",
+						"name": "Dim_comercial_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -853,7 +853,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_estado_venta_gold",
+						"name": "Dim_estado_venta_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -876,7 +876,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_etapa_venta_gold",
+						"name": "Dim_etapa_venta_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -899,7 +899,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_institucion_gold",
+						"name": "Dim_institucion_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -922,7 +922,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_localidad_gold",
+						"name": "Dim_localidad_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -945,7 +945,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_modalidad_gold",
+						"name": "Dim_modalidad_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -968,7 +968,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_motivo_cierre_gold",
+						"name": "Dim_motivo_cierre_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -991,7 +991,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_motivo_perdida_llamada_gold",
+						"name": "Dim_motivo_perdida_llamada_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1014,7 +1014,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_origen_campania_gold",
+						"name": "Dim_origen_campania_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1037,7 +1037,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_sede_gold",
+						"name": "Dim_sede_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1060,7 +1060,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_tipo_formacion_gold",
+						"name": "Dim_tipo_formacion_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1083,7 +1083,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_tipo_negocio_gold",
+						"name": "Dim_tipo_negocio_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1106,7 +1106,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_producto_gold",
+						"name": "Dim_producto_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1129,7 +1129,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_programa_gold",
+						"name": "Dim_programa_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1152,7 +1152,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_vertical_gold",
+						"name": "Dim_vertical_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1175,7 +1175,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_entidad_legal_gold",
+						"name": "Dim_entidad_legal_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1198,7 +1198,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_motivo_perdida_gold",
+						"name": "Dim_motivo_perdida_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1221,7 +1221,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_especialidad_gold",
+						"name": "Dim_especialidad_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1244,7 +1244,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_jerarquia_marketing_gold",
+						"name": "Dim_jerarquia_marketing_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
