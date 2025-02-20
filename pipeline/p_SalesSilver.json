@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "NotebookSalesSilver",
+				"name": "SalesSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -26,11 +26,11 @@
 				}
 			},
 			{
-				"name": "NotebookSalesIdDeletedSilver",
+				"name": "SalesIdDeletedSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookSalesSilver",
+						"activity": "SalesSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
