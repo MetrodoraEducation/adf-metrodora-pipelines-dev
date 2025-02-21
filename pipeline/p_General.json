@@ -65,7 +65,7 @@
 					{
 						"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
