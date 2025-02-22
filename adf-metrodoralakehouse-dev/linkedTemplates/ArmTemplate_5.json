@@ -748,7 +748,7 @@
 						}
 					},
 					{
-						"name": "NotebookAircallCallsSilver",
+						"name": "AircallCallsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -1094,7 +1094,7 @@
 							{
 								"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],

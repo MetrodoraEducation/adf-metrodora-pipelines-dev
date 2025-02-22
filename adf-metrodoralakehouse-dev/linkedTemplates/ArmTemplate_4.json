@@ -1499,7 +1499,7 @@
 						}
 					},
 					{
-						"name": "NotebooClasslife",
+						"name": "ClasslifeProductos",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{

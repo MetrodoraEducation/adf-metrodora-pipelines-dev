@@ -1352,7 +1352,7 @@
 						}
 					},
 					{
-						"name": "NotebookAircallCallsSilver",
+						"name": "AircallCallsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -1620,8 +1620,8 @@
 							"timeout": "0.12:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
-							"secureOutput": true,
-							"secureInput": true
+							"secureOutput": false,
+							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
@@ -1754,7 +1754,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "NotebookClientifyDealsSilver",
+						"name": "ClientifyDealsSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1777,7 +1777,7 @@
 						}
 					},
 					{
-						"name": "NotebookClientifyDealsIdForDeleteSilver",
+						"name": "ClientifyDealsIdForDeleteSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1800,7 +1800,7 @@
 						}
 					},
 					{
-						"name": "NotebookOdooLeadSilver",
+						"name": "OdooLeadSilver",
 						"type": "DatabricksNotebook",
 						"state": "Inactive",
 						"onInactiveMarkAs": "Succeeded",
@@ -1825,11 +1825,11 @@
 						}
 					},
 					{
-						"name": "NotebookClientifyDealsSilver_Ciep",
+						"name": "ClientifyDealsSilver_Ciep",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookClientifyDealsSilver",
+								"activity": "ClientifyDealsSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1855,11 +1855,11 @@
 						}
 					},
 					{
-						"name": "NotebookClientifyDealsSilver_Fp",
+						"name": "ClientifyDealsSilver_Fp",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookClientifyDealsSilver_Ciep",
+								"activity": "ClientifyDealsSilver_Ciep",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4048,7 +4048,7 @@
 							{
 								"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -4993,7 +4993,7 @@
 						}
 					},
 					{
-						"name": "NotebooClasslife",
+						"name": "ClasslifeProductos",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -7980,7 +7980,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "NotebookSalesSilver",
+						"name": "SalesSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -8003,11 +8003,11 @@
 						}
 					},
 					{
-						"name": "NotebookSalesIdDeletedSilver",
+						"name": "SalesIdDeletedSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookSalesSilver",
+								"activity": "SalesSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -9013,7 +9013,14 @@
 					{
 						"name": "Dim_comercial_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9128,7 +9135,14 @@
 					{
 						"name": "Dim_modalidad_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9220,7 +9234,14 @@
 					{
 						"name": "Dim_sede_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9243,7 +9264,14 @@
 					{
 						"name": "Dim_tipo_formacion_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_especialidad_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9266,7 +9294,14 @@
 					{
 						"name": "Dim_tipo_negocio_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_modalidad_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9312,7 +9347,14 @@
 					{
 						"name": "Dim_programa_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9335,7 +9377,14 @@
 					{
 						"name": "Dim_vertical_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_motivo_perdida_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9358,7 +9407,14 @@
 					{
 						"name": "Dim_entidad_legal_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9381,7 +9437,14 @@
 					{
 						"name": "Dim_motivo_perdida_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -9404,7 +9467,14 @@
 					{
 						"name": "Dim_especialidad_gold",
 						"type": "DatabricksNotebook",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim_producto_gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
