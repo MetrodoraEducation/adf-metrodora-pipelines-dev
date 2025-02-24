@@ -91,7 +91,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/dim_pais_silver"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/dim_pais_silver"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
