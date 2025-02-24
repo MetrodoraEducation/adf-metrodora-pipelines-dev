@@ -35,6 +35,8 @@
 			{
 				"name": "ExecutePipelineCallsSalesBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -149,6 +151,8 @@
 			{
 				"name": "ExecutePipelineZohoBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
