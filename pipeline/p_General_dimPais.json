@@ -145,7 +145,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_pais"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/dim_pais"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
