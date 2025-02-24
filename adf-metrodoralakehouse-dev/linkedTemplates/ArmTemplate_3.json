@@ -985,7 +985,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/dim_pais_silver"
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/dim_pais_silver"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1012,7 +1012,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/dim_pais_gold"
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_pais_gold"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1039,7 +1039,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/DWH/dim_pais"
+							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/dim_pais"
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
