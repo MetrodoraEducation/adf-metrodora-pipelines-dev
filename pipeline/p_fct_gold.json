@@ -62,7 +62,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_gold')",
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_zoho_gold')",
 						"type": "Expression"
 					}
 				},
