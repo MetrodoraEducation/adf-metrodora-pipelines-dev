@@ -157,7 +157,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/dim_pais"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_pais')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
