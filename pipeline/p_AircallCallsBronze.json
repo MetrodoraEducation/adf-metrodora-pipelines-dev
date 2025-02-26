@@ -81,7 +81,7 @@
 				"typeProperties": {
 					"variableName": "unix",
 					"value": {
-						"value": "@{formatDateTime(addDays(utcnow(),int(concat('-',string(pipeline().parameters.dayToLoad)))),'yyyy-MM-dd')}",
+						"value": "@{div(sub(ticks(addDays(utcnow(),int(concat('-',string(pipeline().parameters.dayToLoad))))), ticks('1970-01-01')),10000000)}",
 						"type": "Expression"
 					}
 				}
