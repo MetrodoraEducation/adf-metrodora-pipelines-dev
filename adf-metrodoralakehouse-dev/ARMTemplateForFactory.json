@@ -1126,7 +1126,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "NotebookDim_escenario_budget_gold",
+						"name": "Dim_escenario_budget_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1149,7 +1149,7 @@
 						}
 					},
 					{
-						"name": "NotebookDim_titulacion_budget_gold",
+						"name": "Dim_titulacion_budget_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -4048,7 +4048,13 @@
 							{
 								"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "ExecutePipelineZohoBronzeSilver_Full",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -4167,7 +4173,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineZohoBronzeSilver_Full",
+								"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4819,7 +4825,7 @@
 						}
 					},
 					{
-						"name": "NotebookBudgetSilver",
+						"name": "BudgetSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -4853,7 +4859,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "NotebookBudgetSilver",
+								"activity": "BudgetSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4878,7 +4884,7 @@
 						}
 					},
 					{
-						"name": "NotebookBudgetGold_fct",
+						"name": "BudgetGold_fct",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -4912,7 +4918,7 @@
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "NotebookBudgetGold_fct",
+								"activity": "BudgetGold_fct",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -9580,6 +9586,31 @@
 						"typeProperties": {
 							"notebookPath": {
 								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_gold')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Notebook_fct_venta_zoho_gold",
+						"type": "DatabricksNotebook",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_zoho_gold')",
 								"type": "Expression"
 							}
 						},
