@@ -91,7 +91,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/dim_estudio_silver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'dim_estudio_silver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -118,7 +121,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/dim_estudio_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_estudio_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -158,6 +164,9 @@
 				"type": "string"
 			},
 			"gold_storage_databricks": {
+				"type": "string"
+			},
+			"dwh_storage_databricks": {
 				"type": "string"
 			}
 		},
