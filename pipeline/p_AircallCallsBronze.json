@@ -89,13 +89,13 @@
 		],
 		"parameters": {
 			"dayToLoad": {
-				"type": "string",
-				"defaultValue": "7"
+				"type": "int",
+				"defaultValue": 7
 			}
 		},
 		"variables": {
 			"unix": {
-				"type": "String"
+				"type": "Integer"
 			}
 		},
 		"folder": {
