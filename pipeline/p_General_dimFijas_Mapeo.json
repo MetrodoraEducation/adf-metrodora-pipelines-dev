@@ -111,7 +111,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/dim_fecha_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_fecha_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -158,7 +161,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/dim_hora_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_hora_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
