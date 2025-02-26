@@ -121,7 +121,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/mapeo_estudio_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_estudio_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -131,6 +134,9 @@
 		],
 		"parameters": {
 			"silver_storage_databricks": {
+				"type": "string"
+			},
+			"gold_storage_databricks": {
 				"type": "string"
 			}
 		},
