@@ -19,7 +19,7 @@
 				}
 			},
 			{
-				"name": "NotebookBudgetSilver",
+				"name": "BudgetSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -53,7 +53,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "NotebookBudgetSilver",
+						"activity": "BudgetSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -78,7 +78,7 @@
 				}
 			},
 			{
-				"name": "NotebookBudgetGold_fct",
+				"name": "BudgetGold_fct",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -112,7 +112,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "NotebookBudgetGold_fct",
+						"activity": "BudgetGold_fct",
 						"dependencyConditions": [
 							"Succeeded"
 						]
