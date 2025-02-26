@@ -72,7 +72,7 @@
 				]
 			},
 			{
-				"name": "NotebookMapeoOrigenCampaniaSilver",
+				"name": "MapeoOrigenCampaniaSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -91,7 +91,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/mapeo_origen_campania_silver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_origen_campania_silver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -103,7 +106,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookMapeoOrigenCampaniaSilver",
+						"activity": "MapeoOrigenCampaniaSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -126,6 +129,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string"
+			},
+			"gold_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General/General_dimFijas_Mapeo"
 		},
