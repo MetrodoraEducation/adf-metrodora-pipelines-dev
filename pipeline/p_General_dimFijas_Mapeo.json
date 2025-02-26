@@ -99,7 +99,7 @@
 				}
 			},
 			{
-				"name": "Notebook_dim_fecha_gold",
+				"name": "Dim_fecha_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -119,11 +119,11 @@
 				}
 			},
 			{
-				"name": "Notebook_dim_fecha_DWH",
+				"name": "Dim_fecha_DWH",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Notebook_dim_fecha_gold",
+						"activity": "Dim_fecha_gold",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -146,7 +146,7 @@
 				}
 			},
 			{
-				"name": "Notebook_dim_hora_gold",
+				"name": "Dim_hora_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -166,11 +166,11 @@
 				}
 			},
 			{
-				"name": "Notebook_dim_hora",
+				"name": "Dim_hora_DWH",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Notebook_dim_hora_gold",
+						"activity": "Dim_hora_gold",
 						"dependencyConditions": [
 							"Succeeded"
 						]
