@@ -193,6 +193,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+			},
+			"gold_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General"
 		},
