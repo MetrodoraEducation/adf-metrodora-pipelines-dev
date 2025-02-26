@@ -89,8 +89,8 @@
 		],
 		"parameters": {
 			"dayToLoad": {
-				"type": "float",
-				"defaultValue": 7
+				"type": "string",
+				"defaultValue": "7"
 			}
 		},
 		"variables": {
