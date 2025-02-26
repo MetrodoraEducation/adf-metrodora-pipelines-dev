@@ -201,6 +201,10 @@
 			"gold_storage_databricks": {
 				"type": "string",
 				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+			},
+			"dwh_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
 			}
 		},
 		"folder": {
