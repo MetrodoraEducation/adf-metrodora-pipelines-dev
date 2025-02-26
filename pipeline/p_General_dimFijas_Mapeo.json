@@ -45,7 +45,21 @@
 						"referenceName": "p_General_dimPais",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						},
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						},
+						"dwh_storage_databricks": {
+							"value": "@pipeline().parameters.dwh_storage_databricks",
+							"type": "Expression"
+						}
+					}
 				}
 			},
 			{
