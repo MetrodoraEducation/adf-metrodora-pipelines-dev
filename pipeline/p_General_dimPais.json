@@ -72,7 +72,7 @@
 				]
 			},
 			{
-				"name": "NotebookDimPaisSilver",
+				"name": "DimPaisSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -99,11 +99,11 @@
 				}
 			},
 			{
-				"name": "NotebookDimPaisGold",
+				"name": "DimPaisGold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookDimPaisSilver",
+						"activity": "DimPaisSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -126,17 +126,17 @@
 				}
 			},
 			{
-				"name": "NotebookDimPaisDWH",
+				"name": "DimPaisDWH",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookDimPaisGold",
+						"activity": "DimPaisGold",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "DimPaisGold_copy1",
+						"activity": "DimNacionalidadGold",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -159,11 +159,11 @@
 				}
 			},
 			{
-				"name": "DimPaisGold_copy1",
+				"name": "DimNacionalidadGold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookDimPaisSilver",
+						"activity": "DimPaisSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -178,7 +178,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_pais_gold"
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_nacionalidad_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
