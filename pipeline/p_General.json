@@ -65,7 +65,13 @@
 					{
 						"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ExecutePipelineZohoBronzeSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
 						]
 					}
 				],
@@ -184,7 +190,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ExecutePipelineZohoBronzeSilver_Full",
+						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
