@@ -151,7 +151,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_estudio"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_estudio')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
