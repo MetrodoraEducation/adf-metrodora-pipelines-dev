@@ -1648,7 +1648,20 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								},
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1665,7 +1678,20 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								},
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1682,7 +1708,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1699,7 +1734,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1716,7 +1760,16 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
@@ -1733,11 +1786,20 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {}
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					{
-						"name": "Notebook_dim_fecha_gold",
+						"name": "Dim_fecha_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1749,7 +1811,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/dim_fecha_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_fecha_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1757,11 +1822,11 @@
 						}
 					},
 					{
-						"name": "Notebook_dim_fecha_DWH",
+						"name": "Dim_fecha_DWH",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "Notebook_dim_fecha_gold",
+								"activity": "Dim_fecha_gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1776,7 +1841,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/DWH/dim_fecha"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_fecha')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1784,7 +1852,7 @@
 						}
 					},
 					{
-						"name": "Notebook_dim_hora_gold",
+						"name": "Dim_hora_gold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [],
 						"policy": {
@@ -1796,7 +1864,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/dim_hora_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_hora_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1804,11 +1875,11 @@
 						}
 					},
 					{
-						"name": "Notebook_dim_hora",
+						"name": "Dim_hora_DWH",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "Notebook_dim_hora_gold",
+								"activity": "Dim_hora_gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1823,7 +1894,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/DWH/dim_hora"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_hora')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1833,6 +1907,20 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+					},
+					"gold_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+					},
+					"dwh_storage_databricks": {
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General"

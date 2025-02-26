@@ -234,7 +234,7 @@
 						]
 					},
 					{
-						"name": "NotebookMapeoEstudioSilver",
+						"name": "MapeoEstudioSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -253,7 +253,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/mapeo_estudio_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_estudio_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -261,11 +264,11 @@
 						}
 					},
 					{
-						"name": "NotebookMapeoEstudioGold",
+						"name": "MapeoEstudioGold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookMapeoEstudioSilver",
+								"activity": "MapeoEstudioSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -280,7 +283,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/mapeo_estudio_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_estudio_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -290,6 +296,14 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
@@ -375,7 +389,7 @@
 						]
 					},
 					{
-						"name": "NotebookMapeoModalidadSilver",
+						"name": "MapeoModalidadSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -394,7 +408,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/mapeo_modalidad_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_modalidad_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -402,11 +419,11 @@
 						}
 					},
 					{
-						"name": "NotebookMapeoModalidadGold",
+						"name": "MapeoModalidadGold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookMapeoModalidadSilver",
+								"activity": "MapeoModalidadSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -421,7 +438,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/mapeo_modalidad_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_modalidad_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -431,6 +451,14 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
@@ -516,7 +544,7 @@
 						]
 					},
 					{
-						"name": "NotebookMapeoOrigenCampaniaSilver",
+						"name": "MapeoOrigenCampaniaSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -535,7 +563,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/mapeo_origen_campania_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_origen_campania_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -547,7 +578,7 @@
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookMapeoOrigenCampaniaSilver",
+								"activity": "MapeoOrigenCampaniaSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -562,7 +593,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/mapeo_origen_campania_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_origen_campania_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -572,6 +606,14 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
@@ -657,7 +699,7 @@
 						]
 					},
 					{
-						"name": "NotebookMapeoSedeSilver",
+						"name": "MapeoSedeSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -676,7 +718,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/mapeo_sede_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_sede_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -684,11 +729,11 @@
 						}
 					},
 					{
-						"name": "NotebookMapeoSedeGold",
+						"name": "MapeoSedeGold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookMapeoSedeSilver",
+								"activity": "MapeoSedeSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -703,7 +748,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/mapeo_sede_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_sede_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -713,6 +761,14 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
@@ -817,7 +873,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/dim_estudio_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'dim_estudio_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -844,7 +903,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/Gold/dim_estudio_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_estudio_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -871,7 +933,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Lakehouse/DWH/dim_estudio"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_estudio')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -881,6 +946,17 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					},
+					"dwh_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
@@ -966,7 +1042,7 @@
 						]
 					},
 					{
-						"name": "NotebookDimPaisSilver",
+						"name": "DimPaisSilver",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
@@ -985,7 +1061,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/dim_pais_silver"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'dim_pais_silver')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -993,11 +1072,11 @@
 						}
 					},
 					{
-						"name": "NotebookDimPaisGold",
+						"name": "DimPaisGold",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookDimPaisSilver",
+								"activity": "DimPaisSilver",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1012,7 +1091,10 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_pais_gold"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_pais_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1020,11 +1102,17 @@
 						}
 					},
 					{
-						"name": "NotebookDimPaisDWH",
+						"name": "DimPaisDWH",
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "NotebookDimPaisGold",
+								"activity": "DimPaisGold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "DimNacionalidadGold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1039,7 +1127,40 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/dim_pais"
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_pais')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "DimNacionalidadGold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "DimPaisSilver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_nacionalidad_gold')",
+								"type": "Expression"
+							}
 						},
 						"linkedServiceName": {
 							"referenceName": "ls_AzureDatabricks",
@@ -1049,6 +1170,17 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"silver_storage_databricks": {
+						"type": "string"
+					},
+					"gold_storage_databricks": {
+						"type": "string"
+					},
+					"dwh_storage_databricks": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Lakehouse/General/General_dimFijas_Mapeo"
