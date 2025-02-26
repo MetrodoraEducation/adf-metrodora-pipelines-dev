@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "NotebookDim_escenario_budget_gold",
+				"name": "Dim_escenario_budget_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -26,7 +26,7 @@
 				}
 			},
 			{
-				"name": "NotebookDim_titulacion_budget_gold",
+				"name": "Dim_titulacion_budget_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
