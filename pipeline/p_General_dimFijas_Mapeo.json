@@ -141,7 +141,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_fecha"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_fecha')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -191,7 +194,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/DWH/dim_hora"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'dim_hora')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
