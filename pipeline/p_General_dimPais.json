@@ -134,6 +134,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "DimPaisGold_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -146,6 +152,33 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/dim_pais"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "DimPaisGold_copy1",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "NotebookDimPaisSilver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/dim_pais_gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
