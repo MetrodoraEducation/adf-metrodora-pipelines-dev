@@ -91,7 +91,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Silver/mapeo_sede_silver"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'mapeo_sede_silver')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
@@ -118,7 +121,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Lakehouse/Gold/mapeo_sede_gold"
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'mapeo_sede_gold')",
+						"type": "Expression"
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "ls_AzureDatabricks",
