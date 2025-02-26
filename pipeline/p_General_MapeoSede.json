@@ -72,7 +72,7 @@
 				]
 			},
 			{
-				"name": "NotebookMapeoSedeSilver",
+				"name": "MapeoSedeSilver",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -99,11 +99,11 @@
 				}
 			},
 			{
-				"name": "NotebookMapeoSedeGold",
+				"name": "MapeoSedeGold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "NotebookMapeoSedeSilver",
+						"activity": "MapeoSedeSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -126,6 +126,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string"
+			},
+			"gold_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General/General_dimFijas_Mapeo"
 		},
