@@ -186,6 +186,17 @@
 				}
 			}
 		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string"
+			},
+			"gold_storage_databricks": {
+				"type": "string"
+			},
+			"dwh_storage_databricks": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General/General_dimFijas_Mapeo"
 		},
