@@ -110,7 +110,7 @@
 				]
 			},
 			{
-				"name": "WebClasslifeEnroll_groups_copy1",
+				"name": "WebClasslifeStudents",
 				"description": "Activity web that calls the endpoint enroll_groups",
 				"type": "WebActivity",
 				"dependsOn": [],
