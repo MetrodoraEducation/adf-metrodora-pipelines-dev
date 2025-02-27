@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "WebClasslife",
+				"name": "WebClasslifeEnroll_groups",
 				"description": "Activity web that calls the endpoint enroll_groups",
 				"type": "WebActivity",
 				"dependsOn": [],
@@ -39,7 +39,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "WebClasslife",
+						"activity": "WebClasslifeEnroll_groups",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -108,6 +108,37 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "WebClasslifeEnroll_groups_copy1",
+				"description": "Activity web that calls the endpoint enroll_groups",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "GET",
+					"headers": {
+						"apiKey": {
+							"value": "@pipeline().parameters.API_KEY",
+							"type": "Expression"
+						},
+						"clientId": {
+							"value": "@pipeline().parameters.API_CLIENT",
+							"type": "Expression"
+						}
+					},
+					"url": {
+						"value": "@concat('https://api.classlife.io/api/v1/enroll_groups')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
