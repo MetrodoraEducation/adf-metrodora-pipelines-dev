@@ -197,7 +197,7 @@
 						"referenceName": "ds_Classlife",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeUrl": "enroll_groups?showMetas=1"
+							"relativeUrl": "students?showMetas=1"
 						}
 					}
 				],
@@ -208,7 +208,7 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehouse/classlife/enroll_groups/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"value": "@concat('lakehouse/classlife/students/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
 							"filename": "JsaClassLifeProductos.json"
