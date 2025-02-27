@@ -211,7 +211,7 @@
 								"value": "@concat('lakehouse/classlife/students/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaClassLifeProductos.json"
+							"filename": "JsaClassLifeStudents.json"
 						}
 					}
 				]
@@ -318,7 +318,7 @@
 								"value": "@concat('lakehouse/classlife/enrollments/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaClassLifeProductos.json"
+							"filename": "JsaClassLifeEnrollments.json"
 						}
 					}
 				]
