@@ -125,8 +125,6 @@
 			{
 				"name": "Notebook_DWH",
 				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ExecutePipeline_fct_gold",
