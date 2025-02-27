@@ -5,6 +5,8 @@
 			{
 				"name": "ExecutePipelineBudgetGeneral",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -125,6 +127,8 @@
 			{
 				"name": "Notebook_DWH",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ExecutePipeline_fct_gold",
