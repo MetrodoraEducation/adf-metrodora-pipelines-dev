@@ -141,8 +141,8 @@
 				}
 			},
 			{
-				"name": "ClasslifeProductos_copy1",
-				"description": "ClasslifeEnrollGroups",
+				"name": "ClasslifeStudents",
+				"description": "ClasslifeStudents",
 				"type": "Copy",
 				"dependsOn": [
 					{
