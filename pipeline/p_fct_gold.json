@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Notebook_fct_llamada_gold",
+				"name": "Fct_llamada_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -26,7 +26,7 @@
 				}
 			},
 			{
-				"name": "Notebook_fct_venta_gold",
+				"name": "Fct_venta_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -49,7 +49,7 @@
 				}
 			},
 			{
-				"name": "Notebook_fct_venta_zoho_gold",
+				"name": "Fct_venta_zoho_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -72,7 +72,7 @@
 				}
 			},
 			{
-				"name": "Notebook_fct_venta_zoho_gold_copy1",
+				"name": "Fct_matricula_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -85,7 +85,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_venta_zoho_gold')",
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_matricula_gold')",
 						"type": "Expression"
 					}
 				},
