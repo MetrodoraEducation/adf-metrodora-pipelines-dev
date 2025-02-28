@@ -57,7 +57,14 @@
 			{
 				"name": "ClasslifeStudents",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -68,7 +75,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeProductos')",
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeStudents')",
 						"type": "Expression"
 					}
 				},
@@ -80,7 +87,14 @@
 			{
 				"name": "ClasslifeEnrollments",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
