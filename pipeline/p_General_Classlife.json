@@ -55,7 +55,7 @@
 				}
 			},
 			{
-				"name": "ClasslifeProductos_copy1",
+				"name": "ClasslifeStudents",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
