@@ -565,7 +565,14 @@
 			{
 				"name": "Dim_estudiante",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_estado_matricula",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -576,7 +583,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_estado_matricula')",
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_estudiante')",
 						"type": "Expression"
 					}
 				},
