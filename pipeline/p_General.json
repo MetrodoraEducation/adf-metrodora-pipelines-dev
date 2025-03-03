@@ -217,6 +217,36 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "ExecutePipelineBudgetGeneral_copy1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_General_Budget",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						},
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						},
+						"dwh_storage_databricks": {
+							"value": "@pipeline().parameters.dwh_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
 			}
 		],
 		"parameters": {
