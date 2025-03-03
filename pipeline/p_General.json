@@ -40,7 +40,7 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineCallsSalesBronzeSilver_Full",
+				"name": "CallsSalesBronzeSilver_Full",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"policy": {
@@ -70,13 +70,13 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
+						"activity": "ClasslifeBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "ExecutePipelineZohoBronzeSilver_Full",
+						"activity": "ZohoBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -160,11 +160,11 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineZohoBronzeSilver_Full",
+				"name": "ZohoBronzeSilver_Full",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"activity": "CallsSalesBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -193,11 +193,11 @@
 				}
 			},
 			{
-				"name": "ExecutePipelineClasslifeBronzeSilver_Full",
+				"name": "ClasslifeBronzeSilver_Full",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"activity": "CallsSalesBronzeSilver_Full",
 						"dependencyConditions": [
 							"Succeeded"
 						]
