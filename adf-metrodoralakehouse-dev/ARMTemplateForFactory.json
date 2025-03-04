@@ -4331,7 +4331,7 @@
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "Fct gold",
+								"activity": "Wait",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4450,6 +4450,22 @@
 									"type": "Expression"
 								}
 							}
+						}
+					},
+					{
+						"name": "Wait",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Fct gold",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 30
 						}
 					}
 				],
