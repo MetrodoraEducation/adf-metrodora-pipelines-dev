@@ -4200,9 +4200,16 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "ExecutePipelineBudgetGeneral",
+						"name": "Budget General",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim Fijas",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"secureInput": false
 						},
@@ -4230,7 +4237,7 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"name": "CallsSalesBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"policy": {
@@ -4256,17 +4263,17 @@
 						}
 					},
 					{
-						"name": "ExecutePipeline_dim_gold",
+						"name": "Dim gold",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
+								"activity": "ClasslifeBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "ExecutePipelineZohoBronzeSilver_Full",
+								"activity": "ZohoBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4291,11 +4298,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipeline_fct_gold",
+						"name": "Fct gold",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipeline_dim_gold",
+								"activity": "Dim gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4324,7 +4331,7 @@
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipeline_fct_gold",
+								"activity": "Fct gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4350,11 +4357,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineZohoBronzeSilver_Full",
+						"name": "ZohoBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+								"activity": "CallsSalesBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4383,11 +4390,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineClasslifeBronzeSilver_Full",
+						"name": "ClasslifeBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+								"activity": "CallsSalesBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4410,6 +4417,36 @@
 								},
 								"silver_storage_databricks": {
 									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Dim Fijas",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_General_dimFijas_Mapeo",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								},
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
 									"type": "Expression"
 								}
 							}
@@ -4450,7 +4487,8 @@
 				"[concat(variables('factoryId'), '/pipelines/p_fct_gold')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]",
 				"[concat(variables('factoryId'), '/pipelines/p_General_Zoho')]",
-				"[concat(variables('factoryId'), '/pipelines/p_General_Classlife')]"
+				"[concat(variables('factoryId'), '/pipelines/p_General_Classlife')]",
+				"[concat(variables('factoryId'), '/pipelines/p_General_dimFijas_Mapeo')]"
 			]
 		},
 		{
@@ -5312,7 +5350,8 @@
 						"defaultValue": "7"
 					},
 					"silver_storage_databricks": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 					}
 				},
 				"folder": {
@@ -8739,7 +8778,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?per_page=200&page=1&fields=Motivo_p_rdida_B2C,ID_Producto,Owner,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n,Nacionalidad1,lead_correlation_id,id_unico,Tipolog_a_del_alumno1,Contact_Name,Created_Time',if(\n        equals(variables('NextPageToken'), ''), \n        '', \n        concat('&next_page_token=', variables('NextPageToken'))\n    )\n)",
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Deals?per_page=200&page=1&fields=Motivo_p_rdida_B2C,ID_Producto,Owner,Motivo_p_rdida_B2B,Residencia1,utm_type,utm_medium,utm_campaign_name,Fecha_hora_Documentaci_n_completada,br_rating,Deal_Name,Exchange_Rate,Currency,Stage,id,utm_ad_id,ID_Classlife,utm_campaign_id,Importe_pagado,br_score,utm_perfil,C_digo_descuento,L_nea_de_Negocio,utm_source,Descuento,Closing_Date,network,utm_adset_id,utm_estrategia,tipo_conversion,Amount,Probability,Profesion_Estudiante,Contact_Name.id,Pipeline,Competencia,utm_term,utm_channel,Tipolog_a_de_cliente,Created_Date,Modified_Time,ID_Lead,Fecha_hora_Pagado_NE,Fecha_hora_Anulaci_n,Nacionalidad1,lead_correlation_id,id_unico,Tipolog_a_del_alumno1,Contact_Name,Created_Time',if(\n        equals(variables('NextPageToken'), ''), \n        '', \n        concat('&next_page_token=', variables('NextPageToken'))\n    )\n)",
 										"type": "Expression"
 									}
 								}
@@ -8818,7 +8857,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Created_Date,Apellido_2,Description,device,Email,fbclid,First_Name,gclid1,id,id_producto,id_programa,Last_Name,lead_correlation_id,lead_rating,lead_scoring,Lead_Source,Lead_Status,Mobile,Motivos_de_perdida,Nacionalidad,Owner,Phone,Provincia,Residencia,Sexo,source,Tipolog_a_de_cliente,Typo_Conversion,utm_ad_id,utm_adset_id,utm_campaign_id,utm_campaign_name,utm_channel,utm_estrategia,utm_medium,utm_perfil,utm_source,utm_term,utm_type,Visitor_Score,Modified_Time,Created_Time&per_page=200')",
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Leads?fields=Created_Date,Apellido_2,Description,device,Email,fbclid,First_Name,gclid1,id,id_producto,id_programa,Last_Name,lead_correlation_id,lead_rating,lead_scoring,Lead_Source,Lead_Status,Mobile,Motivos_de_perdida,Nacionalidad,Owner,Phone,Provincia,Residencia,Sexo,source,Tipolog_a_de_cliente,Typo_Conversion,utm_ad_id,utm_adset_id,utm_campaign_id,utm_campaign_name,utm_channel,utm_estrategia,utm_medium,utm_perfil,utm_source,utm_term,utm_type,Visitor_Score,Modified_Time,Created_Time,L_nea_de_Negocio&per_page=200')",
 										"type": "Expression"
 									}
 								}
@@ -9018,7 +9057,7 @@
 								"type": "DatasetReference",
 								"parameters": {
 									"relativeUrl": {
-										"value": "@concat('https://www.zohoapis.eu/crm/v7/Contacts?on_demand_properties=\"$client_portal_permission\"&fields=Email,Mailing_Zip,Other_Zip,Mailing_Street,Other_State,woztellplatformintegration__WhatsApp_Opt_Out,Other_Country,Sexo,Profesion,First_Name,Phone,Estudios,Mailing_Country,recibir_comunicacion,id,Apellidos_2,Provincia,ID_Classlife,Date_of_Birth,Tipo_de_contacto,Mailing_City,Other_City,Home_Phone1,Other_Street,Mobile,Residencia,Nacionalidad,Secondary_Email,Tipo_de_cliente,DNI')",
+										"value": "@concat('https://www.zohoapis.eu/crm/v7/Contacts?on_demand_properties=\"$client_portal_permission\"&fields=Email,Mailing_Zip,Other_Zip,Mailing_Street,Other_State,woztellplatformintegration__WhatsApp_Opt_Out,Other_Country,Sexo,Profesion,First_Name,Phone,Estudios,Mailing_Country,recibir_comunicacion,id,Apellidos_2,Provincia,ID_Classlife,Date_of_Birth,Tipo_de_contacto,Mailing_City,Other_City,Home_Phone1,Other_Street,Mobile,Residencia,Nacionalidad,Secondary_Email,Tipo_de_cliente,DNI,ltima_L_nea_de_negocio')",
 										"type": "Expression"
 									}
 								}

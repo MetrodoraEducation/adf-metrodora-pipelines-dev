@@ -1032,9 +1032,16 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "ExecutePipelineBudgetGeneral",
+						"name": "Budget General",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Dim Fijas",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"secureInput": false
 						},
@@ -1062,7 +1069,7 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineCallsSalesBronzeSilver_Full",
+						"name": "CallsSalesBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
 						"policy": {
@@ -1088,17 +1095,17 @@
 						}
 					},
 					{
-						"name": "ExecutePipeline_dim_gold",
+						"name": "Dim gold",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineClasslifeBronzeSilver_Full",
+								"activity": "ClasslifeBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "ExecutePipelineZohoBronzeSilver_Full",
+								"activity": "ZohoBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1123,11 +1130,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipeline_fct_gold",
+						"name": "Fct gold",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipeline_dim_gold",
+								"activity": "Dim gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1156,7 +1163,7 @@
 						"type": "DatabricksNotebook",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipeline_fct_gold",
+								"activity": "Fct gold",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1182,11 +1189,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineZohoBronzeSilver_Full",
+						"name": "ZohoBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+								"activity": "CallsSalesBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1215,11 +1222,11 @@
 						}
 					},
 					{
-						"name": "ExecutePipelineClasslifeBronzeSilver_Full",
+						"name": "ClasslifeBronzeSilver_Full",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "ExecutePipelineCallsSalesBronzeSilver_Full",
+								"activity": "CallsSalesBronzeSilver_Full",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1242,6 +1249,36 @@
 								},
 								"silver_storage_databricks": {
 									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					{
+						"name": "Dim Fijas",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "p_General_dimFijas_Mapeo",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {
+								"silver_storage_databricks": {
+									"value": "@pipeline().parameters.silver_storage_databricks",
+									"type": "Expression"
+								},
+								"gold_storage_databricks": {
+									"value": "@pipeline().parameters.gold_storage_databricks",
+									"type": "Expression"
+								},
+								"dwh_storage_databricks": {
+									"value": "@pipeline().parameters.dwh_storage_databricks",
 									"type": "Expression"
 								}
 							}
