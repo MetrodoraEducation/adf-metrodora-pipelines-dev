@@ -105,7 +105,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
+								"httpRequestTimeout": "00:01:50",
 								"requestInterval": "00.00:00:00.010",
 								"requestMethod": "GET",
 								"paginationRules": {
@@ -10850,7 +10850,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
