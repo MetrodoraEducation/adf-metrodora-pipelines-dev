@@ -48,27 +48,7 @@
 			"type": "string",
 			"defaultValue": "https://stmetrodoralakehousedev.dfs.core.windows.net/"
 		},
-		"tr_General_properties_p_General_parameters_dayToLoad": {
-			"type": "string",
-			"defaultValue": "7"
-		},
-		"tr_General_properties_p_General_parameters_silver_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
-		},
-		"tr_General_properties_p_General_parameters_gold_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
-		},
-		"tr_General_properties_p_General_parameters_dwh_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
-		},
 		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
-			"type": "string",
-			"defaultValue": "7"
-		},
-		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
 			"type": "string",
 			"defaultValue": "7"
 		},
@@ -226,21 +206,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
-						"value": "[parameters('tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate')]"
-					},
-					"tr_General_properties_p_General_parameters_dayToLoad": {
-						"value": "[parameters('tr_General_properties_p_General_parameters_dayToLoad')]"
-					},
-					"tr_General_properties_p_General_parameters_silver_storage_databricks": {
-						"value": "[parameters('tr_General_properties_p_General_parameters_silver_storage_databricks')]"
-					},
-					"tr_General_properties_p_General_parameters_gold_storage_databricks": {
-						"value": "[parameters('tr_General_properties_p_General_parameters_gold_storage_databricks')]"
-					},
-					"tr_General_properties_p_General_parameters_dwh_storage_databricks": {
-						"value": "[parameters('tr_General_properties_p_General_parameters_dwh_storage_databricks')]"
 					},
 					"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
 						"value": "[parameters('tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad')]"

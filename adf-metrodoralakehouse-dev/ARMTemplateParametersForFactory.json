@@ -35,22 +35,7 @@
 		"ls_adsl_properties_typeProperties_url": {
 			"value": "https://stmetrodoralakehousedev.dfs.core.windows.net/"
 		},
-		"tr_General_properties_p_General_parameters_dayToLoad": {
-			"value": "7"
-		},
-		"tr_General_properties_p_General_parameters_silver_storage_databricks": {
-			"value": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
-		},
-		"tr_General_properties_p_General_parameters_gold_storage_databricks": {
-			"value": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
-		},
-		"tr_General_properties_p_General_parameters_dwh_storage_databricks": {
-			"value": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
-		},
 		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
-			"value": "7"
-		},
-		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
 			"value": "7"
 		}
 	}

@@ -7,26 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
-		"tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate": {
-			"type": "string",
-			"defaultValue": "7"
-		},
-		"tr_General_properties_p_General_parameters_dayToLoad": {
-			"type": "string",
-			"defaultValue": "7"
-		},
-		"tr_General_properties_p_General_parameters_silver_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
-		},
-		"tr_General_properties_p_General_parameters_gold_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
-		},
-		"tr_General_properties_p_General_parameters_dwh_storage_databricks": {
-			"type": "string",
-			"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
-		},
 		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
 			"type": "string",
 			"defaultValue": "7"
@@ -984,44 +964,6 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2024-11-19T15:19:25Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/tr_general_zoho')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "p_General_Zoho",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"reprocessDate": "[parameters('tr_general_zoho_properties_p_General_Zoho_parameters_reprocessDate')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2025-01-22T20:59:00",
-						"timeZone": "Romance Standard Time",
-						"schedule": {
-							"minutes": [
-								30
-							],
-							"hours": [
-								3
-							]
-						}
-					}
-				}
 			},
 			"dependsOn": []
 		},
@@ -2009,49 +1951,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/tr_General')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "p_General",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"dayToLoad": "[parameters('tr_General_properties_p_General_parameters_dayToLoad')]",
-							"silver_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_silver_storage_databricks')]",
-							"gold_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_gold_storage_databricks')]",
-							"dwh_storage_databricks": "[parameters('tr_General_properties_p_General_parameters_dwh_storage_databricks')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2024-12-19T15:24:00",
-						"timeZone": "Romance Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								4
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_General')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/tr_GeneralF0')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -2089,6 +1988,44 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/p_GeneralF0')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_general_v1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "p_General",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2025-03-10T08:00:00",
+						"timeZone": "Romance Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								4
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/p_General')]"
 			]
 		}
 	]
