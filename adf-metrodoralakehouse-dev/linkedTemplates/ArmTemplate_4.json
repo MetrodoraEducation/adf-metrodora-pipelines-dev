@@ -1490,12 +1490,7 @@
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
-							"parameters": {
-								"showMetas": {
-									"value": "@pipeline().parameters.reprocessDate",
-									"type": "Expression"
-								}
-							}
+							"parameters": {}
 						}
 					},
 					{
@@ -1580,6 +1575,36 @@
 						"typeProperties": {
 							"notebookPath": {
 								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeEnrollments')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "ClasslifeReceipts",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "ExecuteClasslife",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeReceipts')",
 								"type": "Expression"
 							}
 						},
