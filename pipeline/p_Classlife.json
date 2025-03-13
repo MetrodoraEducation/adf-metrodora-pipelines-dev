@@ -439,10 +439,6 @@
 			"API_KEY": {
 				"type": "string",
 				"defaultValue": "C!Fd4e045d16e5544"
-			},
-			"showMetas": {
-				"type": "string",
-				"defaultValue": "7"
 			}
 		},
 		"folder": {
