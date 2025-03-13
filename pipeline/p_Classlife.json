@@ -411,7 +411,7 @@
 						"referenceName": "ds_Classlife",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeUrl": "enrollments?showMetas=1"
+							"relativeUrl": "receipts?showMetas=1"
 						}
 					}
 				],
@@ -422,10 +422,10 @@
 						"parameters": {
 							"container": "bronze",
 							"folder": {
-								"value": "@concat('lakehouse/classlife/enrollments/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
+								"value": "@concat('lakehouse/classlife/receipts/',formatDateTime(utcnow(),'yyyy'),'/',formatDateTime(utcnow(),'MM'),'/',formatDateTime(utcnow(),'dd'))",
 								"type": "Expression"
 							},
-							"filename": "JsaClassLifeEnrollments.json"
+							"filename": "JsaClassLifeReceipts.json"
 						}
 					}
 				]
