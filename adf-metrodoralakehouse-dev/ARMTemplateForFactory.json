@@ -4508,7 +4508,20 @@
 					{
 						"name": "Dim Fijas",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "ZohoBronzeSilver_Full",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "ClasslifeBronzeSilver_Full",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"secureInput": false
 						},
