@@ -5,7 +5,14 @@
 			{
 				"name": "Execute p_General",
 				"type": "ExecutePipeline",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach_Previous_Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -90,11 +97,16 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach_Previous_Count",
 				"type": "ForEach",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@variables('table_list')",
+						"type": "Expression"
+					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "Get_Previous_Count",
@@ -111,7 +123,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "AzurePostgreSqlSource",
-									"query": "SELECT COUNT(*) AS record_count FROM @{item()}\n",
+									"query": {
+										"value": "SELECT COUNT(*) AS record_count FROM @{item()}",
+										"type": "Expression"
+									},
 									"partitionOption": "None"
 								},
 								"dataset": {
@@ -119,15 +134,50 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"schema": "public",
-										"table": "f0calls"
+										"table": "fctventa"
 									}
 								}
 							}
+						},
+						{
+							"name": "previous_counts",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_Previous_Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": []
 						}
 					]
 				}
 			}
 		],
+		"variables": {
+			"previous_counts": {
+				"type": "Array"
+			},
+			"after_counts": {
+				"type": "Array"
+			},
+			"inserted_records": {
+				"type": "Array"
+			},
+			"table_list": {
+				"type": "Array",
+				"defaultValue": [
+					"fctventa",
+					"fct_matricula",
+					"fct_facturacion"
+				]
+			},
+			"temp_counts": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "Lakehouse/General"
 		},
