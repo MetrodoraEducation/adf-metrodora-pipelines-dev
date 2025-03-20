@@ -301,7 +301,7 @@
 				}
 			},
 			{
-				"name": "Send Email",
+				"name": "Send Succesfully Email",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
@@ -329,7 +329,7 @@
 				}
 			},
 			{
-				"name": "Send Email_copy1",
+				"name": "Send Failed Email",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
