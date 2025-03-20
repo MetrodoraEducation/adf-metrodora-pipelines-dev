@@ -278,7 +278,7 @@
 				}
 			},
 			{
-				"name": "Get_Previous_Count",
+				"name": "Get_Previous_Count1",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -306,7 +306,7 @@
 				}
 			},
 			{
-				"name": "Get_After_Count",
+				"name": "Get_After_Count1",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -331,6 +331,29 @@
 							"table": "fctventa"
 						}
 					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"activities": [
+						{
+							"name": "Get_Previous_Count",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": []
+						}
+					]
 				}
 			}
 		],
@@ -362,6 +385,12 @@
 		},
 		"variables": {
 			"previous_counts": {
+				"type": "Array"
+			},
+			"after_counts": {
+				"type": "Array"
+			},
+			"inserted_records": {
 				"type": "Array"
 			}
 		},
