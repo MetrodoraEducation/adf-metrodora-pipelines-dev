@@ -103,8 +103,6 @@
 			{
 				"name": "ForEach_Previous_Count",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -174,6 +172,12 @@
 				"dependsOn": [
 					{
 						"activity": "Execute p_General",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "ForEach_Previous_Count",
 						"dependencyConditions": [
 							"Succeeded"
 						]
