@@ -105,7 +105,62 @@
 					},
 					"activities": [
 						{
-							"name": "Get_Previous_Count",
+							"name": "Get_Previous_Count_Ventas",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": {
+										"value": "select count(*) from public.fctventa",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
+						},
+						{
+							"name": "previous_counts_ventas",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_Previous_Count_Ventas",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "previous_counts",
+								"value": {
+									"value": "@string(activity('Get_Previous_Count_Ventas').output.firstRow.record_count)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Get_Previous_Count_Matricula",
 							"type": "Lookup",
 							"dependsOn": [],
 							"policy": {
@@ -133,11 +188,11 @@
 							}
 						},
 						{
-							"name": "previous_counts",
+							"name": "previous_counts_matricula",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Get_Previous_Count",
+									"activity": "Get_Previous_Count_Matricula",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -151,7 +206,7 @@
 							"typeProperties": {
 								"variableName": "previous_counts",
 								"value": {
-									"value": "@string(activity('Get_Previous_Count').output.firstRow.record_count)",
+									"value": "@string(activity('Get_Previous_Count_Matricula').output.firstRow.record_count)",
 									"type": "Expression"
 								}
 							}
@@ -162,6 +217,8 @@
 			{
 				"name": "ForEach_After_Count",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach_Previous_Count",
