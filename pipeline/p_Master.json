@@ -285,7 +285,7 @@
 							"typeProperties": {
 								"variableName": "after_counts_ventas",
 								"value": {
-									"value": "@string(activity('Get_After_Count_Ventas').output.firstRow.record_count)",
+									"value": "@string(activity('Get_After_Count_Ventas').output.firstRow.count)",
 									"type": "Expression"
 								}
 							}
@@ -364,7 +364,7 @@
 							"typeProperties": {
 								"variableName": "after_counts_matricula",
 								"value": {
-									"value": "@string(activity('Get_After_Count_Matricula').output.firstRow.record_count)",
+									"value": "@string(activity('Get_After_Count_Matricula').output.firstRow.count)",
 									"type": "Expression"
 								}
 							}
@@ -417,7 +417,10 @@
 				"type": "String"
 			},
 			"table_list": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": [
+					"dummy_value"
+				]
 			}
 		},
 		"folder": {
