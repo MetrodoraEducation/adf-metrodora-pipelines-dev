@@ -331,7 +331,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "CallsSalesBronzeSilver_Full",
+						"activity": "Wait",
 						"dependencyConditions": [
 							"Failed"
 						]
