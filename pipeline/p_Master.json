@@ -7,7 +7,14 @@
 				"type": "ExecutePipeline",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Failed",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach_Previous_Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -40,7 +47,14 @@
 				"type": "WebActivity",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach_After_Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -91,6 +105,8 @@
 			{
 				"name": "Lookup1",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -119,6 +135,8 @@
 			{
 				"name": "Set variable1",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Lookup1",
@@ -135,9 +153,150 @@
 				"typeProperties": {
 					"variableName": "previous_counts",
 					"value": {
-						"value": "@activity('Lookup1').output.firstRow",
+						"value": "@string(activity('Lookup1').output.firstRow.count)",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "ForEach_Previous_Count",
+				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('table_list')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Get_Previous_Count",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": "SELECT COUNT(*) AS record_count FROM @{item()}",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
+						},
+						{
+							"name": "previous_counts",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_Previous_Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "previous_counts",
+								"value": {
+									"value": "@string(activity('Get_Previous_Count').output.firstRow.record_count)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ForEach_After_Count",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Execute p_General",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('table_list')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Get_After_Count",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": "SELECT COUNT(*) AS record_count FROM @{item()}",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
+						},
+						{
+							"name": "After_counts",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_After_Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "after_counts",
+								"value": {
+									"value": "@string(activity('Get_After_Count').output.firstRow.record_count)",
+									"type": "Expression"
+								}
+							}
+						}
+					]
 				}
 			}
 		],
@@ -146,10 +305,10 @@
 				"type": "String"
 			},
 			"after_counts": {
-				"type": "Array"
+				"type": "String"
 			},
 			"inserted_records": {
-				"type": "Array"
+				"type": "String"
 			},
 			"table_list": {
 				"type": "Array",
@@ -158,9 +317,6 @@
 					"fct_matricula",
 					"fct_venta"
 				]
-			},
-			"temp_counts": {
-				"type": "String"
 			}
 		},
 		"folder": {
