@@ -235,8 +235,6 @@
 						{
 							"name": "Append_Inserted_Records",
 							"type": "AppendVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Append_After_Count",
@@ -249,7 +247,7 @@
 							"typeProperties": {
 								"variableName": "inserted_records",
 								"value": {
-									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Insertados: ', \n    string(\n        sub(\n            if(empty(activity('Get_After_Count').output.firstRow.record_count), \n               0, \n               activity('Get_After_Count').output.firstRow.record_count), \n            if(empty(activity('Get_Previous_Count').output.firstRow.record_count), \n               0, \n               activity('Get_Previous_Count').output.firstRow.record_count)\n        )\n    ),\n    '\\n'\n)",
+									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Insertados: ', \n    string(\n        sub(\n            coalesce(activity('Get_After_Count').output.firstRow.record_count, 0),\n            coalesce(activity('Get_Previous_Count').output.firstRow.record_count, 0)\n        )\n    ),\n    '\\n'\n)",
 									"type": "Expression"
 								}
 							}
