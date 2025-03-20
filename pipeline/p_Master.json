@@ -45,7 +45,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Execute p_General",
+						"activity": "ForEach_Get_After_Count",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -161,6 +161,79 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "ForEach_Get_After_Count",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Execute p_General",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('table_list')",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Get_After_Count",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": {
+										"value": "SELECT COUNT(*) AS record_count FROM @{item()}",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "fctventa"
+									}
+								}
+							}
+						},
+						{
+							"name": "Append_After_Count",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_After_Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "after_counts",
+								"value": {
+									"value": "@concat('Tabla: ', item(), ' - Registros Finales: ', activity('Get_After_Count').output.firstRow.record_count, '\\n')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"variables": {
@@ -177,8 +250,7 @@
 				"type": "Array",
 				"defaultValue": [
 					"fctventa",
-					"fct_matricula",
-					"fct_facturacion"
+					"fct_matricula"
 				]
 			},
 			"temp_counts": {
