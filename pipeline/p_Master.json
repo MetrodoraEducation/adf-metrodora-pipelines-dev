@@ -5,6 +5,8 @@
 			{
 				"name": "Execute p_General",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach_Previous_Count",
@@ -63,7 +65,7 @@
 					"method": "POST",
 					"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
 					"body": {
-						"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"previous_counts\": \"@{join(variables('previous_counts'), ', ')}\",\n    \"after_counts\": \"@{join(variables('after_counts'), ', ')}\",\n    \"inserted_records\": \"@{join(variables('inserted_records'), ', ')}\"\n  }\n}",
+						"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"tables\": \"@{json(concat('[', join(variables('table_list'), ','), ']'))}\"\n  }\n}",
 						"type": "Expression"
 					}
 				}
@@ -71,6 +73,8 @@
 			{
 				"name": "Send Failed Email",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute p_General",
@@ -99,6 +103,8 @@
 			{
 				"name": "ForEach_Previous_Count",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
@@ -154,7 +160,7 @@
 							"typeProperties": {
 								"variableName": "previous_counts",
 								"value": {
-									"value": "{\n  \"Tabla\": \"@{item()}\",\n  \"RegistrosIniciales\": \"@{activity('Get_Previous_Count').output.firstRow.record_count}\"\n}",
+									"value": "@array(\n    concat(\n        'Tabla: ', item(), \n        ' - Registros Iniciales: ', \n        string(activity('Get_Previous_Count').output.firstRow.record_count)\n    )\n)",
 									"type": "Expression"
 								}
 							}
@@ -227,7 +233,7 @@
 							"typeProperties": {
 								"variableName": "after_counts",
 								"value": {
-									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Finales: ', \n    string(\n        if(empty(activity('Get_After_Count').output.firstRow.record_count), \n           0, \n           activity('Get_After_Count').output.firstRow.record_count)\n    ),\n    '\\n'\n)",
+									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Finales: ', \n    string(\n        coalesce(activity('Get_After_Count').output.firstRow.record_count, 0)\n    )\n)",
 									"type": "Expression"
 								}
 							}
@@ -235,6 +241,8 @@
 						{
 							"name": "Append_Inserted_Records",
 							"type": "AppendVariable",
+							"state": "Inactive",
+							"onInactiveMarkAs": "Succeeded",
 							"dependsOn": [
 								{
 									"activity": "Append_After_Count",
@@ -247,7 +255,27 @@
 							"typeProperties": {
 								"variableName": "inserted_records",
 								"value": {
-									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Insertados: ', \n    string(\n        sub(\n            int(if(empty(activity('Get_After_Count').output.firstRow.record_count), '0', activity('Get_After_Count').output.firstRow.record_count)), \n            int(if(empty(activity('Get_Previous_Count').output.firstRow.record_count), '0', activity('Get_Previous_Count').output.firstRow.record_count))\n        )\n    ),\n    '\\n'\n)",
+									"value": "@array(\n    concat(\n        'Tabla: ', item(), \n        ' - Registros Insertados: ', \n        string(\n            sub(\n                coalesce(int(activity('Get_After_Count').output.firstRow?.record_count), 0), \n                coalesce(int(activity('Get_Previous_Count').output.firstRow?.record_count), 0)\n            )\n        )\n    )\n)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Append_table_list",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Append_Inserted_Records",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "table_list",
+								"value": {
+									"value": "@concat(\n    '{',\n    '\"table\": \"', item(), '\", ',\n    '\"previous_count\": ', if(empty(activity('Get_Previous_Count').output.firstRow.record_count), '0', string(activity('Get_Previous_Count').output.firstRow.record_count)), ', ',\n    '\"after_count\": ', if(empty(activity('Get_After_Count').output.firstRow.record_count), '0', string(activity('Get_After_Count').output.firstRow.record_count)),\n    '}'\n)",
 									"type": "Expression"
 								}
 							}
