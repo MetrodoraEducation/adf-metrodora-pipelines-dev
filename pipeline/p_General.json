@@ -350,6 +350,19 @@
 			"dwh_storage_databricks": {
 				"type": "string",
 				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+			},
+			"TableLsit": {
+				"type": "array",
+				"defaultValue": [
+					"silver_lakehouse.fct_venta",
+					"silver_lakehouse.fct_matricula",
+					"silver_lakehouse.fct_facturacion"
+				]
+			}
+		},
+		"variables": {
+			"previous_counts": {
+				"type": "Array"
 			}
 		},
 		"folder": {
