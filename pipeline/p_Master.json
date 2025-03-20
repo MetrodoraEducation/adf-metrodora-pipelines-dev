@@ -346,7 +346,7 @@
 							}
 						},
 						{
-							"name": "After_counts_ventas_Matricula",
+							"name": "After_counts_Matricula",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -374,7 +374,7 @@
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "After_counts_ventas_Matricula",
+									"activity": "After_counts_Matricula",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -386,7 +386,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "inserted_records_ventas",
+								"variableName": "inserted_records_matricula",
 								"value": {
 									"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_matricula')), '0', variables('after_counts_matricula'))), \n            int(if(empty(variables('previous_counts_matricula')), '0', variables('previous_counts_matricula')))\n        )\n    )\n)",
 									"type": "Expression"
