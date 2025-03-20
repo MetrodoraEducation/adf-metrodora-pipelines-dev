@@ -17,92 +17,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/p_SalesBronzeF0_Full')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ExecutePipelineClientifyDealsBronzeF0_Full",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_ClientifyDealsBronzeF0_Full",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ExecutePipelineOdooLeadBronzeF0_Full",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_OdooLeadBronzeF0_Full",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ExecutePipelineClientifyDealsBronzeF0_LostReason_Full",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_ClientifyDealsBronzeF0_LostReason_Full",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					},
-					{
-						"name": "ExecutePipelineClientifyDealsBronzeF0_IdForDelete",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_ClientifyDealsBronzeF0_IdForDelete",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "LakehouseF0/BronzeF0"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-11-19T15:16:31Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/p_SalesBronze_Full')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1275,6 +1189,25 @@
 					"dwh_storage_databricks": {
 						"type": "string",
 						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+					},
+					"TableLsit": {
+						"type": "array",
+						"defaultValue": [
+							"silver_lakehouse.fct_venta",
+							"silver_lakehouse.fct_matricula",
+							"silver_lakehouse.fct_facturacion"
+						]
+					}
+				},
+				"variables": {
+					"previous_counts": {
+						"type": "Array"
+					},
+					"after_counts": {
+						"type": "Array"
+					},
+					"inserted_records": {
+						"type": "Array"
 					}
 				},
 				"folder": {
@@ -1828,7 +1761,6 @@
 				"lastPublishTime": "2024-11-05T09:59:45Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_SalesBronzeF0_Full')]",
 				"[concat(variables('factoryId'), '/pipelines/p_SalesSilverF0')]",
 				"[concat(variables('factoryId'), '/pipelines/p_SalesGoldF0')]",
 				"[concat(variables('factoryId'), '/pipelines/p_SalesDWHF0')]"
@@ -1964,17 +1896,17 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/p_General_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/p_Master')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Budget General",
+						"name": "Execute p_General",
 						"type": "ExecutePipeline",
 						"dependsOn": [
 							{
-								"activity": "Dim Fijas",
+								"activity": "ForEach_Previous_Count",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1986,122 +1918,33 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "p_General_Budget",
+								"referenceName": "p_General",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
 							"parameters": {
+								"dayToLoad": "7",
 								"silver_storage_databricks": {
-									"value": "@pipeline().parameters.silver_storage_databricks",
+									"value": "@concat('/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/')",
 									"type": "Expression"
 								},
 								"gold_storage_databricks": {
-									"value": "@pipeline().parameters.gold_storage_databricks",
+									"value": "@concat('/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/')",
 									"type": "Expression"
 								},
 								"dwh_storage_databricks": {
-									"value": "@pipeline().parameters.dwh_storage_databricks",
+									"value": "@concat('/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/')",
 									"type": "Expression"
 								}
 							}
 						}
 					},
 					{
-						"name": "CallsSalesBronzeSilver_Full",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_CallsSalesBronzeSilver",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"dayToLoad": {
-									"value": "@pipeline().parameters.dayToLoad",
-									"type": "Expression"
-								},
-								"silver_storage_databricks": {
-									"value": "@pipeline().parameters.silver_storage_databricks",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "Dim gold",
-						"type": "ExecutePipeline",
+						"name": "Send Succesfully Email",
+						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "ClasslifeBronzeSilver_Full",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "ZohoBronzeSilver_Full",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_dim_gold",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"gold_storage_databricks": {
-									"value": "@pipeline().parameters.gold_storage_databricks",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "Fct gold",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Dim gold",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_fct_gold",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"gold_storage_databricks": {
-									"value": "@pipeline().parameters.gold_storage_databricks",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "Notebook_DWH",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "Wait",
+								"activity": "ForEach_After_Count",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2116,171 +1959,527 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"notebookPath": {
-								"value": "@concat(pipeline().parameters.dwh_storage_databricks, 'master_execute_notebooks')",
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
+							"body": {
+								"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"tables\": [\n      {\n        \"table\": \"fctventa\",\n        \"previous_count\": \"@{variables('previous_counts_ventas')}\",\n        \"after_count\": \"@{variables('after_counts_ventas')}\",\n        \"inserted_records\": \"@{variables('inserted_records_ventas')}\"\n      },\n      {\n        \"table\": \"fct_matricula\",\n        \"previous_count\": \"@{variables('previous_counts_matricula')}\",\n        \"after_count\": \"@{variables('after_counts_matricula')}\",\n        \"inserted_records\": \"@{variables('inserted_records_matricula')}\"\n      },\n      {\n        \"table\": \"fct_ventas\",\n        \"previous_count\": \"@{variables('previous_counts_fct_ventas')}\",\n        \"after_count\": \"@{variables('after_counts_fct_ventas')}\",\n        \"inserted_records\": \"@{if(empty(variables('inserted_records_fct_ventas')), '0', variables('inserted_records_fct_ventas'))}\"\n      }\n    ]\n  }\n}",
 								"type": "Expression"
 							}
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_AzureDatabricks",
-							"type": "LinkedServiceReference"
 						}
 					},
 					{
-						"name": "ZohoBronzeSilver_Full",
-						"type": "ExecutePipeline",
+						"name": "Send Failed Email",
+						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "CallsSalesBronzeSilver_Full",
+								"activity": "Execute p_General",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
 						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
 							"secureInput": false
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_General_Zoho",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"reprocessDate": {
-									"value": "@pipeline().parameters.dayToLoad",
-									"type": "Expression"
-								},
-								"silver_storage_databricks": {
-									"value": "@pipeline().parameters.silver_storage_databricks",
-									"type": "Expression"
-								}
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
+							"body": {
+								"value": "{\n  \"title\": \"PIPELINE RUN FAILED\",\n  \"message\": \"@{activity('Execute p_General').error.message}\n  El pipeline ha fallado en una de sus actividades. Revisa los detalles en ADF.\",\n  \"color\": \"Red\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\"\n}",
+								"type": "Expression"
 							}
 						}
 					},
 					{
-						"name": "ClasslifeBronzeSilver_Full",
-						"type": "ExecutePipeline",
+						"name": "ForEach_Previous_Count",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('table_list')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Get_Previous_Count_Ventas",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fctventa",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
+								},
+								{
+									"name": "previous_counts_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_Previous_Count_Ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "previous_counts_ventas",
+										"value": {
+											"value": "@string(activity('Get_Previous_Count_Ventas').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Get_Previous_Count_Matricula",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fct_matricula",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
+								},
+								{
+									"name": "previous_counts_matricula",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_Previous_Count_Matricula",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "previous_counts_matricula",
+										"value": {
+											"value": "@string(activity('Get_Previous_Count_Matricula').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Get_Previous_Count_fct_ventas",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fct_venta",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
+								},
+								{
+									"name": "previous_counts_fct_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_Previous_Count_fct_ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "previous_counts_fct_ventas",
+										"value": {
+											"value": "@string(activity('Get_Previous_Count_fct_ventas').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "ForEach_After_Count",
+						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "CallsSalesBronzeSilver_Full",
+								"activity": "Execute p_General",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							}
 						],
-						"policy": {
-							"secureInput": false
-						},
 						"userProperties": [],
 						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_General_Classlife",
-								"type": "PipelineReference"
+							"items": {
+								"value": "@variables('table_list')",
+								"type": "Expression"
 							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"reprocessDate": {
-									"value": "@pipeline().parameters.dayToLoad",
-									"type": "Expression"
+							"activities": [
+								{
+									"name": "Get_After_Count_Ventas",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fctventa",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
 								},
-								"silver_storage_databricks": {
-									"value": "@pipeline().parameters.silver_storage_databricks",
-									"type": "Expression"
+								{
+									"name": "After_counts_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_After_Count_Ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "after_counts_ventas",
+										"value": {
+											"value": "@string(activity('Get_After_Count_Ventas').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "inserted_records_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "After_counts_ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "inserted_records_ventas",
+										"value": {
+											"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_ventas')), '0', variables('after_counts_ventas'))), \n            int(if(empty(variables('previous_counts_ventas')), '0', variables('previous_counts_ventas')))\n        )\n    )\n)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Get_After_Count_Matricula",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fct_matricula",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
+								},
+								{
+									"name": "After_counts_Matricula",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_After_Count_Matricula",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "after_counts_matricula",
+										"value": {
+											"value": "@string(activity('Get_After_Count_Matricula').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "inserted_records_Matricula",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "After_counts_Matricula",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "inserted_records_matricula",
+										"value": {
+											"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_matricula')), '0', variables('after_counts_matricula'))), \n            int(if(empty(variables('previous_counts_matricula')), '0', variables('previous_counts_matricula')))\n        )\n    )\n)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Get_After_Count_fct_ventas",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzurePostgreSqlSource",
+											"query": {
+												"value": "select count(*) from public.fct_venta",
+												"type": "Expression"
+											},
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_PostgreSql",
+											"type": "DatasetReference",
+											"parameters": {
+												"schema": "public",
+												"table": "f0calls"
+											}
+										}
+									}
+								},
+								{
+									"name": "After_counts_fct_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Get_After_Count_fct_ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "after_counts_fct_ventas",
+										"value": {
+											"value": "@string(activity('Get_After_Count_fct_ventas').output.firstRow.count)",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "inserted_records_fct_ventas",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "After_counts_fct_ventas",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "inserted_records_matricula",
+										"value": {
+											"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_fct_ventas')), '0', variables('after_counts_fct_ventas'))), \n            int(if(empty(variables('previous_counts_fct_ventas')), '0', variables('previous_counts_fct_ventas')))\n        )\n    )\n)",
+											"type": "Expression"
+										}
+									}
 								}
-							}
-						}
-					},
-					{
-						"name": "Dim Fijas",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "ZohoBronzeSilver_Full",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "ClasslifeBronzeSilver_Full",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "p_General_dimFijas_Mapeo",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {
-								"silver_storage_databricks": {
-									"value": "@pipeline().parameters.silver_storage_databricks",
-									"type": "Expression"
-								},
-								"gold_storage_databricks": {
-									"value": "@pipeline().parameters.gold_storage_databricks",
-									"type": "Expression"
-								},
-								"dwh_storage_databricks": {
-									"value": "@pipeline().parameters.dwh_storage_databricks",
-									"type": "Expression"
-								}
-							}
-						}
-					},
-					{
-						"name": "Wait",
-						"type": "Wait",
-						"dependsOn": [
-							{
-								"activity": "Fct gold",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 30
+							]
 						}
 					}
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"dayToLoad": {
-						"type": "string",
-						"defaultValue": "7"
+				"variables": {
+					"previous_counts_ventas": {
+						"type": "String"
 					},
-					"silver_storage_databricks": {
-						"type": "string",
-						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+					"after_counts_ventas": {
+						"type": "String"
 					},
-					"gold_storage_databricks": {
-						"type": "string",
-						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+					"inserted_records_ventas": {
+						"type": "String"
 					},
-					"dwh_storage_databricks": {
-						"type": "string",
-						"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+					"previous_counts_matricula": {
+						"type": "String"
+					},
+					"after_counts_matricula": {
+						"type": "String"
+					},
+					"inserted_records_matricula": {
+						"type": "String"
+					},
+					"table_list": {
+						"type": "Array",
+						"defaultValue": [
+							"dummy_value"
+						]
+					},
+					"previous_counts_fct_ventas": {
+						"type": "String"
+					},
+					"after_counts_fct_ventas": {
+						"type": "String"
+					},
+					"inserted_records_fct_ventas": {
+						"type": "String"
 					}
 				},
 				"folder": {
 					"name": "Lakehouse/General"
 				},
-				"annotations": [],
-				"lastPublishTime": "2024-12-13T08:33:18Z"
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_CallsSalesBronzeSilver')]"
+				"[concat(variables('factoryId'), '/pipelines/p_General')]"
 			]
 		},
 		{

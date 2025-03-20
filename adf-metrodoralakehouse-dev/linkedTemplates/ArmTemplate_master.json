@@ -96,6 +96,12 @@
 					},
 					"ls_Zoho_properties_typeProperties_url": {
 						"value": "[parameters('ls_Zoho_properties_typeProperties_url')]"
+					},
+					"ls_Aircall_properties_typeProperties_url": {
+						"value": "[parameters('ls_Aircall_properties_typeProperties_url')]"
+					},
+					"ls_Aircall_properties_typeProperties_userName": {
+						"value": "[parameters('ls_Aircall_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -117,12 +123,6 @@
 					},
 					"ls_PostgreSql_connectionString": {
 						"value": "[parameters('ls_PostgreSql_connectionString')]"
-					},
-					"ls_Aircall_properties_typeProperties_url": {
-						"value": "[parameters('ls_Aircall_properties_typeProperties_url')]"
-					},
-					"ls_Aircall_properties_typeProperties_userName": {
-						"value": "[parameters('ls_Aircall_properties_typeProperties_userName')]"
 					},
 					"ls_adsl_properties_typeProperties_url": {
 						"value": "[parameters('ls_adsl_properties_typeProperties_url')]"

@@ -30,6 +30,14 @@
 		"ls_Zoho_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://accounts.zoho.eu"
+		},
+		"ls_Aircall_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.aircall.io/"
+		},
+		"ls_Aircall_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "c668cd9a3a86775ddb72333278d0b7bb"
 		}
 	},
 	"variables": {
@@ -722,73 +730,6 @@
 					"silver_storage_databricks": {
 						"type": "string"
 					}
-				},
-				"folder": {
-					"name": "Lakehouse/Silver"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-12-12T17:02:07Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/p_ZohoSilver_copy1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "NotebookSalesSilver",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/SalesSilver"
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "NotebookSalesIdDeletedSilver",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "NotebookSalesSilver",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Lakehouse/Silver/SalesIdDeletedSilver"
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_AzureDatabricks",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "Lakehouse/Silver"
@@ -1703,6 +1644,32 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_Zoho')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_Aircall')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('ls_Aircall_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Basic",
+					"userName": "[parameters('ls_Aircall_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_KeyVault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "aircallpwd"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_KeyVault')]"
 			]
 		}
 	]
