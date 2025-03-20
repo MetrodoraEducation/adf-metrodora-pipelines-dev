@@ -303,14 +303,7 @@
 			{
 				"name": "Send Email",
 				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "CallsSalesBronzeSilver_Full",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
