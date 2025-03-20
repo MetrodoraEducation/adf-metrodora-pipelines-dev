@@ -289,7 +289,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "Wait",
+						"activity": "Notebook_DWH",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -318,6 +318,12 @@
 				"dependsOn": [
 					{
 						"activity": "Wait",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Notebook_DWH",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -382,12 +388,6 @@
 					},
 					{
 						"activity": "Fct gold",
-						"dependencyConditions": [
-							"Failed"
-						]
-					},
-					{
-						"activity": "Notebook_DWH",
 						"dependencyConditions": [
 							"Failed"
 						]
