@@ -464,7 +464,7 @@
 								"source": {
 									"type": "AzurePostgreSqlSource",
 									"query": {
-										"value": "select count(*) from public.fct_matricula",
+										"value": "select count(*) from public.fct_venta",
 										"type": "Expression"
 									},
 									"partitionOption": "None"
