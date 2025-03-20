@@ -34,9 +34,6 @@
 		},
 		"ls_adsl_properties_typeProperties_url": {
 			"value": "https://stmetrodoralakehousedev.dfs.core.windows.net/"
-		},
-		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
-			"value": "7"
 		}
 	}
 }

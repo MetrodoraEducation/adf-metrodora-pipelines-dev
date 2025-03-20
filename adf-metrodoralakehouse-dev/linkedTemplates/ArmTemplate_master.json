@@ -48,10 +48,6 @@
 			"type": "string",
 			"defaultValue": "https://stmetrodoralakehousedev.dfs.core.windows.net/"
 		},
-		"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
-			"type": "string",
-			"defaultValue": "7"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -206,9 +202,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad": {
-						"value": "[parameters('tr_GeneralF0_properties_p_GeneralF0_parameters_dayToLoad')]"
 					}
 				}
 			},
