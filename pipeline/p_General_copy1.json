@@ -341,13 +341,13 @@
 					"method": "POST",
 					"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
 					"body": {
-						"value": "{\n  \"title\": \"PIPELINE RUN FAILED\",\n  \"errorDetails\": \"@{pipeline().parameters.ErrorMessage}\",\n  \"color\": \"Red\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\"\n}",
+						"value": "{\n  \"title\": \"PIPELINE RUN FAILED\",\n  \"errorDetails\": \"@{variables('ErrorMessage')}\",\n  \"color\": \"Red\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\"\n}",
 						"type": "Expression"
 					}
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "ErrorMessage",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
@@ -397,7 +397,11 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "ErrorMessage",
+					"value": "@concat('Error en la actividad: ', activity('NombreDeTuActividad').error.message)\n"
+				}
 			}
 		],
 		"parameters": {
