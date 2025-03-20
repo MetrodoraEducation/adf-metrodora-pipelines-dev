@@ -5,6 +5,8 @@
 			{
 				"name": "Budget General",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Dim Fijas",
@@ -68,6 +70,8 @@
 			{
 				"name": "Dim gold",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ClasslifeBronzeSilver_Full",
@@ -103,6 +107,8 @@
 			{
 				"name": "Fct gold",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Dim gold",
@@ -132,6 +138,8 @@
 			{
 				"name": "Notebook_DWH",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Wait",
@@ -162,6 +170,8 @@
 			{
 				"name": "ZohoBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CallsSalesBronzeSilver_Full",
@@ -195,6 +205,8 @@
 			{
 				"name": "ClasslifeBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CallsSalesBronzeSilver_Full",
@@ -228,6 +240,8 @@
 			{
 				"name": "Dim Fijas",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ZohoBronzeSilver_Full",
@@ -271,6 +285,8 @@
 			{
 				"name": "Wait",
 				"type": "Wait",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Fct gold",
@@ -285,7 +301,7 @@
 				}
 			},
 			{
-				"name": "Web1",
+				"name": "Send Email",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
