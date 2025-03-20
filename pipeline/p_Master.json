@@ -6,15 +6,8 @@
 				"name": "Execute p_General",
 				"type": "ExecutePipeline",
 				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "ForEach_Previous_Count",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"onInactiveMarkAs": "Failed",
+				"dependsOn": [],
 				"policy": {
 					"secureInput": false
 				},
@@ -45,14 +38,9 @@
 			{
 				"name": "Send Succesfully Email",
 				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "ForEach_Get_After_Count",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -65,7 +53,7 @@
 					"method": "POST",
 					"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
 					"body": {
-						"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"tables\": \"@{json(concat('[', join(variables('table_list'), ','), ']'))}\"\n  }\n}",
+						"value": "{\n  \"title\": \"PIPELINE RUN FAILED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\"\n}",
 						"type": "Expression"
 					}
 				}
@@ -101,192 +89,61 @@
 				}
 			},
 			{
-				"name": "ForEach_Previous_Count",
-				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
-						"value": "@variables('table_list')",
-						"type": "Expression"
+					"source": {
+						"type": "AzurePostgreSqlSource",
+						"query": "select count(*) from public.fctventa",
+						"partitionOption": "None"
 					},
-					"isSequential": false,
-					"activities": [
-						{
-							"name": "Get_Previous_Count",
-							"type": "Lookup",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "AzurePostgreSqlSource",
-									"query": {
-										"value": "SELECT COUNT(*) AS record_count FROM @{item()}",
-										"type": "Expression"
-									},
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "ds_PostgreSql",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "public",
-										"table": "fctventa"
-									}
-								}
-							}
-						},
-						{
-							"name": "previous_counts",
-							"type": "AppendVariable",
-							"dependsOn": [
-								{
-									"activity": "Get_Previous_Count",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "previous_counts",
-								"value": {
-									"value": "@array(\n    concat(\n        'Tabla: ', item(), \n        ' - Registros Iniciales: ', \n        string(activity('Get_Previous_Count').output.firstRow.record_count)\n    )\n)",
-									"type": "Expression"
-								}
-							}
+					"dataset": {
+						"referenceName": "ds_PostgreSql",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "public",
+							"table": "fctventa"
 						}
-					]
+					}
 				}
 			},
 			{
-				"name": "ForEach_Get_After_Count",
-				"type": "ForEach",
+				"name": "Set variable1",
+				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Execute p_General",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					}
 				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
-						"value": "@variables('table_list')",
+					"variableName": "previous_counts",
+					"value": {
+						"value": "@activity('Lookup1').output.firstRow",
 						"type": "Expression"
-					},
-					"isSequential": false,
-					"activities": [
-						{
-							"name": "Get_After_Count",
-							"type": "Lookup",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "AzurePostgreSqlSource",
-									"query": {
-										"value": "SELECT COUNT(*) AS record_count FROM @{item()}",
-										"type": "Expression"
-									},
-									"partitionOption": "None"
-								},
-								"dataset": {
-									"referenceName": "ds_PostgreSql",
-									"type": "DatasetReference",
-									"parameters": {
-										"schema": "public",
-										"table": "fctventa"
-									}
-								}
-							}
-						},
-						{
-							"name": "Append_After_Count",
-							"type": "AppendVariable",
-							"dependsOn": [
-								{
-									"activity": "Get_After_Count",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "after_counts",
-								"value": {
-									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Finales: ', \n    string(\n        coalesce(activity('Get_After_Count').output.firstRow.record_count, 0)\n    )\n)",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "Append_Inserted_Records",
-							"type": "AppendVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [
-								{
-									"activity": "Append_After_Count",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "inserted_records",
-								"value": {
-									"value": "@array(\n    concat(\n        'Tabla: ', item(), \n        ' - Registros Insertados: ', \n        string(\n            sub(\n                coalesce(int(activity('Get_After_Count').output.firstRow?.record_count), 0), \n                coalesce(int(activity('Get_Previous_Count').output.firstRow?.record_count), 0)\n            )\n        )\n    )\n)",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "Append_table_list",
-							"type": "AppendVariable",
-							"dependsOn": [
-								{
-									"activity": "Append_Inserted_Records",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "table_list",
-								"value": {
-									"value": "@concat(\n    '{',\n    '\"table\": \"', item(), '\", ',\n    '\"previous_count\": ', if(empty(activity('Get_Previous_Count').output.firstRow.record_count), '0', string(activity('Get_Previous_Count').output.firstRow.record_count)), ', ',\n    '\"after_count\": ', if(empty(activity('Get_After_Count').output.firstRow.record_count), '0', string(activity('Get_After_Count').output.firstRow.record_count)),\n    '}'\n)",
-									"type": "Expression"
-								}
-							}
-						}
-					]
+					}
 				}
 			}
 		],
 		"variables": {
 			"previous_counts": {
-				"type": "Array"
+				"type": "String"
 			},
 			"after_counts": {
 				"type": "Array"
