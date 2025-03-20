@@ -44,6 +44,8 @@
 			{
 				"name": "CallsSalesBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -285,8 +287,6 @@
 			{
 				"name": "Wait",
 				"type": "Wait",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Fct gold",
@@ -303,7 +303,42 @@
 			{
 				"name": "Send Email",
 				"type": "WebActivity",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Wait",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
+					"body": {
+						"value": "{\n  \"title\": \"PIPELINE RUS FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Send Email_copy1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Wait",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
