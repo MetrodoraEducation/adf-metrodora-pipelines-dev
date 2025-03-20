@@ -415,6 +415,9 @@
 			},
 			"inserted_records_matricula": {
 				"type": "String"
+			},
+			"table_list": {
+				"type": "String"
 			}
 		},
 		"folder": {
