@@ -5,9 +5,14 @@
 			{
 				"name": "Execute p_General",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Failed",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach_Previous_Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"secureInput": false
 				},
@@ -66,8 +71,6 @@
 			{
 				"name": "Send Failed Email",
 				"type": "WebActivity",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute p_General",
@@ -277,7 +280,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "ForEach_Previous_Count",
+						"activity": "Execute p_General",
 						"dependencyConditions": [
 							"Succeeded"
 						]
