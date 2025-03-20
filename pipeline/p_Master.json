@@ -447,6 +447,85 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Get_After_Count_fct_ventas",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": {
+										"value": "select count(*) from public.fct_matricula",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
+						},
+						{
+							"name": "After_counts_fct_ventas",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_After_Count_fct_ventas",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "after_counts_fct_ventas",
+								"value": {
+									"value": "@string(activity('Get_After_Count_fct_ventas').output.firstRow.count)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "inserted_records_fct_ventas",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "After_counts_fct_ventas",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "inserted_records_matricula",
+								"value": {
+									"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_fct_ventas')), '0', variables('after_counts_fct_ventas'))), \n            int(if(empty(variables('previous_counts_fct_ventas')), '0', variables('previous_counts_fct_ventas')))\n        )\n    )\n)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
