@@ -5,8 +5,6 @@
 			{
 				"name": "Budget General",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Dim Fijas",
@@ -70,8 +68,6 @@
 			{
 				"name": "Dim gold",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ClasslifeBronzeSilver_Full",
@@ -107,8 +103,6 @@
 			{
 				"name": "Fct gold",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Dim gold",
@@ -138,8 +132,6 @@
 			{
 				"name": "Notebook_DWH",
 				"type": "DatabricksNotebook",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Wait",
@@ -170,8 +162,6 @@
 			{
 				"name": "ZohoBronzeSilver_Full",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CallsSalesBronzeSilver_Full",
@@ -205,8 +195,6 @@
 			{
 				"name": "ClasslifeBronzeSilver_Full",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "CallsSalesBronzeSilver_Full",
@@ -240,8 +228,6 @@
 			{
 				"name": "Dim Fijas",
 				"type": "ExecutePipeline",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ZohoBronzeSilver_Full",
@@ -353,6 +339,65 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "CallsSalesBronzeSilver_Full",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "ZohoBronzeSilver_Full",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "ClasslifeBronzeSilver_Full",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Dim gold",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Dim Fijas",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Budget General",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Fct gold",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Notebook_DWH",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
 			}
 		],
 		"parameters": {
@@ -371,6 +416,11 @@
 			"dwh_storage_databricks": {
 				"type": "string",
 				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+			}
+		},
+		"variables": {
+			"ErrorMessage": {
+				"type": "String"
 			}
 		},
 		"folder": {
