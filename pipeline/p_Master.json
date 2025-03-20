@@ -150,7 +150,14 @@
 									]
 								}
 							],
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "previous_counts",
+								"value": {
+									"value": "{\n  \"Tabla\": \"@{item()}\",\n  \"RegistrosIniciales\": \"@{activity('Get_Previous_Count').output.firstRow.record_count}\"\n}",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
