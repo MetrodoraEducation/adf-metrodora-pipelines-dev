@@ -417,7 +417,11 @@
 				"type": "String"
 			},
 			"table_list": {
-				"type": "String"
+				"type": "Array",
+				"defaultValue": [
+					"fctventa",
+					"fct_matricula"
+				]
 			}
 		},
 		"folder": {
