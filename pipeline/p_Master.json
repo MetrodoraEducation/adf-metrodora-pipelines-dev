@@ -213,6 +213,61 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Get_Previous_Count_fct_ventas",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": {
+										"value": "select count(*) from public.fct_matricula",
+										"type": "Expression"
+									},
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
+						},
+						{
+							"name": "previous_counts_fct_ventas",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Get_Previous_Count_fct_ventas",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "previous_counts_fct_ventas",
+								"value": {
+									"value": "@string(activity('Get_Previous_Count_fct_ventas').output.firstRow.count)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
@@ -421,6 +476,15 @@
 				"defaultValue": [
 					"dummy_value"
 				]
+			},
+			"previous_counts_fct_ventas": {
+				"type": "String"
+			},
+			"after_counts_fct_ventas": {
+				"type": "String"
+			},
+			"inserted_records_fct_ventas": {
+				"type": "String"
 			}
 		},
 		"folder": {
