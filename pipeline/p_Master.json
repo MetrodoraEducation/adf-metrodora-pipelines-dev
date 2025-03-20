@@ -15,7 +15,14 @@
 						"referenceName": "p_General",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"dayToLoad": "7",
+						"silver_storage_databricks": {
+							"value": "@concat('/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/')",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
