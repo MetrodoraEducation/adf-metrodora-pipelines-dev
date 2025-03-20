@@ -351,7 +351,22 @@
 								"secureOutput": false,
 								"secureInput": false
 							},
-							"userProperties": []
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzurePostgreSqlSource",
+									"query": "SELECT COUNT(*) AS record_count FROM @{item()}\n",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "ds_PostgreSql",
+									"type": "DatasetReference",
+									"parameters": {
+										"schema": "public",
+										"table": "f0calls"
+									}
+								}
+							}
 						}
 					]
 				}
