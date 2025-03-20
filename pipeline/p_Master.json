@@ -247,7 +247,7 @@
 							"typeProperties": {
 								"variableName": "inserted_records",
 								"value": {
-									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Insertados: ', \n    string(\n        sub(\n            coalesce(activity('Get_After_Count').output.firstRow.record_count, 0),\n            coalesce(activity('Get_Previous_Count').output.firstRow.record_count, 0)\n        )\n    ),\n    '\\n'\n)",
+									"value": "@concat(\n    'Tabla: ', item(), \n    ' - Registros Insertados: ', \n    string(\n        sub(\n            int(if(empty(activity('Get_After_Count').output.firstRow.record_count), '0', activity('Get_After_Count').output.firstRow.record_count)), \n            int(if(empty(activity('Get_Previous_Count').output.firstRow.record_count), '0', activity('Get_Previous_Count').output.firstRow.record_count))\n        )\n    ),\n    '\\n'\n)",
 									"type": "Expression"
 								}
 							}
