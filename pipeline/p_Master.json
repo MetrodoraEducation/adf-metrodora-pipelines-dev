@@ -231,6 +231,26 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Append_Inserted_Records",
+							"type": "AppendVariable",
+							"dependsOn": [
+								{
+									"activity": "Append_After_Count",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "inserted_records",
+								"value": {
+									"value": "@concat('Tabla: ', item(), ' - Registros Insertados: ', string(sub(int(activity('Get_After_Count').output.firstRow.record_count), int(activity('Get_Previous_Count').output.firstRow.record_count))), '\\n')",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}
