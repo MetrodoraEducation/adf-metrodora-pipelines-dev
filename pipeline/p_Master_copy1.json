@@ -5,6 +5,8 @@
 			{
 				"name": "Execute p_General",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach_Previous_Count",
@@ -63,7 +65,7 @@
 					"method": "POST",
 					"url": "https://prod-96.westeurope.logic.azure.com:443/workflows/421b78d3946b475d962d9cfbea4c0899/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=A1vnMT0ZUVltAWLpmQ4qU6Z3ggPqz0MSz-O0hrdjHn8",
 					"body": {
-						"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"tables\": \"@{if(empty(variables('table_list')), '[]', json(concat('[', join(variables('table_list'), ','), ']')))}\"\n  }\n}",
+						"value": "{\n  \"title\": \"PIPELINE RUN FINISHED\",\n  \"message\": \"PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n  \"color\": \"Green\",\n  \"dataFactoryName\": \"@{pipeline().DataFactory}\",\n  \"pipelineName\": \"@{pipeline().Pipeline}\",\n  \"pipelineRunId\": \"@{pipeline().RunId}\",\n  \"time\": \"@{utcNow()}\",\n  \"details\": {\n    \"tables\": [\n      {\n        \"table\": \"fctventa\",\n        \"previous_count\": \"@{json(activity('Get_Previous_Count').input.firstRow.record_count)}\",\n        \"after_count\": \"@{json(activity('Get_After_Count').input.firstRow.record_count)}\"\n      },\n      {\n        \"table\": \"fct_matricula\",\n        \"previous_count\": \"@{json(activity('Get_Previous_Count').input.firstRow.record_count)}\",\n        \"after_count\": \"@{json(activity('Get_After_Count').input.firstRow.record_count)}\"\n      },\n      {\n        \"table\": \"fct_venta\",\n        \"previous_count\": \"@{json(activity('Get_Previous_Count').input.firstRow.record_count)}\",\n        \"after_count\": \"@{json(activity('Get_After_Count').input.firstRow.record_count)}\"\n      }\n    ]\n  }\n}",
 						"type": "Expression"
 					}
 				}
@@ -71,6 +73,8 @@
 			{
 				"name": "Send Failed Email",
 				"type": "WebActivity",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute p_General",
@@ -140,30 +144,8 @@
 							}
 						},
 						{
-							"name": "previous_counts1",
-							"type": "AppendVariable",
-							"state": "Inactive",
-							"onInactiveMarkAs": "Succeeded",
-							"dependsOn": [
-								{
-									"activity": "previous_counts",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "previous_counts",
-								"value": {
-									"value": "@array(\n    concat(\n        'Tabla: ', item(), \n        ' - Registros Iniciales: ', \n        string(activity('Get_Previous_Count').output.firstRow.record_count)\n    )\n)",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "previous_counts",
-							"type": "SetVariable",
+							"type": "AppendVariable",
 							"dependsOn": [
 								{
 									"activity": "Get_Previous_Count",
@@ -172,10 +154,6 @@
 									]
 								}
 							],
-							"policy": {
-								"secureOutput": false,
-								"secureInput": false
-							},
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "previous_counts",
@@ -191,6 +169,8 @@
 			{
 				"name": "ForEach_Get_After_Count",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Execute p_General",
