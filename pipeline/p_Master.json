@@ -217,8 +217,6 @@
 			{
 				"name": "ForEach_After_Count",
 				"type": "ForEach",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "ForEach_Previous_Count",
@@ -235,7 +233,7 @@
 					},
 					"activities": [
 						{
-							"name": "Get_After_Count",
+							"name": "Get_After_Count_Ventas",
 							"type": "Lookup",
 							"dependsOn": [],
 							"policy": {
@@ -263,11 +261,11 @@
 							}
 						},
 						{
-							"name": "After_counts",
+							"name": "After_counts_ventas",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Get_After_Count",
+									"activity": "Get_After_Count_Ventas",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -281,17 +279,17 @@
 							"typeProperties": {
 								"variableName": "after_counts",
 								"value": {
-									"value": "@string(activity('Get_After_Count').output.firstRow.record_count)",
+									"value": "@string(activity('Get_After_Count_Ventas').output.firstRow.record_count)",
 									"type": "Expression"
 								}
 							}
 						},
 						{
-							"name": "inserted_records",
+							"name": "inserted_records_ventas",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "After_counts",
+									"activity": "After_counts_ventas",
 									"dependencyConditions": [
 										"Succeeded"
 									]
