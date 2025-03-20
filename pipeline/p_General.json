@@ -299,6 +299,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzurePostgreSqlSource",
+						"query": "select count(*) from public.fctventa",
 						"partitionOption": "None"
 					},
 					"dataset": {
@@ -306,7 +307,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "public",
-							"table": "f0calls"
+							"table": "fctventa"
 						}
 					}
 				}
