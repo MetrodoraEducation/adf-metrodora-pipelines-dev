@@ -600,7 +600,7 @@
 				}
 			},
 			{
-				"name": "Dim_origen_campania_gold_copy1",
+				"name": "dim_concepto_cobro_gold",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
@@ -613,7 +613,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"notebookPath": {
-						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_origen_campania_gold')",
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_concepto_cobro_gold')",
 						"type": "Expression"
 					}
 				},
