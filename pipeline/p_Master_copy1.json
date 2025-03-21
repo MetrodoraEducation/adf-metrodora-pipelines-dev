@@ -527,7 +527,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "inserted_records_matricula",
+								"variableName": "inserted_records_fct_ventas",
 								"value": {
 									"value": "@string(\n    max(\n        0,\n        sub(\n            int(if(empty(variables('after_counts_fct_ventas')), '0', variables('after_counts_fct_ventas'))), \n            int(if(empty(variables('previous_counts_fct_ventas')), '0', variables('previous_counts_fct_ventas')))\n        )\n    )\n)",
 									"type": "Expression"
