@@ -4,7 +4,7 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
 		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
@@ -1343,6 +1343,29 @@
 							"referenceName": "ls_AzureDatabricks",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "dim_concepto_cobro_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_concepto_cobro_gold')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -1453,6 +1476,29 @@
 						"typeProperties": {
 							"notebookPath": {
 								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_matricula_gold')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "fct_recibos_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_recibos_gold')",
 								"type": "Expression"
 							}
 						},

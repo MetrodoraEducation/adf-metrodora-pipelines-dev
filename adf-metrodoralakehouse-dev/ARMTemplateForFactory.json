@@ -4,12 +4,12 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Data Factory name",
+			"metadata": "Nombre de instancia de Data Factory",
 			"defaultValue": "adf-metrodoralakehouse-dev"
 		},
 		"ls_PostgreSql_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_PostgreSql'",
+			"metadata": "Cadena protegida para \"connectionString\"de \"ls_PostgreSql\"",
 			"defaultValue": "Host=psql-metrodoralakehouse-dev.postgres.database.azure.com;Port=5432;Database=lakehouse;UID=sqladminuser;EncryptionMethod=1;ValidateServerCertificate=0"
 		},
 		"ls_Aircall_properties_typeProperties_url": {
@@ -10818,6 +10818,29 @@
 							"referenceName": "ls_AzureDatabricks",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "dim_concepto_cobro_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_concepto_cobro_gold')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -10928,6 +10951,29 @@
 						"typeProperties": {
 							"notebookPath": {
 								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_matricula_gold')",
+								"type": "Expression"
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_AzureDatabricks",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "fct_recibos_gold",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": {
+								"value": "@concat(pipeline().parameters.gold_storage_databricks, 'fct_recibos_gold')",
 								"type": "Expression"
 							}
 						},
@@ -11506,6 +11552,52 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_KeyVault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger_master')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Execution of trigger master",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "p_Master",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2025-03-20T17:34:00",
+						"timeZone": "Romance Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								4
+							],
+							"weekDays": [
+								"Monday",
+								"Tuesday",
+								"Wednesday",
+								"Thursday",
+								"Friday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/p_Master')]"
 			]
 		},
 		{
@@ -16633,52 +16725,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_adsl')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger_master')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Execution of trigger master",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "p_Master",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2025-03-20T17:34:00",
-						"timeZone": "Romance Standard Time",
-						"schedule": {
-							"minutes": [
-								30
-							],
-							"hours": [
-								4
-							],
-							"weekDays": [
-								"Monday",
-								"Tuesday",
-								"Wednesday",
-								"Thursday",
-								"Friday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/p_Master')]"
 			]
 		}
 	]
