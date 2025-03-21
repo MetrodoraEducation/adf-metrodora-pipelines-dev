@@ -558,7 +558,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "after_counts_fct_recibos",
+								"variableName": "after_counts_fct_ventas",
 								"value": {
 									"value": "@string(activity('Get_After_Count_fct_ventas').output.firstRow.count)",
 									"type": "Expression"
