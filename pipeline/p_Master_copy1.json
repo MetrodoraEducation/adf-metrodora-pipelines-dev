@@ -324,9 +324,9 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "previous_counts_fct_ventas",
+								"variableName": "previous_counts_recibos",
 								"value": {
-									"value": "@string(activity('Get_Previous_Count_fct_ventas').output.firstRow.count)",
+									"value": "@string(activity('Get_Previous_Count_fct_recibos').output.firstRow.count)",
 									"type": "Expression"
 								}
 							}
