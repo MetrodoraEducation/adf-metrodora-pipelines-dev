@@ -594,6 +594,9 @@
 			},
 			"inserted_records_fct_ventas": {
 				"type": "String"
+			},
+			"previous_counts_recibos": {
+				"type": "String"
 			}
 		},
 		"folder": {
