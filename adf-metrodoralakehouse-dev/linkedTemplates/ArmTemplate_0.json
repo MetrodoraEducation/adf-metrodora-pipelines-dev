@@ -30,20 +30,19 @@
 		"ls_Zoho_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://accounts.zoho.eu"
-		},
-		"ls_Aircall_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://api.aircall.io/"
-		},
-		"ls_Aircall_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "c668cd9a3a86775ddb72333278d0b7bb"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/globalparameters",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ls_AzureDatabricks')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -1690,32 +1689,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_Zoho')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_Aircall')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('ls_Aircall_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('ls_Aircall_properties_typeProperties_userName')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_KeyVault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "aircallpwd"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_KeyVault')]"
 			]
 		}
 	]
