@@ -292,7 +292,7 @@
 			"name": "Lakehouse/Bronze"
 		},
 		"annotations": [],
-		"lastPublishTime": "2025-01-14T17:05:28Z"
+		"lastPublishTime": "2025-06-20T15:40:49Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -61,14 +61,14 @@
 			},
 			"silver_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
 			}
 		},
 		"folder": {
 			"name": "Lakehouse/General"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-13T08:33:18Z"
+		"lastPublishTime": "2025-06-20T15:40:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

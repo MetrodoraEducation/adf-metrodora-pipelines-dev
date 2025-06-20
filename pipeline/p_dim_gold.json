@@ -5,7 +5,14 @@
 			{
 				"name": "Dim_campania_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_programa_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -58,7 +65,14 @@
 			{
 				"name": "Dim_estado_venta_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_vertical_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -81,7 +95,14 @@
 			{
 				"name": "Dim_etapa_venta_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_tipo_formacion_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -104,7 +125,14 @@
 			{
 				"name": "Dim_institucion_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_estado_venta_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -127,7 +155,14 @@
 			{
 				"name": "Dim_localidad_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_etapa_venta_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -180,7 +215,14 @@
 			{
 				"name": "Dim_motivo_cierre_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_jerarquia_marketing_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -203,7 +245,14 @@
 			{
 				"name": "Dim_motivo_perdida_llamada_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_tipo_negocio_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -226,7 +275,14 @@
 			{
 				"name": "Dim_origen_campania_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_estudiante",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -602,7 +658,14 @@
 			{
 				"name": "dim_concepto_cobro_gold",
 				"type": "DatabricksNotebook",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Dim_comercial_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -621,18 +684,49 @@
 					"referenceName": "ls_AzureDatabricks",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Dim_tipo_conversion_gold",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Dim_origen_campania_gold",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.gold_storage_databricks, 'dim_tipo_conversion_gold')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"parameters": {
 			"gold_storage_databricks": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Gold/"
 			}
 		},
 		"folder": {
 			"name": "Lakehouse/Gold"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-12T17:30:55Z"
+		"lastPublishTime": "2025-06-20T15:40:47Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

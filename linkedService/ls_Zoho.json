@@ -12,13 +12,7 @@
 		"typeProperties": {
 			"url": "https://accounts.zoho.eu",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous",
-			"authHeaders": {
-				"Authorization": {
-					"type": "SecureString",
-					"value": "**********"
-				}
-			}
+			"authenticationType": "Anonymous"
 		}
 	}
 }

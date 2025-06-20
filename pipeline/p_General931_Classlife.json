@@ -1,0 +1,189 @@
+{
+	"name": "p_General931_Classlife",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteClasslife931",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Classlife931",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"API_CLIENT": "931",
+						"API_KEY": "C!F5ec7888d40c7e8"
+					}
+				}
+			},
+			{
+				"name": "ClasslifeProductos_931",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife931",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'classlife_931/ClasslifeProductos_931')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeStudents_931",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife931",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'classlife_931/ClasslifeStudents_931')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeEnrollments_931",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife931",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'classlife_931/ClasslifeEnrollments_931')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeReceipts_931",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife931",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'classlife_931/ClasslifeReceipts_931')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeAdmissions_931",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife931",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'classlife_931/ClasslifeAdmissions_931')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"silver_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
+			}
+		},
+		"folder": {
+			"name": "Lakehouse/General"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-06-20T15:40:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -28,6 +28,8 @@
 			{
 				"name": "Fct_venta_gold",
 				"type": "DatabricksNotebook",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -120,14 +122,15 @@
 		],
 		"parameters": {
 			"gold_storage_databricks": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Gold/"
 			}
 		},
 		"folder": {
 			"name": "Lakehouse/Gold"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-12T17:36:44Z"
+		"lastPublishTime": "2025-06-20T15:40:47Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

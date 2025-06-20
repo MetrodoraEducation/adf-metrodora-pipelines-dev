@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_General_Budget",
+						"referenceName": "p_General_Budget_old",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -112,7 +112,7 @@
 			"name": "Lakehouse/General"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-12T17:39:07Z"
+		"lastPublishTime": "2025-06-20T15:40:51Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

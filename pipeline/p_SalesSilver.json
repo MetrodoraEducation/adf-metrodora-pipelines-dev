@@ -65,7 +65,7 @@
 			"name": "Lakehouse/Silver"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-12T17:02:07Z"
+		"lastPublishTime": "2025-06-20T15:40:47Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

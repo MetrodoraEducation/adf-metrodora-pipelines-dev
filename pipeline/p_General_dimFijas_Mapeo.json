@@ -298,23 +298,20 @@
 		],
 		"parameters": {
 			"silver_storage_databricks": {
-				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+				"type": "string"
 			},
 			"gold_storage_databricks": {
-				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+				"type": "string"
 			},
 			"dwh_storage_databricks": {
-				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+				"type": "string"
 			}
 		},
 		"folder": {
 			"name": "Lakehouse/General"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-12T16:00:11Z"
+		"lastPublishTime": "2025-06-20T15:40:50Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }

@@ -1,7 +1,7 @@
 {
 	"name": "trigger_master",
 	"properties": {
-		"description": "Execution of trigger master",
+		"description": "Executed trigger master",
 		"annotations": [],
 		"runtimeState": "Stopped",
 		"pipelines": [
@@ -17,7 +17,7 @@
 			"recurrence": {
 				"frequency": "Week",
 				"interval": 1,
-				"startTime": "2025-03-20T17:34:00",
+				"startTime": "2025-03-24T15:15:00",
 				"timeZone": "Romance Standard Time",
 				"schedule": {
 					"minutes": [
@@ -27,13 +27,13 @@
 						4
 					],
 					"weekDays": [
+						"Sunday",
 						"Monday",
 						"Tuesday",
 						"Wednesday",
 						"Thursday",
 						"Friday",
-						"Saturday",
-						"Sunday"
+						"Saturday"
 					]
 				}
 			}

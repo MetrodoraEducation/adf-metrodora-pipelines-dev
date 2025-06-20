@@ -1,0 +1,189 @@
+{
+	"name": "p_General919_Classlife",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteClasslife919",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Classlife919",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "ClasslifeProductos",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife919",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeProductos')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeStudents",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife919",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeStudents')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeEnrollments",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife919",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeEnrollments')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeReceipts",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife919",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeReceipts')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "ClasslifeAdmissions",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "ExecuteClasslife919",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'ClasslifeAdmissions')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"reprocessDate": {
+				"type": "string",
+				"defaultValue": "7"
+			},
+			"silver_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
+			}
+		},
+		"folder": {
+			"name": "Lakehouse/General"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-06-20T15:40:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

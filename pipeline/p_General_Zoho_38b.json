@@ -1,0 +1,74 @@
+{
+	"name": "p_General_Zoho_38b",
+	"properties": {
+		"activities": [
+			{
+				"name": "ExecuteZohoBronze_38b",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Zoho_38b",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"reprocessDate": {
+							"value": "@pipeline().parameters.reprocessDate",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "ExecuteZohoBronzetoSilver_38b",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "ExecuteZohoBronze_38b",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_ZohoSilver_38b",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"reprocessDate": {
+				"type": "string",
+				"defaultValue": "7"
+			},
+			"silver_storage_databricks": {
+				"type": "string",
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
+			}
+		},
+		"folder": {
+			"name": "Lakehouse/General"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-06-20T15:40:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

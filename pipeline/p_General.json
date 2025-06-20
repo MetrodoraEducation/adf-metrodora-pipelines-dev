@@ -5,21 +5,16 @@
 			{
 				"name": "Budget General",
 				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "Dim Fijas",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
 				"policy": {
 					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_General_Budget",
+						"referenceName": "p_General_Budget_old",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -42,6 +37,8 @@
 			{
 				"name": "CallsSalesBronzeSilver_Full",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -70,13 +67,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ClasslifeBronzeSilver_Full",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "ZohoBronzeSilver_Full",
+						"activity": "Tablon_Leads_and_DealsSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -160,7 +151,7 @@
 				}
 			},
 			{
-				"name": "ZohoBronzeSilver_Full",
+				"name": "Zoho_Full",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -193,7 +184,7 @@
 				}
 			},
 			{
-				"name": "ClasslifeBronzeSilver_Full",
+				"name": "Classlife919Bronze_Full",
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
@@ -209,7 +200,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "p_General_Classlife",
+						"referenceName": "p_General919_Classlife",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true,
@@ -230,13 +221,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "ZohoBronzeSilver_Full",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "ClasslifeBronzeSilver_Full",
+						"activity": "Tablon_Leads_and_DealsSilver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -277,11 +262,197 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "Budget General_FF",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"userProperties": [],
 				"typeProperties": {
 					"waitTimeInSeconds": 30
+				}
+			},
+			{
+				"name": "Auxiliar Periodificacion",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Notebook_DWH",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_Auxiliar_periodificacion",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						},
+						"dwh_storage_databricks": {
+							"value": "@pipeline().parameters.dwh_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Budget General_FF",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Dim Fijas",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_General_Budget_FF",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						},
+						"gold_storage_databricks": {
+							"value": "@pipeline().parameters.gold_storage_databricks",
+							"type": "Expression"
+						},
+						"dwh_storage_databricks": {
+							"value": "@pipeline().parameters.dwh_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Classlife931Bronze_Full",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "CallsSalesBronzeSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_General931_Classlife",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Zoho_38bSilver_Full",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "CallsSalesBronzeSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "p_General_Zoho_38b",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"reprocessDate": {
+							"value": "@pipeline().parameters.dayToLoad",
+							"type": "Expression"
+						},
+						"silver_storage_databricks": {
+							"value": "@pipeline().parameters.silver_storage_databricks",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Tablon_Leads_and_DealsSilver",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "Zoho_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Classlife919Bronze_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Classlife931Bronze_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Zoho_38bSilver_Full",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": {
+						"value": "@concat(pipeline().parameters.silver_storage_databricks, 'Tablon_Leads_and_Deals')",
+						"type": "Expression"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_AzureDatabricks",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
@@ -292,15 +463,15 @@
 			},
 			"silver_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
 			},
 			"gold_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Gold/"
 			},
 			"dwh_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
+				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/DWH/"
 			}
 		},
 		"variables": {
@@ -318,7 +489,7 @@
 			"name": "Lakehouse/General"
 		},
 		"annotations": [],
-		"lastPublishTime": "2024-12-13T08:33:18Z"
+		"lastPublishTime": "2025-06-20T15:40:51Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
