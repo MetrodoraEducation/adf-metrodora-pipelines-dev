@@ -463,15 +463,15 @@
 			},
 			"silver_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Silver/"
+				"defaultValue": "/Workspace/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Silver/"
 			},
 			"gold_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/Gold/"
+				"defaultValue": "/Workspace/Repos/development_repository/notebooks-databricks-dev/Lakehouse/Gold/"
 			},
 			"dwh_storage_databricks": {
 				"type": "string",
-				"defaultValue": "/Workspace/Repos/production_repository/notebooks-databricks-prod/Lakehouse/DWH/"
+				"defaultValue": "/Workspace/Repos/development_repository/notebooks-databricks-dev/Lakehouse/DWH/"
 			}
 		},
 		"variables": {
